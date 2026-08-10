@@ -31,6 +31,7 @@ from cb2game.server.messages import (
 from cb2game.server.messages.action import ActionType, Color
 from cb2game.server.messages.buttons import ButtonPress, KeyCode
 from cb2game.server.messages.feedback_questions import FeedbackResponse
+from cb2game.server.messages.objective import ObjectiveCompleteMessage
 from cb2game.server.messages.prop import PropUpdate
 from cb2game.server.messages.rooms import Role
 from cb2game.server.messages.scenario import (
@@ -578,6 +579,8 @@ class State(object):
                 self._announce_action(card_select_action)
 
         if self._map_provider.selected_valid_set():
+            self._advance_fmri_instruction()
+            self._map_provider.increment_custom_targets()
             self._current_set_invalid = False
             cards_changed = True
 
@@ -834,6 +837,33 @@ class State(object):
         logger.debug(
             f"Player {actor.actor_id()} stepped on card {str(stepped_on_card)}."
         )
+        kvals = self._game_recorder.kvals() or {}
+        current_targets = self._map_provider.custom_targets()
+        replace_previous = (
+            kvals.get("fmri_auto_advance_instructions", False)
+            and len(current_targets) == 1
+            and not stepped_on_card.selected
+        )
+        if replace_previous:
+            previous_cards = list(self._map_provider.selected_cards())
+            for previous_card in previous_cards:
+                if previous_card.id == stepped_on_card.id:
+                    continue
+                self._map_provider.set_selected(previous_card.id, False)
+                self._map_provider.set_color(
+                    previous_card.id, Color(0, 0, 1, 1)
+                )
+                self._announce_action(CardSelectAction(
+                    previous_card.id, False, Color(0, 0, 1, 1)
+                ))
+                self._game_recorder.record_card_selection(actor, previous_card)
+                logger.info(
+                    "Replaced previous fMRI card selection %s with %s.",
+                    previous_card.id, stepped_on_card.id,
+                )
+            if previous_cards:
+                self._current_set_invalid = False
+                color = Color(0, 0, 1, 1)
         selected = not stepped_on_card.selected
         self._map_provider.set_selected(stepped_on_card.id, selected)
         self._map_provider.set_color(stepped_on_card.id, color)
@@ -863,6 +893,18 @@ class State(object):
         # If the follower selected a card, send the sound to the leader too.
         if actor.role() == Role.FOLLOWER:
             self.queue_leader_sound(clip_type)
+
+    def _advance_fmri_instruction(self):
+        """Complete the current instruction after its target card is found."""
+        kvals = self._game_recorder.kvals() or {}
+        if not kvals.get("fmri_auto_advance_instructions", False):
+            return False
+        if len(self._instructions) == 0 or self._follower is None:
+            return False
+        completed = ObjectiveCompleteMessage(self._instructions[0].uuid)
+        self._handle_instruction_complete(self._follower.actor_id(), completed)
+        logger.info("Correct fMRI target selected; advanced to next instruction.")
+        return True
 
     def _check_for_stepped_on_cards(self, actor_id, action, color):
         # Check if this is a lobby with select_requires_button_press == False.
@@ -1569,6 +1611,13 @@ class State(object):
         # Load in instructions.
         if scenario.objectives is not None:
             self._instructions = deque(scenario.objectives)
+            # Record instructions arriving.
+            if len(scenario.objectives) > 0:
+                self._game_recorder.record_instruction_sent(scenario.objectives[0])
+                # The first instruction activates immediately.
+                self._game_recorder.record_instruction_activated(scenario.objectives[0])
+            for objective in scenario.objectives[1:]:
+                self._game_recorder.record_instruction_sent(objective)
             self._mark_instructions_stale()
         # Load in actor states.
         if scenario.actor_state is not None:

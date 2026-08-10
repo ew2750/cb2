@@ -1258,6 +1258,7 @@ async def receive_agent_updates(request, ws, lobby):
 
 @routes.get("/player_endpoint")
 async def PlayerEndpoint(request):
+
     if "lobby_name" in request.query:
         lobby = GetLobby(request.query["lobby_name"])
         if lobby == None:
@@ -1377,7 +1378,11 @@ async def serve(config):
     app.add_routes(routes)
     runner = aiohttp.web.AppRunner(app, handle_signals=True)
     await runner.setup()
-    site = web.TCPSite(runner, None, config.http_port)
+    # Scanner deployments set CB2_BIND_HOST=127.0.0.1 so the internal game
+    # transport is reachable only by this Mac, never by network participants.
+    site = web.TCPSite(
+        runner, os.environ.get("CB2_BIND_HOST"), config.http_port
+    )
     await site.start()
 
     print("======= Serving on {site.name} ======".format(site=site))

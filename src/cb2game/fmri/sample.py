@@ -106,7 +106,9 @@ def sample_scenario(
 
 def sample_card_properties():
     return dict(
-        color=np.random.randint(1, 7),
+        # Pink cards are excluded because their appearance is easily confused
+        # with the pink house landmark in the scanner display.
+        color=int(np.random.choice([1, 2, 3, 4, 6])),
         shape=np.random.randint(1, 7),
         count=np.random.randint(1, 3),
         selected=0,

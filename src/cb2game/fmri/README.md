@@ -105,8 +105,17 @@ The dedicated `scanner_task` runner and macOS launcher use `2`/`3`/`4`/`5`
 for movement and `6` for pickup. The launcher can optionally enable pilot
 controls `W`/`S`/`A`/`D` for movement; pickup remains `6`. Correct target-card
 selection automatically completes the active instruction and reveals the next
-one. Each of the four conditions contains three 30-second task epochs, with a
-10-second fixation cross after every epoch (12 task epochs and 12 fixations).
+one. The scanner run uses an eight-block palindrome (four forward conditions,
+then their reverse), with one 30-second task period per block. It begins and
+ends with 20 seconds of fixation and uses 10 seconds of fixation between the
+seven block transitions, for a total duration of 350 seconds (5:50).
+At every block boundary, the active unfinished card is discarded. The new
+block starts with the next card–instruction pair in the shuffled sequence after
+any cards that were completed during the preceding block. It also starts at a
+new randomized safe position and heading on the same map. The eight starts are
+distinct within a run and exclude cards, landmarks, blocked cells, and isolated
+map regions. Randomization is reproducibly seeded by participant ID, run number,
+map, and block number.
 The Mac launcher also accepts a display number: `1` uses the primary display
 and `2` normally uses the first extended monitor. All task presentation windows
 are placed on the selected display.

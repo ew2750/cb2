@@ -417,9 +417,9 @@ google_oauth_client_id: ''
 exception_prefix: exceptions/
 map_config: !!python/object:cb2game.server.config.map_config.MapConfig
   rng_seed: null
-  map_width: 15
-  map_height: 15
-  number_of_cards: 100
+  map_width: 12
+  map_height: 12
+  number_of_cards: 70
   number_of_mountains_range: !!python/tuple
   - 2
   - 6
@@ -460,7 +460,6 @@ map_config: !!python/object:cb2game.server.config.map_config.MapConfig
   - GROUND_TILE_HOUSE
   - GROUND_TILE_HOUSE_RED
   - GROUND_TILE_HOUSE_BLUE
-  - GROUND_TILE_HOUSE_PINK
   - GROUND_TILE_HOUSE_GREEN
   - GROUND_TILE_HOUSE_ORANGE
   - GROUND_TILE_HOUSE_YELLOW
@@ -471,7 +470,6 @@ map_config: !!python/object:cb2game.server.config.map_config.MapConfig
   - GROUND_TILE_HOUSE
   - GROUND_TILE_HOUSE_RED
   - GROUND_TILE_HOUSE_BLUE
-  - GROUND_TILE_HOUSE_PINK
   - GROUND_TILE_HOUSE_GREEN
   - GROUND_TILE_HOUSE_ORANGE
   - GROUND_TILE_HOUSE_YELLOW

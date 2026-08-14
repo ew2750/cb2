@@ -85,7 +85,6 @@ LANDMARK_NAME_TO_TEXT = dict(
     GROUND_TILE_HOUSE_RED='a short red house',
     GROUND_TILE_HOUSE_BLUE='a short blue house',
     GROUND_TILE_HOUSE_GREEN='a short green house',
-    GROUND_TILE_HOUSE_PINK='a short pink house',
     GROUND_TILE_HOUSE_YELLOW='a short yellow house',
     GROUND_TILE_HOUSE_TRIPLE='a tall grey house',
     GROUND_TILE_HOUSE_TRIPLE_RED='a tall red house',

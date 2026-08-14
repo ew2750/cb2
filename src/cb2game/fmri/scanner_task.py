@@ -15,6 +15,7 @@ import random
 import re
 import time
 import uuid
+from collections import deque
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -37,14 +38,21 @@ from cb2game.fmri.utils import (
 )
 from cb2game.pyclient.game_endpoint import Action
 from cb2game.pyclient.remote_client import RemoteClient
+from cb2game.server.hex import HecsCoord, HexBoundary
 
 
 logger = logging.getLogger(__name__)
 TASK_SECONDS = 30.0
 FIXATION_SECONDS = 10.0
-EPOCHS_PER_CONDITION = 3
+RUN_ONSET_FIXATION_SECONDS = 20.0
+RUN_OFFSET_FIXATION_SECONDS = 20.0
+MAP_SIZE = 12
+PINK_CARD_COLOR = 5
+PINK_HOUSE_ASSET_ID = 22
+PATH_TILE_ASSET_ID = 28
 GAME_POLL_INTERVAL_NS = 50_000_000
 EVENT_COLUMNS = ("onset", "duration", "trial_type")
+SPAWNABLE_TILE_ASSET_IDS = {0, 3, PATH_TILE_ASSET_ID}
 
 
 def _safe_label(value):
@@ -128,7 +136,7 @@ def _condition_paths(materials_dir, run_set, hard_environment, hard_language,
             f"Scenario {selected_id} is not available in all four conditions"
         )
 
-    result = []
+    forward = []
     for label in labels:
         condition = condition_lookup[label]
         entry = next(
@@ -136,18 +144,241 @@ def _condition_paths(materials_dir, run_set, hard_environment, hard_language,
             for item in available[condition]
             if item["scenario_id"] == selected_id
         )
-        result.append((label, condition, Path(entry["full_path"])))
-    return result
+        forward.append((label, condition, Path(entry["full_path"])))
+    # A/B/C/D denote HH/EH/HE/EE. Each run uses one cyclic forward order and
+    # then its mirror: run 1 = A B C D D C B A, run 2 = B C D A A D C B, etc.
+    return forward + list(reversed(forward))
 
 
-def _load_scenario(path, subject_id, run_number, previous_state=None):
+def _inside_runtime_map(location):
+    """Return whether a serialized HECS coordinate fits the runtime map.
+
+    Scenario coordinates use HECS ``(a, r, c)`` coordinates, whereas Unity's
+    map dimensions are offset-grid rows and columns.  A HECS coordinate's
+    offset row is ``2 * r + a``; comparing ``r`` directly with ``rows`` leaves
+    out-of-range cells in a cropped map and crashes the WebGL client while it
+    populates its tile array.
+    """
+    if location is None:
+        return False
+    offset_row = 2 * int(location.get("r", -1)) + int(location.get("a", -1))
+    offset_col = int(location.get("c", -1))
+    return (
+        0 <= offset_row < MAP_SIZE
+        and 0 <= offset_col < MAP_SIZE
+    )
+
+
+def _prepare_runtime_materials(scenario, path):
+    """Apply scanner presentation constraints to one static scenario."""
+    map_data = scenario.get("map", {})
+    map_data["rows"] = MAP_SIZE
+    map_data["cols"] = MAP_SIZE
+    cropped_tiles = []
+    for tile in map_data.get("tiles", []):
+        location = tile.get("cell", {}).get("coord")
+        if not _inside_runtime_map(location):
+            continue
+        if tile.get("asset_id") == PINK_HOUSE_ASSET_ID:
+            tile["asset_id"] = PATH_TILE_ASSET_ID
+        cropped_tiles.append(tile)
+    map_data["tiles"] = cropped_tiles
+
+    props = []
+    for prop in scenario.get("prop_update", {}).get("props", []):
+        card = prop.get("card_init")
+        location = prop.get("prop_info", {}).get("location")
+        if not _inside_runtime_map(location):
+            continue
+        if card is not None and card.get("color") == PINK_CARD_COLOR:
+            continue
+        if card is not None:
+            card["selected"] = 0
+        props.append(prop)
+    scenario.setdefault("prop_update", {})["props"] = props
+    valid_prop_ids = {prop.get("id") for prop in props}
+
+    landmarks = scenario.get("landmarks", {})
+    retained_trials = []
+    for objective, target_group in zip(
+        scenario.get("objectives", []), scenario.get("target_card_ids", [])
+    ):
+        text = objective.get("text", "")
+        text = re.sub(r"\bstreetlights\b", "lampposts", text, flags=re.IGNORECASE)
+        text = re.sub(r"\bstreetlight\b", "lamppost", text, flags=re.IGNORECASE)
+        objective["text"] = text
+        target_ids = [int(target_id) for target_id in target_group]
+        target_landmarks = []
+        for target_id in target_ids:
+            target_landmarks.extend(
+                landmarks.get(str(target_id), landmarks.get(target_id, []))
+            )
+        landmarks_are_valid = all(
+            landmark[0].get("asset_id") != PINK_HOUSE_ASSET_ID
+            and _inside_runtime_map(
+                landmark[0].get("cell", {}).get("coord")
+            )
+            for landmark in target_landmarks
+        )
+        if (
+            all(target_id in valid_prop_ids for target_id in target_ids)
+            and landmarks_are_valid
+            and "pink house" not in text.lower()
+        ):
+            retained_trials.append((objective, target_group))
+
+    if not retained_trials:
+        raise ValueError(f"No eligible non-pink targets remain in {path}")
+    scenario["objectives"] = [trial[0] for trial in retained_trials]
+    scenario["target_card_ids"] = [trial[1] for trial in retained_trials]
+    retained_target_ids = {
+        int(target_id)
+        for _, target_group in retained_trials
+        for target_id in target_group
+    }
+    scenario["landmarks"] = {
+        str(target_id): landmarks.get(str(target_id), landmarks.get(target_id, []))
+        for target_id in retained_target_ids
+    }
+    return scenario
+
+
+def _randomize_player_spawn(scenario, path, subject_id, run_number,
+                            block_index):
+    """Place the playable actor on a reproducibly random reachable cell."""
+    tiles = scenario.get("map", {}).get("tiles", [])
+    tiles_by_coord = {
+        (
+            int(tile["cell"]["coord"]["a"]),
+            int(tile["cell"]["coord"]["r"]),
+            int(tile["cell"]["coord"]["c"]),
+        ): tile
+        for tile in tiles
+    }
+    if not tiles_by_coord:
+        raise ValueError(f"No map tiles available for randomized spawn in {path}")
+
+    def neighbors(coord_key):
+        coord = HecsCoord(*coord_key)
+        tile = tiles_by_coord[coord_key]
+        boundary = HexBoundary(int(tile["cell"]["boundary"]["edges"]))
+        for neighbor in coord.neighbors():
+            neighbor_key = (neighbor.a, neighbor.r, neighbor.c)
+            neighbor_tile = tiles_by_coord.get(neighbor_key)
+            if neighbor_tile is None:
+                continue
+            neighbor_boundary = HexBoundary(
+                int(neighbor_tile["cell"]["boundary"]["edges"])
+            )
+            if boundary.get_edge_between(coord, neighbor):
+                continue
+            if neighbor_boundary.get_edge_between(neighbor, coord):
+                continue
+            yield neighbor_key
+
+    # Identify the largest mutually reachable part of the map so a random
+    # start cannot land in an isolated pocket behind map boundaries.
+    unseen = set(tiles_by_coord)
+    components = []
+    while unseen:
+        start = min(unseen)
+        component = set()
+        queue = deque([start])
+        while queue:
+            current = queue.popleft()
+            if current in component:
+                continue
+            component.add(current)
+            unseen.discard(current)
+            queue.extend(neighbor for neighbor in neighbors(current)
+                         if neighbor not in component)
+        components.append(component)
+    largest_component = max(components, key=lambda component: (len(component), -min(component)[1]))
+
+    occupied = {
+        (
+            int(prop["prop_info"]["location"]["a"]),
+            int(prop["prop_info"]["location"]["r"]),
+            int(prop["prop_info"]["location"]["c"]),
+        )
+        for prop in scenario.get("prop_update", {}).get("props", [])
+        if prop.get("prop_info", {}).get("location") is not None
+    }
+    actors = scenario.get("actor_state", {}).get("actors", [])
+    playable_actors = [
+        actor for actor in actors if int(actor.get("actor_role", -1)) == 1
+    ]
+    if len(playable_actors) != 1:
+        raise ValueError(
+            f"Expected one playable role-1 actor in {path}, found "
+            f"{len(playable_actors)}"
+        )
+    for actor in actors:
+        if actor is playable_actors[0]:
+            continue
+        location = actor.get("location")
+        if location is not None:
+            occupied.add(
+                (int(location.get("a", -1)), int(location.get("r", -1)),
+                 int(location.get("c", -1)))
+            )
+
+    candidates = sorted(
+        coord_key for coord_key in largest_component
+        if coord_key not in occupied
+        and int(tiles_by_coord[coord_key].get("asset_id", -1))
+        in SPAWNABLE_TILE_ASSET_IDS
+        and sum(1 for _ in neighbors(coord_key)) >= 2
+    )
+    if len(candidates) < 8:
+        raise ValueError(
+            f"Only {len(candidates)} safe randomized spawn cells remain in {path}"
+        )
+
+    scenario_stem = re.sub(r"_t\d+_l\d+$", "", Path(path).stem)
+    material_key = f"{Path(path).parent.name}/{scenario_stem}"
+    seed_text = f"{subject_id}:{run_number}:{material_key}:spawn"
+    spawn_seed = int.from_bytes(
+        hashlib.sha256(seed_text.encode("utf-8")).digest()[:8], "big"
+    )
+    rng = random.Random(spawn_seed)
+    rng.shuffle(candidates)
+    spawn = candidates[int(block_index) % len(candidates)]
+    headings = [0, 60, 120, 180, 240, 300]
+    heading_rng = random.Random(f"{spawn_seed}:{block_index}:heading")
+    heading = heading_rng.choice(headings)
+
+    playable_actors[0]["location"] = {
+        "a": spawn[0], "r": spawn[1], "c": spawn[2]
+    }
+    playable_actors[0]["rotation_degrees"] = float(heading)
+    scenario.setdefault("kvals", {})["fmri_spawn"] = {
+        "block_index": int(block_index),
+        "coord": {"a": spawn[0], "r": spawn[1], "c": spawn[2]},
+        "offset_row": 2 * spawn[1] + spawn[0],
+        "offset_col": spawn[2],
+        "rotation_degrees": heading,
+        "seed": spawn_seed,
+    }
+    logger.info(
+        "Randomized block %s spawn to HECS=%s offset=(%s,%s) heading=%s",
+        block_index + 1, spawn, 2 * spawn[1] + spawn[0], spawn[2], heading,
+    )
+
+
+def _load_scenario(path, subject_id, run_number, block_index=0,
+                   trial_offset=None):
     with Path(path).open(encoding="utf-8") as handle:
         scenario = json.load(handle)
+    scenario = _prepare_runtime_materials(scenario, path)
     scenario.setdefault("subject", {}).update(
         {"subject_id": str(subject_id), "run": int(run_number)}
     )
     scenario["kvals"] = scenario.get("kvals") or {}
     scenario["kvals"]["fmri_auto_advance_instructions"] = True
+    _randomize_player_spawn(
+        scenario, path, subject_id, run_number, block_index
+    )
 
     objectives = scenario.get("objectives", [])
     target_groups = scenario.get("target_card_ids", [])
@@ -157,12 +388,25 @@ def _load_scenario(path, subject_id, run_number, previous_state=None):
             f"{len(objectives)} instructions, {len(target_groups)} targets"
         )
     paired_trials = list(zip(objectives, target_groups))
-    material_key = f"{Path(path).parent.name}/{Path(path).name}"
+    scenario_stem = re.sub(
+        r"_t\d+_l\d+$", "", Path(path).stem
+    )
+    material_key = f"{Path(path).parent.name}/{scenario_stem}"
     seed_text = f"{subject_id}:{run_number}:{material_key}"
     shuffle_seed = int.from_bytes(
         hashlib.sha256(seed_text.encode("utf-8")).digest()[:8], "big"
     )
     random.Random(shuffle_seed).shuffle(paired_trials)
+    # Every block starts from the next target in one shared shuffled sequence.
+    # ``trial_offset`` is advanced by the number completed in the prior block
+    # plus one, which discards the unfinished target that was active when the
+    # block ended. Because language variants share target IDs, their rephrased
+    # instructions remain attached to the correct cards after this rotation.
+    if paired_trials:
+        if trial_offset is None:
+            trial_offset = block_index
+        rotation = int(trial_offset) % len(paired_trials)
+        paired_trials = paired_trials[rotation:] + paired_trials[:rotation]
     if paired_trials:
         shuffled_objectives, shuffled_targets = zip(*paired_trials)
         scenario["objectives"] = list(shuffled_objectives)
@@ -182,30 +426,10 @@ def _load_scenario(path, subject_id, run_number, previous_state=None):
         if not objective.get("uuid"):
             objective["uuid"] = str(uuid.uuid5(
                 uuid.NAMESPACE_URL,
-                f"cb2-fmri:{Path(path).resolve()}:{subject_id}:{run_number}:{index}",
+                f"cb2-fmri:{Path(path).resolve()}:{subject_id}:{run_number}:"
+                f"{block_index}:{index}",
             ))
     scenario["duration_s"] = 3600
-
-    # Keep only the participant's pose across condition changes. Objectives and
-    # cards reset to the condition-specific materials.
-    if previous_state is not None:
-        state = previous_state.to_dict()
-        source = next(
-            (actor for actor in state.get("actors", [])
-             if actor.get("actor_role") == 1),
-            None,
-        )
-        if source is not None:
-            target = next(
-                (actor for actor in scenario.get("actor_state", {}).get("actors", [])
-                 if actor.get("actor_role") == 1),
-                None,
-            )
-            if target is not None:
-                target["location"] = source.get("location", target.get("location"))
-                target["rotation_degrees"] = source.get(
-                    "rotation_degrees", target.get("rotation_degrees", 0)
-                )
     return json.dumps(scenario)
 
 
@@ -249,7 +473,7 @@ def _install_runtime_keymap(browser, pilot_wasd=False):
 
 
 def _zoom_out_browser_interface(browser):
-    """Set Chrome to 80% page zoom so the bundled UI occupies less space."""
+    """Set Chrome to 67% page zoom for a wider effective game view."""
     try:
         from selenium.webdriver import ActionChains
         from selenium.webdriver.common.keys import Keys
@@ -259,12 +483,12 @@ def _zoom_out_browser_interface(browser):
         )
         ActionChains(browser).key_down(Keys.COMMAND).send_keys("-").send_keys(
             "-"
-        ).key_up(Keys.COMMAND).perform()
+        ).send_keys("-").key_up(Keys.COMMAND).perform()
         time.sleep(0.2)
         after = browser.execute_script(
             "return [window.innerWidth, window.innerHeight];"
         )
-        logger.info("Applied 80%% interface zoom: viewport %s -> %s", before, after)
+        logger.info("Applied 67%% interface zoom: viewport %s -> %s", before, after)
     except Exception as error:
         logger.warning("Could not apply browser interface zoom: %s", error)
 
@@ -317,12 +541,16 @@ def _snapshot_game(game, fallback_state=None):
 
 
 def _run_task_epoch(game, run_zero_ns, condition_code, event_file,
-                    fallback_state=None):
+                    fallback_state=None, deadline_ns=None):
     onset_ns = time.perf_counter_ns()
-    deadline_ns = onset_ns + int(TASK_SECONDS * 1_000_000_000)
+    if deadline_ns is None:
+        deadline_ns = onset_ns + int(TASK_SECONDS * 1_000_000_000)
     latest_state = _wait_until(
         deadline_ns, game=game, fallback_state=fallback_state
     )
+    # Capture any completion already buffered at the exact block boundary so a
+    # correct selection in the final polling interval is included in the score.
+    latest_state = _snapshot_game(game, latest_state)
     offset_ns = time.perf_counter_ns()
     onset = (onset_ns - run_zero_ns) / 1_000_000_000
     duration = (offset_ns - onset_ns) / 1_000_000_000
@@ -331,6 +559,24 @@ def _run_task_epoch(game, run_zero_ns, condition_code, event_file,
         "Logged %s onset=%.6f duration=%.6f", condition_code, onset, duration
     )
     return latest_state
+
+
+def _completed_instruction_count(game_state):
+    if game_state is None:
+        return 0
+    return sum(
+        1 for instruction in game_state.instructions
+        if instruction.completed and not instruction.cancelled
+    )
+
+
+def _has_unfinished_instruction(game_state):
+    if game_state is None:
+        return False
+    return any(
+        not instruction.completed and not instruction.cancelled
+        for instruction in game_state.instructions
+    )
 
 
 def _trial_type(condition):
@@ -351,12 +597,14 @@ def _send_scenario_load(game, scenario_data):
     game.socket.send_message(message)
 
 
-def _show_fixation(display, game, fallback_state=None, scenario_data=None):
+def _show_fixation(display, game, fallback_state=None, scenario_data=None,
+                   duration_s=FIXATION_SECONDS, deadline_ns=None):
     display.show_cross()
     grab_pygame_focus()
     start_ns = time.perf_counter_ns()
-    deadline_ns = start_ns + int(FIXATION_SECONDS * 1_000_000_000)
-    logger.info("Fixation started; deadline is %.3f seconds", FIXATION_SECONDS)
+    if deadline_ns is None:
+        deadline_ns = start_ns + int(duration_s * 1_000_000_000)
+    logger.info("Fixation started; planned duration is %.3f seconds", duration_s)
     if scenario_data is not None:
         _send_scenario_load(game, scenario_data)
         logger.info("Queued next condition while fixation remains visible")
@@ -421,10 +669,14 @@ def run_scanner_task(subject_id, run_number, run_set, hard_environment,
         client, game = _connect_controller(host, lobby)
         _install_runtime_keymap(browser, pilot_wasd=pilot_wasd)
 
+        trial_offset = 0
         first_label, _, first_path = schedule[0]
         game_state = game.step(
             Action.LoadScenario(
-                _load_scenario(first_path, subject_id, run_number)
+                _load_scenario(
+                    first_path, subject_id, run_number, block_index=0,
+                    trial_offset=trial_offset,
+                )
             )
         )
         logger.info("Preloaded first condition %s behind scanner screen", first_label)
@@ -446,31 +698,78 @@ def run_scanner_task(subject_id, run_number, run_set, hard_environment,
         events = EventFile(output_dir, subject_id, run_number)
         logger.info("Scanner trigger received at %s; events=%s", trigger_utc, events.path)
 
-        for condition_index, (label, condition, path) in enumerate(schedule):
-            code = _trial_type(condition)
-            for epoch_index in range(EPOCHS_PER_CONDITION):
-                display.hide()
-                restore_unity_focus_after_rating(browser)
-                game_state = _run_task_epoch(
-                    game, run_zero_ns, code, events, fallback_state=game_state
-                )
+        scheduled_seconds = RUN_ONSET_FIXATION_SECONDS
+        game_state = _show_fixation(
+            display, game, fallback_state=game_state,
+            duration_s=RUN_ONSET_FIXATION_SECONDS,
+            deadline_ns=(
+                run_zero_ns
+                + int(RUN_ONSET_FIXATION_SECONDS * 1_000_000_000)
+            ),
+        )
 
-                next_scenario_data = None
-                if (
-                    epoch_index == EPOCHS_PER_CONDITION - 1
-                    and condition_index + 1 < len(schedule)
-                ):
-                    _, _, next_path = schedule[condition_index + 1]
-                    next_scenario_data = _load_scenario(
-                        next_path, subject_id, run_number,
-                        previous_state=game_state,
-                    )
+        total_cards_found = 0
+        block_scores = []
+        for block_index, (label, condition, path) in enumerate(schedule):
+            code = _trial_type(condition)
+            display.hide()
+            restore_unity_focus_after_rating(browser)
+            scheduled_seconds += TASK_SECONDS
+            game_state = _run_task_epoch(
+                game, run_zero_ns, code, events, fallback_state=game_state,
+                deadline_ns=(
+                    run_zero_ns + int(scheduled_seconds * 1_000_000_000)
+                ),
+            )
+            block_score = _completed_instruction_count(game_state)
+            block_scores.append(block_score)
+            total_cards_found += block_score
+            # The completed instructions have already advanced past their
+            # targets. Advance once more to discard the unfinished card that
+            # was active at the exact block boundary. If every available item
+            # was completed, there is no active card to discard.
+            discarded_card = int(_has_unfinished_instruction(game_state))
+            trial_offset += block_score + discarded_card
+            logger.info(
+                "Block %s/%s (%s) complete: %s card(s), run total=%s; "
+                "discarded active card=%s; next trial offset=%s",
+                block_index + 1, len(schedule), label, block_score,
+                total_cards_found, bool(discarded_card), trial_offset,
+            )
+
+            if block_index + 1 < len(schedule):
+                _, _, next_path = schedule[block_index + 1]
+                next_scenario_data = _load_scenario(
+                    next_path, subject_id, run_number,
+                    block_index=block_index + 1,
+                    trial_offset=trial_offset,
+                )
+                scheduled_seconds += FIXATION_SECONDS
                 game_state = _show_fixation(
                     display, game, fallback_state=game_state,
                     scenario_data=next_scenario_data,
+                    deadline_ns=(
+                        run_zero_ns + int(scheduled_seconds * 1_000_000_000)
+                    ),
+                )
+            else:
+                scheduled_seconds += RUN_OFFSET_FIXATION_SECONDS
+                game_state = _show_fixation(
+                    display, game, fallback_state=game_state,
+                    duration_s=RUN_OFFSET_FIXATION_SECONDS,
+                    deadline_ns=(
+                        run_zero_ns + int(scheduled_seconds * 1_000_000_000)
+                    ),
                 )
 
-        display.show_complete()
+        logger.info(
+            "Run complete after %.1f scheduled seconds; block scores=%s; total=%s",
+            scheduled_seconds, block_scores, total_cards_found,
+        )
+        print(f"Run complete. Cards found: {total_cards_found}", flush=True)
+        display.show()
+        display.clear()
+        display.draw_text(f"Run complete. Cards found: {total_cards_found}")
         time.sleep(2)
         return events.path
     finally:

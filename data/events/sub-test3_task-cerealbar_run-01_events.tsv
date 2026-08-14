@@ -1,0 +1,9 @@
+onset	duration	trial_type
+20.618090	29.382015	language-hard_environment-fog
+60.523627	29.476585	language-hard_environment-clear
+100.551289	29.448935	language-easy_environment-fog
+140.588853	29.411392	language-easy_environment-clear
+180.467406	29.532817	language-easy_environment-clear
+220.537774	29.462584	language-easy_environment-fog
+260.528407	29.471790	language-hard_environment-clear
+300.492007	29.508211	language-hard_environment-fog

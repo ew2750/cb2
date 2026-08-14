@@ -14,40 +14,6 @@
   "prop_update": {
     "props": [
       {
-        "id": 0,
-        "prop_type": 2,
-        "prop_info": {
-          "location": {
-            "a": 0,
-            "r": 1,
-            "c": 12
-          },
-          "rotation_degrees": 0,
-          "collide": false,
-          "border_radius": 30,
-          "border_color": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "border_color_follower": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          }
-        },
-        "card_init": {
-          "color": 4,
-          "shape": 1,
-          "count": 1,
-          "selected": 0,
-          "hidden": false
-        },
-        "simple_init": null
-      },
-      {
         "id": 1,
         "prop_type": 2,
         "prop_info": {
@@ -74,40 +40,6 @@
         },
         "card_init": {
           "color": 2,
-          "shape": 4,
-          "count": 1,
-          "selected": 0,
-          "hidden": false
-        },
-        "simple_init": null
-      },
-      {
-        "id": 2,
-        "prop_type": 2,
-        "prop_info": {
-          "location": {
-            "a": 1,
-            "r": 3,
-            "c": 13
-          },
-          "rotation_degrees": 0,
-          "collide": false,
-          "border_radius": 30,
-          "border_color": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "border_color_follower": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          }
-        },
-        "card_init": {
-          "color": 6,
           "shape": 4,
           "count": 1,
           "selected": 0,
@@ -184,40 +116,6 @@
         "simple_init": null
       },
       {
-        "id": 5,
-        "prop_type": 2,
-        "prop_info": {
-          "location": {
-            "a": 0,
-            "r": 7,
-            "c": 9
-          },
-          "rotation_degrees": 0,
-          "collide": false,
-          "border_radius": 30,
-          "border_color": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "border_color_follower": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          }
-        },
-        "card_init": {
-          "color": 7,
-          "shape": 1,
-          "count": 2,
-          "selected": 0,
-          "hidden": false
-        },
-        "simple_init": null
-      },
-      {
         "id": 6,
         "prop_type": 2,
         "prop_info": {
@@ -246,40 +144,6 @@
           "color": 6,
           "shape": 6,
           "count": 1,
-          "selected": 0,
-          "hidden": false
-        },
-        "simple_init": null
-      },
-      {
-        "id": 7,
-        "prop_type": 2,
-        "prop_info": {
-          "location": {
-            "a": 0,
-            "r": 7,
-            "c": 2
-          },
-          "rotation_degrees": 0,
-          "collide": false,
-          "border_radius": 30,
-          "border_color": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "border_color_follower": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          }
-        },
-        "card_init": {
-          "color": 3,
-          "shape": 3,
-          "count": 2,
           "selected": 0,
           "hidden": false
         },
@@ -382,40 +246,6 @@
           "color": 4,
           "shape": 4,
           "count": 1,
-          "selected": 0,
-          "hidden": false
-        },
-        "simple_init": null
-      },
-      {
-        "id": 11,
-        "prop_type": 2,
-        "prop_info": {
-          "location": {
-            "a": 0,
-            "r": 2,
-            "c": 13
-          },
-          "rotation_degrees": 0,
-          "collide": false,
-          "border_radius": 30,
-          "border_color": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "border_color_follower": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          }
-        },
-        "card_init": {
-          "color": 5,
-          "shape": 5,
-          "count": 2,
           "selected": 0,
           "hidden": false
         },
@@ -558,40 +388,6 @@
         "simple_init": null
       },
       {
-        "id": 16,
-        "prop_type": 2,
-        "prop_info": {
-          "location": {
-            "a": 1,
-            "r": 3,
-            "c": 14
-          },
-          "rotation_degrees": 0,
-          "collide": false,
-          "border_radius": 30,
-          "border_color": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "border_color_follower": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          }
-        },
-        "card_init": {
-          "color": 1,
-          "shape": 1,
-          "count": 1,
-          "selected": 0,
-          "hidden": false
-        },
-        "simple_init": null
-      },
-      {
         "id": 17,
         "prop_type": 2,
         "prop_info": {
@@ -620,40 +416,6 @@
           "color": 3,
           "shape": 2,
           "count": 2,
-          "selected": 0,
-          "hidden": false
-        },
-        "simple_init": null
-      },
-      {
-        "id": 18,
-        "prop_type": 2,
-        "prop_info": {
-          "location": {
-            "a": 1,
-            "r": 4,
-            "c": 1
-          },
-          "rotation_degrees": 0,
-          "collide": false,
-          "border_radius": 30,
-          "border_color": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "border_color_follower": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          }
-        },
-        "card_init": {
-          "color": 5,
-          "shape": 2,
-          "count": 1,
           "selected": 0,
           "hidden": false
         },
@@ -694,40 +456,6 @@
         "simple_init": null
       },
       {
-        "id": 20,
-        "prop_type": 2,
-        "prop_info": {
-          "location": {
-            "a": 1,
-            "r": 2,
-            "c": 3
-          },
-          "rotation_degrees": 0,
-          "collide": false,
-          "border_radius": 30,
-          "border_color": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "border_color_follower": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          }
-        },
-        "card_init": {
-          "color": 5,
-          "shape": 6,
-          "count": 2,
-          "selected": 0,
-          "hidden": false
-        },
-        "simple_init": null
-      },
-      {
         "id": 21,
         "prop_type": 2,
         "prop_info": {
@@ -756,40 +484,6 @@
           "color": 3,
           "shape": 6,
           "count": 2,
-          "selected": 0,
-          "hidden": false
-        },
-        "simple_init": null
-      },
-      {
-        "id": 22,
-        "prop_type": 2,
-        "prop_info": {
-          "location": {
-            "a": 1,
-            "r": 2,
-            "c": 5
-          },
-          "rotation_degrees": 0,
-          "collide": false,
-          "border_radius": 30,
-          "border_color": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "border_color_follower": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          }
-        },
-        "card_init": {
-          "color": 5,
-          "shape": 2,
-          "count": 1,
           "selected": 0,
           "hidden": false
         },
@@ -830,40 +524,6 @@
         "simple_init": null
       },
       {
-        "id": 24,
-        "prop_type": 2,
-        "prop_info": {
-          "location": {
-            "a": 1,
-            "r": 1,
-            "c": 14
-          },
-          "rotation_degrees": 0,
-          "collide": false,
-          "border_radius": 30,
-          "border_color": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "border_color_follower": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          }
-        },
-        "card_init": {
-          "color": 1,
-          "shape": 2,
-          "count": 1,
-          "selected": 0,
-          "hidden": false
-        },
-        "simple_init": null
-      },
-      {
         "id": 25,
         "prop_type": 2,
         "prop_info": {
@@ -890,108 +550,6 @@
         },
         "card_init": {
           "color": 1,
-          "shape": 1,
-          "count": 2,
-          "selected": 0,
-          "hidden": false
-        },
-        "simple_init": null
-      },
-      {
-        "id": 26,
-        "prop_type": 2,
-        "prop_info": {
-          "location": {
-            "a": 0,
-            "r": 1,
-            "c": 7
-          },
-          "rotation_degrees": 0,
-          "collide": false,
-          "border_radius": 30,
-          "border_color": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "border_color_follower": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          }
-        },
-        "card_init": {
-          "color": 5,
-          "shape": 1,
-          "count": 2,
-          "selected": 0,
-          "hidden": false
-        },
-        "simple_init": null
-      },
-      {
-        "id": 27,
-        "prop_type": 2,
-        "prop_info": {
-          "location": {
-            "a": 0,
-            "r": 4,
-            "c": 2
-          },
-          "rotation_degrees": 0,
-          "collide": false,
-          "border_radius": 30,
-          "border_color": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "border_color_follower": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          }
-        },
-        "card_init": {
-          "color": 5,
-          "shape": 4,
-          "count": 2,
-          "selected": 0,
-          "hidden": false
-        },
-        "simple_init": null
-      },
-      {
-        "id": 28,
-        "prop_type": 2,
-        "prop_info": {
-          "location": {
-            "a": 0,
-            "r": 1,
-            "c": 8
-          },
-          "rotation_degrees": 0,
-          "collide": false,
-          "border_radius": 30,
-          "border_color": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "border_color_follower": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          }
-        },
-        "card_init": {
-          "color": 5,
           "shape": 1,
           "count": 2,
           "selected": 0,
@@ -1034,74 +592,6 @@
         "simple_init": null
       },
       {
-        "id": 30,
-        "prop_type": 2,
-        "prop_info": {
-          "location": {
-            "a": 1,
-            "r": 0,
-            "c": 13
-          },
-          "rotation_degrees": 0,
-          "collide": false,
-          "border_radius": 30,
-          "border_color": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "border_color_follower": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          }
-        },
-        "card_init": {
-          "color": 5,
-          "shape": 1,
-          "count": 2,
-          "selected": 0,
-          "hidden": false
-        },
-        "simple_init": null
-      },
-      {
-        "id": 31,
-        "prop_type": 2,
-        "prop_info": {
-          "location": {
-            "a": 1,
-            "r": 1,
-            "c": 1
-          },
-          "rotation_degrees": 0,
-          "collide": false,
-          "border_radius": 30,
-          "border_color": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "border_color_follower": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          }
-        },
-        "card_init": {
-          "color": 5,
-          "shape": 2,
-          "count": 2,
-          "selected": 0,
-          "hidden": false
-        },
-        "simple_init": null
-      },
-      {
         "id": 32,
         "prop_type": 2,
         "prop_info": {
@@ -1129,108 +619,6 @@
         "card_init": {
           "color": 4,
           "shape": 2,
-          "count": 2,
-          "selected": 0,
-          "hidden": false
-        },
-        "simple_init": null
-      },
-      {
-        "id": 33,
-        "prop_type": 2,
-        "prop_info": {
-          "location": {
-            "a": 1,
-            "r": 5,
-            "c": 0
-          },
-          "rotation_degrees": 0,
-          "collide": false,
-          "border_radius": 30,
-          "border_color": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "border_color_follower": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          }
-        },
-        "card_init": {
-          "color": 5,
-          "shape": 4,
-          "count": 2,
-          "selected": 0,
-          "hidden": false
-        },
-        "simple_init": null
-      },
-      {
-        "id": 34,
-        "prop_type": 2,
-        "prop_info": {
-          "location": {
-            "a": 1,
-            "r": 2,
-            "c": 9
-          },
-          "rotation_degrees": 0,
-          "collide": false,
-          "border_radius": 30,
-          "border_color": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "border_color_follower": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          }
-        },
-        "card_init": {
-          "color": 5,
-          "shape": 2,
-          "count": 1,
-          "selected": 0,
-          "hidden": false
-        },
-        "simple_init": null
-      },
-      {
-        "id": 35,
-        "prop_type": 2,
-        "prop_info": {
-          "location": {
-            "a": 1,
-            "r": 4,
-            "c": 3
-          },
-          "rotation_degrees": 0,
-          "collide": false,
-          "border_radius": 30,
-          "border_color": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "border_color_follower": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          }
-        },
-        "card_init": {
-          "color": 5,
-          "shape": 6,
           "count": 2,
           "selected": 0,
           "hidden": false
@@ -1266,40 +654,6 @@
           "color": 1,
           "shape": 1,
           "count": 1,
-          "selected": 0,
-          "hidden": false
-        },
-        "simple_init": null
-      },
-      {
-        "id": 37,
-        "prop_type": 2,
-        "prop_info": {
-          "location": {
-            "a": 0,
-            "r": 6,
-            "c": 7
-          },
-          "rotation_degrees": 0,
-          "collide": false,
-          "border_radius": 30,
-          "border_color": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "border_color_follower": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          }
-        },
-        "card_init": {
-          "color": 4,
-          "shape": 1,
-          "count": 2,
           "selected": 0,
           "hidden": false
         },
@@ -1435,40 +789,6 @@
         "card_init": {
           "color": 6,
           "shape": 1,
-          "count": 1,
-          "selected": 0,
-          "hidden": false
-        },
-        "simple_init": null
-      },
-      {
-        "id": 42,
-        "prop_type": 2,
-        "prop_info": {
-          "location": {
-            "a": 0,
-            "r": 5,
-            "c": 13
-          },
-          "rotation_degrees": 0,
-          "collide": false,
-          "border_radius": 30,
-          "border_color": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "border_color_follower": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          }
-        },
-        "card_init": {
-          "color": 2,
-          "shape": 5,
           "count": 1,
           "selected": 0,
           "hidden": false
@@ -1612,40 +932,6 @@
         "simple_init": null
       },
       {
-        "id": 47,
-        "prop_type": 2,
-        "prop_info": {
-          "location": {
-            "a": 1,
-            "r": 5,
-            "c": 12
-          },
-          "rotation_degrees": 0,
-          "collide": false,
-          "border_radius": 30,
-          "border_color": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "border_color_follower": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          }
-        },
-        "card_init": {
-          "color": 4,
-          "shape": 1,
-          "count": 2,
-          "selected": 0,
-          "hidden": false
-        },
-        "simple_init": null
-      },
-      {
         "id": 48,
         "prop_type": 2,
         "prop_info": {
@@ -1714,40 +1000,6 @@
         "simple_init": null
       },
       {
-        "id": 50,
-        "prop_type": 2,
-        "prop_info": {
-          "location": {
-            "a": 0,
-            "r": 6,
-            "c": 9
-          },
-          "rotation_degrees": 0,
-          "collide": false,
-          "border_radius": 30,
-          "border_color": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "border_color_follower": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          }
-        },
-        "card_init": {
-          "color": 2,
-          "shape": 4,
-          "count": 1,
-          "selected": 0,
-          "hidden": false
-        },
-        "simple_init": null
-      },
-      {
         "id": 51,
         "prop_type": 2,
         "prop_info": {
@@ -1776,210 +1028,6 @@
           "color": 4,
           "shape": 3,
           "count": 2,
-          "selected": 0,
-          "hidden": false
-        },
-        "simple_init": null
-      },
-      {
-        "id": 52,
-        "prop_type": 2,
-        "prop_info": {
-          "location": {
-            "a": 1,
-            "r": 3,
-            "c": 12
-          },
-          "rotation_degrees": 0,
-          "collide": false,
-          "border_radius": 30,
-          "border_color": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "border_color_follower": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          }
-        },
-        "card_init": {
-          "color": 4,
-          "shape": 1,
-          "count": 2,
-          "selected": 0,
-          "hidden": false
-        },
-        "simple_init": null
-      },
-      {
-        "id": 53,
-        "prop_type": 2,
-        "prop_info": {
-          "location": {
-            "a": 0,
-            "r": 7,
-            "c": 8
-          },
-          "rotation_degrees": 0,
-          "collide": false,
-          "border_radius": 30,
-          "border_color": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "border_color_follower": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          }
-        },
-        "card_init": {
-          "color": 5,
-          "shape": 5,
-          "count": 2,
-          "selected": 0,
-          "hidden": false
-        },
-        "simple_init": null
-      },
-      {
-        "id": 54,
-        "prop_type": 2,
-        "prop_info": {
-          "location": {
-            "a": 1,
-            "r": 6,
-            "c": 1
-          },
-          "rotation_degrees": 0,
-          "collide": false,
-          "border_radius": 30,
-          "border_color": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "border_color_follower": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          }
-        },
-        "card_init": {
-          "color": 4,
-          "shape": 1,
-          "count": 1,
-          "selected": 0,
-          "hidden": false
-        },
-        "simple_init": null
-      },
-      {
-        "id": 55,
-        "prop_type": 2,
-        "prop_info": {
-          "location": {
-            "a": 0,
-            "r": 7,
-            "c": 10
-          },
-          "rotation_degrees": 0,
-          "collide": false,
-          "border_radius": 30,
-          "border_color": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "border_color_follower": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          }
-        },
-        "card_init": {
-          "color": 5,
-          "shape": 7,
-          "count": 1,
-          "selected": 0,
-          "hidden": false
-        },
-        "simple_init": null
-      },
-      {
-        "id": 56,
-        "prop_type": 2,
-        "prop_info": {
-          "location": {
-            "a": 0,
-            "r": 6,
-            "c": 3
-          },
-          "rotation_degrees": 0,
-          "collide": false,
-          "border_radius": 30,
-          "border_color": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "border_color_follower": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          }
-        },
-        "card_init": {
-          "color": 6,
-          "shape": 3,
-          "count": 1,
-          "selected": 0,
-          "hidden": false
-        },
-        "simple_init": null
-      },
-      {
-        "id": 57,
-        "prop_type": 2,
-        "prop_info": {
-          "location": {
-            "a": 0,
-            "r": 6,
-            "c": 1
-          },
-          "rotation_degrees": 0,
-          "collide": false,
-          "border_radius": 30,
-          "border_color": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "border_color_follower": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          }
-        },
-        "card_init": {
-          "color": 6,
-          "shape": 5,
-          "count": 1,
           "selected": 0,
           "hidden": false
         },
@@ -2048,40 +1096,6 @@
           "color": 6,
           "shape": 5,
           "count": 3,
-          "selected": 0,
-          "hidden": false
-        },
-        "simple_init": null
-      },
-      {
-        "id": 60,
-        "prop_type": 2,
-        "prop_info": {
-          "location": {
-            "a": 1,
-            "r": 6,
-            "c": 4
-          },
-          "rotation_degrees": 0,
-          "collide": false,
-          "border_radius": 30,
-          "border_color": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "border_color_follower": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          }
-        },
-        "card_init": {
-          "color": 6,
-          "shape": 3,
-          "count": 1,
           "selected": 0,
           "hidden": false
         },
@@ -2190,108 +1204,6 @@
         "simple_init": null
       },
       {
-        "id": 64,
-        "prop_type": 2,
-        "prop_info": {
-          "location": {
-            "a": 1,
-            "r": 2,
-            "c": 14
-          },
-          "rotation_degrees": 0,
-          "collide": false,
-          "border_radius": 30,
-          "border_color": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "border_color_follower": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          }
-        },
-        "card_init": {
-          "color": 3,
-          "shape": 2,
-          "count": 2,
-          "selected": 0,
-          "hidden": false
-        },
-        "simple_init": null
-      },
-      {
-        "id": 65,
-        "prop_type": 2,
-        "prop_info": {
-          "location": {
-            "a": 1,
-            "r": 6,
-            "c": 0
-          },
-          "rotation_degrees": 0,
-          "collide": false,
-          "border_radius": 30,
-          "border_color": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "border_color_follower": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          }
-        },
-        "card_init": {
-          "color": 1,
-          "shape": 5,
-          "count": 1,
-          "selected": 0,
-          "hidden": false
-        },
-        "simple_init": null
-      },
-      {
-        "id": 66,
-        "prop_type": 2,
-        "prop_info": {
-          "location": {
-            "a": 0,
-            "r": 7,
-            "c": 13
-          },
-          "rotation_degrees": 0,
-          "collide": false,
-          "border_radius": 30,
-          "border_color": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "border_color_follower": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          }
-        },
-        "card_init": {
-          "color": 2,
-          "shape": 5,
-          "count": 1,
-          "selected": 0,
-          "hidden": false
-        },
-        "simple_init": null
-      },
-      {
         "id": 67,
         "prop_type": 2,
         "prop_info": {
@@ -2360,40 +1272,6 @@
         "simple_init": null
       },
       {
-        "id": 69,
-        "prop_type": 2,
-        "prop_info": {
-          "location": {
-            "a": 1,
-            "r": 6,
-            "c": 5
-          },
-          "rotation_degrees": 0,
-          "collide": false,
-          "border_radius": 30,
-          "border_color": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "border_color_follower": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          }
-        },
-        "card_init": {
-          "color": 4,
-          "shape": 2,
-          "count": 2,
-          "selected": 0,
-          "hidden": false
-        },
-        "simple_init": null
-      },
-      {
         "id": 70,
         "prop_type": 2,
         "prop_info": {
@@ -2421,74 +1299,6 @@
         "card_init": {
           "color": 2,
           "shape": 3,
-          "count": 1,
-          "selected": 0,
-          "hidden": false
-        },
-        "simple_init": null
-      },
-      {
-        "id": 71,
-        "prop_type": 2,
-        "prop_info": {
-          "location": {
-            "a": 1,
-            "r": 1,
-            "c": 10
-          },
-          "rotation_degrees": 0,
-          "collide": false,
-          "border_radius": 30,
-          "border_color": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "border_color_follower": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          }
-        },
-        "card_init": {
-          "color": 5,
-          "shape": 4,
-          "count": 2,
-          "selected": 0,
-          "hidden": false
-        },
-        "simple_init": null
-      },
-      {
-        "id": 72,
-        "prop_type": 2,
-        "prop_info": {
-          "location": {
-            "a": 0,
-            "r": 2,
-            "c": 14
-          },
-          "rotation_degrees": 0,
-          "collide": false,
-          "border_radius": 30,
-          "border_color": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "border_color_follower": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          }
-        },
-        "card_init": {
-          "color": 5,
-          "shape": 5,
           "count": 1,
           "selected": 0,
           "hidden": false
@@ -2598,74 +1408,6 @@
         "simple_init": null
       },
       {
-        "id": 76,
-        "prop_type": 2,
-        "prop_info": {
-          "location": {
-            "a": 1,
-            "r": 5,
-            "c": 2
-          },
-          "rotation_degrees": 0,
-          "collide": false,
-          "border_radius": 30,
-          "border_color": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "border_color_follower": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          }
-        },
-        "card_init": {
-          "color": 5,
-          "shape": 2,
-          "count": 1,
-          "selected": 0,
-          "hidden": false
-        },
-        "simple_init": null
-      },
-      {
-        "id": 77,
-        "prop_type": 2,
-        "prop_info": {
-          "location": {
-            "a": 0,
-            "r": 1,
-            "c": 14
-          },
-          "rotation_degrees": 0,
-          "collide": false,
-          "border_radius": 30,
-          "border_color": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "border_color_follower": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          }
-        },
-        "card_init": {
-          "color": 3,
-          "shape": 6,
-          "count": 2,
-          "selected": 0,
-          "hidden": false
-        },
-        "simple_init": null
-      },
-      {
         "id": 78,
         "prop_type": 2,
         "prop_info": {
@@ -2693,40 +1435,6 @@
         "card_init": {
           "color": 6,
           "shape": 4,
-          "count": 1,
-          "selected": 0,
-          "hidden": false
-        },
-        "simple_init": null
-      },
-      {
-        "id": 79,
-        "prop_type": 2,
-        "prop_info": {
-          "location": {
-            "a": 0,
-            "r": 0,
-            "c": 13
-          },
-          "rotation_degrees": 0,
-          "collide": false,
-          "border_radius": 30,
-          "border_color": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "border_color_follower": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          }
-        },
-        "card_init": {
-          "color": 6,
-          "shape": 1,
           "count": 1,
           "selected": 0,
           "hidden": false
@@ -2796,40 +1504,6 @@
           "color": 6,
           "shape": 5,
           "count": 1,
-          "selected": 0,
-          "hidden": false
-        },
-        "simple_init": null
-      },
-      {
-        "id": 82,
-        "prop_type": 2,
-        "prop_info": {
-          "location": {
-            "a": 0,
-            "r": 0,
-            "c": 2
-          },
-          "rotation_degrees": 0,
-          "collide": false,
-          "border_radius": 30,
-          "border_color": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "border_color_follower": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          }
-        },
-        "card_init": {
-          "color": 5,
-          "shape": 1,
-          "count": 2,
           "selected": 0,
           "hidden": false
         },
@@ -2932,40 +1606,6 @@
           "color": 2,
           "shape": 3,
           "count": 1,
-          "selected": 0,
-          "hidden": false
-        },
-        "simple_init": null
-      },
-      {
-        "id": 86,
-        "prop_type": 2,
-        "prop_info": {
-          "location": {
-            "a": 0,
-            "r": 6,
-            "c": 0
-          },
-          "rotation_degrees": 0,
-          "collide": false,
-          "border_radius": 30,
-          "border_color": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "border_color_follower": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          }
-        },
-        "card_init": {
-          "color": 5,
-          "shape": 4,
-          "count": 2,
           "selected": 0,
           "hidden": false
         },
@@ -3108,74 +1748,6 @@
         "simple_init": null
       },
       {
-        "id": 91,
-        "prop_type": 2,
-        "prop_info": {
-          "location": {
-            "a": 0,
-            "r": 7,
-            "c": 14
-          },
-          "rotation_degrees": 0,
-          "collide": false,
-          "border_radius": 30,
-          "border_color": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "border_color_follower": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          }
-        },
-        "card_init": {
-          "color": 6,
-          "shape": 1,
-          "count": 1,
-          "selected": 0,
-          "hidden": false
-        },
-        "simple_init": null
-      },
-      {
-        "id": 92,
-        "prop_type": 2,
-        "prop_info": {
-          "location": {
-            "a": 0,
-            "r": 5,
-            "c": 12
-          },
-          "rotation_degrees": 0,
-          "collide": false,
-          "border_radius": 30,
-          "border_color": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "border_color_follower": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          }
-        },
-        "card_init": {
-          "color": 3,
-          "shape": 5,
-          "count": 2,
-          "selected": 0,
-          "hidden": false
-        },
-        "simple_init": null
-      },
-      {
         "id": 93,
         "prop_type": 2,
         "prop_info": {
@@ -3244,40 +1816,6 @@
         "simple_init": null
       },
       {
-        "id": 95,
-        "prop_type": 2,
-        "prop_info": {
-          "location": {
-            "a": 0,
-            "r": 5,
-            "c": 14
-          },
-          "rotation_degrees": 0,
-          "collide": false,
-          "border_radius": 30,
-          "border_color": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "border_color_follower": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          }
-        },
-        "card_init": {
-          "color": 1,
-          "shape": 3,
-          "count": 2,
-          "selected": 0,
-          "hidden": false
-        },
-        "simple_init": null
-      },
-      {
         "id": 96,
         "prop_type": 2,
         "prop_info": {
@@ -3305,40 +1843,6 @@
         "card_init": {
           "color": 1,
           "shape": 3,
-          "count": 2,
-          "selected": 0,
-          "hidden": false
-        },
-        "simple_init": null
-      },
-      {
-        "id": 97,
-        "prop_type": 2,
-        "prop_info": {
-          "location": {
-            "a": 1,
-            "r": 2,
-            "c": 13
-          },
-          "rotation_degrees": 0,
-          "collide": false,
-          "border_radius": 30,
-          "border_color": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "border_color_follower": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          }
-        },
-        "card_init": {
-          "color": 3,
-          "shape": 2,
           "count": 2,
           "selected": 0,
           "hidden": false
@@ -3380,40 +1884,6 @@
         "simple_init": null
       },
       {
-        "id": 99,
-        "prop_type": 2,
-        "prop_info": {
-          "location": {
-            "a": 1,
-            "r": 5,
-            "c": 13
-          },
-          "rotation_degrees": 0,
-          "collide": false,
-          "border_radius": 30,
-          "border_color": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "border_color_follower": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          }
-        },
-        "card_init": {
-          "color": 6,
-          "shape": 4,
-          "count": 2,
-          "selected": 0,
-          "hidden": false
-        },
-        "simple_init": null
-      },
-      {
         "id": 100,
         "prop_type": 2,
         "prop_info": {
@@ -3446,46 +1916,12 @@
           "hidden": false
         },
         "simple_init": null
-      },
-      {
-        "id": 101,
-        "prop_type": 2,
-        "prop_info": {
-          "location": {
-            "a": 0,
-            "r": 7,
-            "c": 7
-          },
-          "rotation_degrees": 0,
-          "collide": false,
-          "border_radius": 30,
-          "border_color": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "border_color_follower": {
-            "r": 0.0,
-            "g": 0.0,
-            "b": 1.0,
-            "a": 1.0
-          }
-        },
-        "card_init": {
-          "color": 3,
-          "shape": 2,
-          "count": 2,
-          "selected": 0,
-          "hidden": false
-        },
-        "simple_init": null
       }
     ]
   },
   "map": {
-    "rows": 15,
-    "cols": 15,
+    "rows": 12,
+    "cols": 12,
     "tiles": [
       {
         "asset_id": 21,
@@ -3673,54 +2109,6 @@
           },
           "boundary": {
             "edges": 33
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 4,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 0,
-            "c": 12
-          },
-          "boundary": {
-            "edges": 63
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 0,
-            "c": 13
-          },
-          "boundary": {
-            "edges": 33
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 0,
-            "c": 14
-          },
-          "boundary": {
-            "edges": 35
           },
           "height": 0.05,
           "layer": 0
@@ -3920,54 +2308,6 @@
         "rotation_degrees": 0
       },
       {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 1,
-            "r": 0,
-            "c": 12
-          },
-          "boundary": {
-            "edges": 0
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 1,
-            "r": 0,
-            "c": 13
-          },
-          "boundary": {
-            "edges": 0
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 1,
-            "r": 0,
-            "c": 14
-          },
-          "boundary": {
-            "edges": 7
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
         "asset_id": 18,
         "cell": {
           "coord": {
@@ -4112,7 +2452,7 @@
         "rotation_degrees": 0
       },
       {
-        "asset_id": 22,
+        "asset_id": 28,
         "cell": {
           "coord": {
             "a": 0,
@@ -4153,54 +2493,6 @@
           },
           "boundary": {
             "edges": 63
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 1,
-            "c": 12
-          },
-          "boundary": {
-            "edges": 0
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 1,
-            "c": 13
-          },
-          "boundary": {
-            "edges": 0
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 1,
-            "c": 14
-          },
-          "boundary": {
-            "edges": 2
           },
           "height": 0.05,
           "layer": 0
@@ -4336,7 +2628,7 @@
         "rotation_degrees": 0
       },
       {
-        "asset_id": 22,
+        "asset_id": 28,
         "cell": {
           "coord": {
             "a": 1,
@@ -4393,54 +2685,6 @@
           },
           "boundary": {
             "edges": 0
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 1,
-            "r": 1,
-            "c": 12
-          },
-          "boundary": {
-            "edges": 0
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 13,
-        "cell": {
-          "coord": {
-            "a": 1,
-            "r": 1,
-            "c": 13
-          },
-          "boundary": {
-            "edges": 63
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 1,
-            "r": 1,
-            "c": 14
-          },
-          "boundary": {
-            "edges": 7
           },
           "height": 0.05,
           "layer": 0
@@ -4640,54 +2884,6 @@
         "rotation_degrees": 0
       },
       {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 2,
-            "c": 12
-          },
-          "boundary": {
-            "edges": 0
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 2,
-            "c": 13
-          },
-          "boundary": {
-            "edges": 0
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 2,
-            "c": 14
-          },
-          "boundary": {
-            "edges": 2
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
         "asset_id": 23,
         "cell": {
           "coord": {
@@ -4873,54 +3069,6 @@
           },
           "boundary": {
             "edges": 0
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 1,
-            "r": 2,
-            "c": 12
-          },
-          "boundary": {
-            "edges": 0
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 1,
-            "r": 2,
-            "c": 13
-          },
-          "boundary": {
-            "edges": 0
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 1,
-            "r": 2,
-            "c": 14
-          },
-          "boundary": {
-            "edges": 7
           },
           "height": 0.05,
           "layer": 0
@@ -5120,54 +3268,6 @@
         "rotation_degrees": 0
       },
       {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 3,
-            "c": 12
-          },
-          "boundary": {
-            "edges": 0
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 3,
-            "c": 13
-          },
-          "boundary": {
-            "edges": 0
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 3,
-            "c": 14
-          },
-          "boundary": {
-            "edges": 2
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
         "asset_id": 28,
         "cell": {
           "coord": {
@@ -5360,54 +3460,6 @@
         "rotation_degrees": 0
       },
       {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 1,
-            "r": 3,
-            "c": 12
-          },
-          "boundary": {
-            "edges": 0
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 1,
-            "r": 3,
-            "c": 13
-          },
-          "boundary": {
-            "edges": 0
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 1,
-            "r": 3,
-            "c": 14
-          },
-          "boundary": {
-            "edges": 7
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
         "asset_id": 25,
         "cell": {
           "coord": {
@@ -5593,54 +3645,6 @@
           },
           "boundary": {
             "edges": 0
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 4,
-            "c": 12
-          },
-          "boundary": {
-            "edges": 0
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 4,
-            "c": 13
-          },
-          "boundary": {
-            "edges": 0
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 4,
-            "c": 14
-          },
-          "boundary": {
-            "edges": 2
           },
           "height": 0.05,
           "layer": 0
@@ -5843,54 +3847,6 @@
         "asset_id": 3,
         "cell": {
           "coord": {
-            "a": 1,
-            "r": 4,
-            "c": 12
-          },
-          "boundary": {
-            "edges": 0
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 1,
-            "r": 4,
-            "c": 13
-          },
-          "boundary": {
-            "edges": 0
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 4,
-        "cell": {
-          "coord": {
-            "a": 1,
-            "r": 4,
-            "c": 14
-          },
-          "boundary": {
-            "edges": 63
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
             "a": 0,
             "r": 5,
             "c": 0
@@ -6073,54 +4029,6 @@
           },
           "boundary": {
             "edges": 0
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 5,
-            "c": 12
-          },
-          "boundary": {
-            "edges": 0
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 5,
-            "c": 13
-          },
-          "boundary": {
-            "edges": 0
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 5,
-            "c": 14
-          },
-          "boundary": {
-            "edges": 2
           },
           "height": 0.05,
           "layer": 0
@@ -6318,774 +4226,6 @@
           "layer": 0
         },
         "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 1,
-            "r": 5,
-            "c": 12
-          },
-          "boundary": {
-            "edges": 0
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 1,
-            "r": 5,
-            "c": 13
-          },
-          "boundary": {
-            "edges": 0
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 1,
-            "r": 5,
-            "c": 14
-          },
-          "boundary": {
-            "edges": 7
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 6,
-            "c": 0
-          },
-          "boundary": {
-            "edges": 56
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 6,
-            "c": 1
-          },
-          "boundary": {
-            "edges": 0
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 6,
-            "c": 2
-          },
-          "boundary": {
-            "edges": 0
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 6,
-            "c": 3
-          },
-          "boundary": {
-            "edges": 0
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 44,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 6,
-            "c": 4
-          },
-          "boundary": {
-            "edges": 63
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 4,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 6,
-            "c": 5
-          },
-          "boundary": {
-            "edges": 63
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 46,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 6,
-            "c": 6
-          },
-          "boundary": {
-            "edges": 63
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 6,
-            "c": 7
-          },
-          "boundary": {
-            "edges": 0
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 6,
-            "c": 8
-          },
-          "boundary": {
-            "edges": 0
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 6,
-            "c": 9
-          },
-          "boundary": {
-            "edges": 0
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 44,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 6,
-            "c": 10
-          },
-          "boundary": {
-            "edges": 63
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 27,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 6,
-            "c": 11
-          },
-          "boundary": {
-            "edges": 63
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 6,
-            "c": 12
-          },
-          "boundary": {
-            "edges": 0
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 13,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 6,
-            "c": 13
-          },
-          "boundary": {
-            "edges": 63
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 6,
-            "c": 14
-          },
-          "boundary": {
-            "edges": 2
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 1,
-            "r": 6,
-            "c": 0
-          },
-          "boundary": {
-            "edges": 16
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 1,
-            "r": 6,
-            "c": 1
-          },
-          "boundary": {
-            "edges": 0
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 1,
-            "r": 6,
-            "c": 2
-          },
-          "boundary": {
-            "edges": 0
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 1,
-            "r": 6,
-            "c": 3
-          },
-          "boundary": {
-            "edges": 0
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 1,
-            "r": 6,
-            "c": 4
-          },
-          "boundary": {
-            "edges": 0
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 1,
-            "r": 6,
-            "c": 5
-          },
-          "boundary": {
-            "edges": 0
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 1,
-            "r": 6,
-            "c": 6
-          },
-          "boundary": {
-            "edges": 0
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 1,
-            "r": 6,
-            "c": 7
-          },
-          "boundary": {
-            "edges": 0
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 1,
-            "r": 6,
-            "c": 8
-          },
-          "boundary": {
-            "edges": 0
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 1,
-            "r": 6,
-            "c": 9
-          },
-          "boundary": {
-            "edges": 0
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 15,
-        "cell": {
-          "coord": {
-            "a": 1,
-            "r": 6,
-            "c": 10
-          },
-          "boundary": {
-            "edges": 63
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 1,
-            "r": 6,
-            "c": 11
-          },
-          "boundary": {
-            "edges": 0
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 1,
-            "r": 6,
-            "c": 12
-          },
-          "boundary": {
-            "edges": 0
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 1,
-            "r": 6,
-            "c": 13
-          },
-          "boundary": {
-            "edges": 0
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 1,
-            "r": 6,
-            "c": 14
-          },
-          "boundary": {
-            "edges": 7
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 7,
-            "c": 0
-          },
-          "boundary": {
-            "edges": 60
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 7,
-            "c": 1
-          },
-          "boundary": {
-            "edges": 12
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 7,
-            "c": 2
-          },
-          "boundary": {
-            "edges": 12
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 7,
-            "c": 3
-          },
-          "boundary": {
-            "edges": 12
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 7,
-            "c": 4
-          },
-          "boundary": {
-            "edges": 12
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 11,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 7,
-            "c": 5
-          },
-          "boundary": {
-            "edges": 63
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 7,
-            "c": 6
-          },
-          "boundary": {
-            "edges": 12
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 7,
-            "c": 7
-          },
-          "boundary": {
-            "edges": 12
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 7,
-            "c": 8
-          },
-          "boundary": {
-            "edges": 12
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 7,
-            "c": 9
-          },
-          "boundary": {
-            "edges": 12
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 7,
-            "c": 10
-          },
-          "boundary": {
-            "edges": 12
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 7,
-            "c": 11
-          },
-          "boundary": {
-            "edges": 12
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 7,
-            "c": 12
-          },
-          "boundary": {
-            "edges": 12
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 7,
-            "c": 13
-          },
-          "boundary": {
-            "edges": 12
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
-      },
-      {
-        "asset_id": 3,
-        "cell": {
-          "coord": {
-            "a": 0,
-            "r": 7,
-            "c": 14
-          },
-          "boundary": {
-            "edges": 14
-          },
-          "height": 0.05,
-          "layer": 0
-        },
-        "rotation_degrees": 0
       }
     ],
     "metadata": {
@@ -7180,49 +4320,7 @@
   "objectives": [
     {
       "sender": 2,
-      "text": "Find the card with two orange plusses that is beside a lamppost that is beside a rock.",
-      "uuid": "",
-      "completed": false,
-      "cancelled": false
-    },
-    {
-      "sender": 2,
-      "text": "Find the card with one pink circle that is beside a tall blue house that is 2 tiles from a lamppost.",
-      "uuid": "",
-      "completed": false,
-      "cancelled": false
-    },
-    {
-      "sender": 2,
-      "text": "Find the card with one green circle that is 2 tiles from a rock that is 2 tiles from a tree.",
-      "uuid": "",
-      "completed": false,
-      "cancelled": false
-    },
-    {
-      "sender": 2,
-      "text": "Find the card with one black circle that is next to a short blue house that is 2 tiles from a short pink house.",
-      "uuid": "",
-      "completed": false,
-      "cancelled": false
-    },
-    {
-      "sender": 2,
-      "text": "Find the card with two green circles that is 3 tiles from a lamppost that is beside a rock.",
-      "uuid": "",
-      "completed": false,
-      "cancelled": false
-    },
-    {
-      "sender": 2,
       "text": "Find the card with two orange hearts that is 2 tiles from a short blue house that is 2 tiles from a short green house.",
-      "uuid": "",
-      "completed": false,
-      "cancelled": false
-    },
-    {
-      "sender": 2,
-      "text": "Find the card with one black square that is 2 tiles from a short blue house that is 3 tiles from a rock.",
       "uuid": "",
       "completed": false,
       "cancelled": false
@@ -7237,27 +4335,6 @@
     {
       "sender": 2,
       "text": "Find the card with one red plus that is beside a tall blue house that is 3 tiles from a short red house.",
-      "uuid": "",
-      "completed": false,
-      "cancelled": false
-    },
-    {
-      "sender": 2,
-      "text": "Find the card with two pink plusses that is beside a short yellow house that is 2 tiles from another short yellow house.",
-      "uuid": "",
-      "completed": false,
-      "cancelled": false
-    },
-    {
-      "sender": 2,
-      "text": "Find the card with one black plus that is 2 tiles from a rock that is 3 tiles from a tree.",
-      "uuid": "",
-      "completed": false,
-      "cancelled": false
-    },
-    {
-      "sender": 2,
-      "text": "Find the card with two pink diamonds that is next to a tree that is 2 tiles from a rock.",
       "uuid": "",
       "completed": false,
       "cancelled": false
@@ -7299,7 +4376,70 @@
     },
     {
       "sender": 2,
-      "text": "Find the card with one orange plus that is next to a lamppost that is next to a tree.",
+      "text": "Find the card with three black circles that is beside a tree that is 2 tiles from a lamppost.",
+      "uuid": "",
+      "completed": false,
+      "cancelled": false
+    },
+    {
+      "sender": 2,
+      "text": "Find the card with one orange diamond that is next to a lamppost that is 2 tiles from a short blue house.",
+      "uuid": "",
+      "completed": false,
+      "cancelled": false
+    },
+    {
+      "sender": 2,
+      "text": "Find the card with one blue diamond that is next to a lamppost that is next to a rock.",
+      "uuid": "",
+      "completed": false,
+      "cancelled": false
+    },
+    {
+      "sender": 2,
+      "text": "Find the card with three blue plusses that is next to a short red house that is beside a short green house.",
+      "uuid": "",
+      "completed": false,
+      "cancelled": false
+    },
+    {
+      "sender": 2,
+      "text": "Find the card with one red star that is 2 tiles from a short blue house that is beside a short grey house.",
+      "uuid": "",
+      "completed": false,
+      "cancelled": false
+    },
+    {
+      "sender": 2,
+      "text": "Find the card with two black plusses that is 2 tiles from a lamppost that is 2 tiles from a short blue house.",
+      "uuid": "",
+      "completed": false,
+      "cancelled": false
+    },
+    {
+      "sender": 2,
+      "text": "Find the card with three blue circles that is next to a short yellow house that is 3 tiles from a short blue house.",
+      "uuid": "",
+      "completed": false,
+      "cancelled": false
+    },
+    {
+      "sender": 2,
+      "text": "Find the card with two green circles that is beside a short green house that is 2 tiles from a short blue house.",
+      "uuid": "",
+      "completed": false,
+      "cancelled": false
+    },
+    {
+      "sender": 2,
+      "text": "Find the card with two yellow triangles that is beside a short yellow house that is beside a short green house.",
+      "uuid": "",
+      "completed": false,
+      "cancelled": false
+    },
+    {
+      "sender": 2,
+      "text": "Find the card with three yellow circles that is beside a short blue house that is 3 tiles from a tree.",
       "uuid": "",
       "completed": false,
       "cancelled": false
@@ -7308,40 +4448,13 @@
   "duration_s": 360,
   "target_card_ids": [
     [
-      37
-    ],
-    [
-      18
-    ],
-    [
-      83
-    ],
-    [
-      15
-    ],
-    [
-      97
-    ],
-    [
       51
-    ],
-    [
-      90
     ],
     [
       78
     ],
     [
       41
-    ],
-    [
-      82
-    ],
-    [
-      16
-    ],
-    [
-      71
     ],
     [
       45
@@ -7359,331 +4472,38 @@
       96
     ],
     [
-      84
+      9
+    ],
+    [
+      10
+    ],
+    [
+      1
+    ],
+    [
+      87
+    ],
+    [
+      6
+    ],
+    [
+      25
+    ],
+    [
+      3
+    ],
+    [
+      17
+    ],
+    [
+      43
+    ],
+    [
+      93
     ]
   ],
   "landmarks": {
-    "37": [
-      [
-        {
-          "asset_id": 46,
-          "cell": {
-            "coord": {
-              "a": 0,
-              "r": 6,
-              "c": 6
-            },
-            "boundary": {
-              "edges": 63
-            },
-            "height": 0.05,
-            "layer": 0
-          },
-          "rotation_degrees": 0
-        },
-        1
-      ],
-      [
-        {
-          "asset_id": 6,
-          "cell": {
-            "coord": {
-              "a": 1,
-              "r": 5,
-              "c": 6
-            },
-            "boundary": {
-              "edges": 63
-            },
-            "height": 0.05,
-            "layer": 0
-          },
-          "rotation_degrees": 0
-        },
-        1
-      ]
-    ],
-    "18": [
-      [
-        {
-          "asset_id": 26,
-          "cell": {
-            "coord": {
-              "a": 1,
-              "r": 4,
-              "c": 0
-            },
-            "boundary": {
-              "edges": 63
-            },
-            "height": 0.05,
-            "layer": 0
-          },
-          "rotation_degrees": -120
-        },
-        1
-      ],
-      [
-        {
-          "asset_id": 46,
-          "cell": {
-            "coord": {
-              "a": 1,
-              "r": 5,
-              "c": 1
-            },
-            "boundary": {
-              "edges": 63
-            },
-            "height": 0.05,
-            "layer": 0
-          },
-          "rotation_degrees": 0
-        },
-        2
-      ]
-    ],
-    "83": [
-      [
-        {
-          "asset_id": 5,
-          "cell": {
-            "coord": {
-              "a": 1,
-              "r": 5,
-              "c": 11
-            },
-            "boundary": {
-              "edges": 63
-            },
-            "height": 0.05,
-            "layer": 0
-          },
-          "rotation_degrees": 0
-        },
-        2
-      ],
-      [
-        {
-          "asset_id": 13,
-          "cell": {
-            "coord": {
-              "a": 0,
-              "r": 6,
-              "c": 13
-            },
-            "boundary": {
-              "edges": 63
-            },
-            "height": 0.05,
-            "layer": 0
-          },
-          "rotation_degrees": 0
-        },
-        2
-      ]
-    ],
-    "15": [
-      [
-        {
-          "asset_id": 19,
-          "cell": {
-            "coord": {
-              "a": 0,
-              "r": 0,
-              "c": 9
-            },
-            "boundary": {
-              "edges": 63
-            },
-            "height": 0.05,
-            "layer": 0
-          },
-          "rotation_degrees": 60
-        },
-        1
-      ],
-      [
-        {
-          "asset_id": 22,
-          "cell": {
-            "coord": {
-              "a": 0,
-              "r": 1,
-              "c": 9
-            },
-            "boundary": {
-              "edges": 63
-            },
-            "height": 0.05,
-            "layer": 0
-          },
-          "rotation_degrees": -180
-        },
-        2
-      ]
-    ],
-    "97": [
-      [
-        {
-          "asset_id": 43,
-          "cell": {
-            "coord": {
-              "a": 0,
-              "r": 2,
-              "c": 11
-            },
-            "boundary": {
-              "edges": 63
-            },
-            "height": 0.05,
-            "layer": 0
-          },
-          "rotation_degrees": 0
-        },
-        3
-      ],
-      [
-        {
-          "asset_id": 7,
-          "cell": {
-            "coord": {
-              "a": 0,
-              "r": 2,
-              "c": 10
-            },
-            "boundary": {
-              "edges": 63
-            },
-            "height": 0.05,
-            "layer": 0
-          },
-          "rotation_degrees": 0
-        },
-        1
-      ]
-    ],
-    "51": [
-      [
-        {
-          "asset_id": 19,
-          "cell": {
-            "coord": {
-              "a": 0,
-              "r": 0,
-              "c": 6
-            },
-            "boundary": {
-              "edges": 63
-            },
-            "height": 0.05,
-            "layer": 0
-          },
-          "rotation_degrees": -60
-        },
-        2
-      ],
-      [
-        {
-          "asset_id": 20,
-          "cell": {
-            "coord": {
-              "a": 0,
-              "r": 1,
-              "c": 6
-            },
-            "boundary": {
-              "edges": 63
-            },
-            "height": 0.05,
-            "layer": 0
-          },
-          "rotation_degrees": -60
-        },
-        2
-      ]
-    ],
-    "90": [
-      [
-        {
-          "asset_id": 19,
-          "cell": {
-            "coord": {
-              "a": 0,
-              "r": 0,
-              "c": 9
-            },
-            "boundary": {
-              "edges": 63
-            },
-            "height": 0.05,
-            "layer": 0
-          },
-          "rotation_degrees": 60
-        },
-        2
-      ],
-      [
-        {
-          "asset_id": 4,
-          "cell": {
-            "coord": {
-              "a": 0,
-              "r": 0,
-              "c": 12
-            },
-            "boundary": {
-              "edges": 63
-            },
-            "height": 0.05,
-            "layer": 0
-          },
-          "rotation_degrees": 0
-        },
-        3
-      ]
-    ],
-    "78": [
-      [
-        {
-          "asset_id": 23,
-          "cell": {
-            "coord": {
-              "a": 0,
-              "r": 3,
-              "c": 9
-            },
-            "boundary": {
-              "edges": 63
-            },
-            "height": 0.05,
-            "layer": 0
-          },
-          "rotation_degrees": 60
-        },
-        3
-      ],
-      [
-        {
-          "asset_id": 20,
-          "cell": {
-            "coord": {
-              "a": 1,
-              "r": 2,
-              "c": 8
-            },
-            "boundary": {
-              "edges": 63
-            },
-            "height": 0.05,
-            "layer": 0
-          },
-          "rotation_degrees": 60
-        },
-        1
-      ]
-    ],
-    "41": [
+    "96": [
       [
         {
           "asset_id": 26,
@@ -7721,166 +4541,6 @@
           "rotation_degrees": -60
         },
         3
-      ]
-    ],
-    "82": [
-      [
-        {
-          "asset_id": 23,
-          "cell": {
-            "coord": {
-              "a": 0,
-              "r": 0,
-              "c": 3
-            },
-            "boundary": {
-              "edges": 63
-            },
-            "height": 0.05,
-            "layer": 0
-          },
-          "rotation_degrees": 60
-        },
-        1
-      ],
-      [
-        {
-          "asset_id": 23,
-          "cell": {
-            "coord": {
-              "a": 0,
-              "r": 1,
-              "c": 3
-            },
-            "boundary": {
-              "edges": 63
-            },
-            "height": 0.05,
-            "layer": 0
-          },
-          "rotation_degrees": -180
-        },
-        2
-      ]
-    ],
-    "16": [
-      [
-        {
-          "asset_id": 4,
-          "cell": {
-            "coord": {
-              "a": 1,
-              "r": 4,
-              "c": 14
-            },
-            "boundary": {
-              "edges": 63
-            },
-            "height": 0.05,
-            "layer": 0
-          },
-          "rotation_degrees": 0
-        },
-        2
-      ],
-      [
-        {
-          "asset_id": 13,
-          "cell": {
-            "coord": {
-              "a": 0,
-              "r": 6,
-              "c": 13
-            },
-            "boundary": {
-              "edges": 63
-            },
-            "height": 0.05,
-            "layer": 0
-          },
-          "rotation_degrees": 0
-        },
-        3
-      ]
-    ],
-    "71": [
-      [
-        {
-          "asset_id": 12,
-          "cell": {
-            "coord": {
-              "a": 0,
-              "r": 1,
-              "c": 11
-            },
-            "boundary": {
-              "edges": 63
-            },
-            "height": 0.05,
-            "layer": 0
-          },
-          "rotation_degrees": 0
-        },
-        1
-      ],
-      [
-        {
-          "asset_id": 4,
-          "cell": {
-            "coord": {
-              "a": 0,
-              "r": 0,
-              "c": 12
-            },
-            "boundary": {
-              "edges": 63
-            },
-            "height": 0.05,
-            "layer": 0
-          },
-          "rotation_degrees": 0
-        },
-        2
-      ]
-    ],
-    "45": [
-      [
-        {
-          "asset_id": 17,
-          "cell": {
-            "coord": {
-              "a": 1,
-              "r": 1,
-              "c": 0
-            },
-            "boundary": {
-              "edges": 63
-            },
-            "height": 0.05,
-            "layer": 0
-          },
-          "rotation_degrees": -120
-        },
-        1
-      ],
-      [
-        {
-          "asset_id": 18,
-          "cell": {
-            "coord": {
-              "a": 0,
-              "r": 1,
-              "c": 0
-            },
-            "boundary": {
-              "edges": 63
-            },
-            "height": 0.05,
-            "layer": 0
-          },
-          "rotation_degrees": -60
-        },
-        1
       ]
     ],
     "73": [
@@ -7923,14 +4583,94 @@
         3
       ]
     ],
-    "23": [
+    "41": [
       [
         {
-          "asset_id": 25,
+          "asset_id": 26,
+          "cell": {
+            "coord": {
+              "a": 1,
+              "r": 4,
+              "c": 6
+            },
+            "boundary": {
+              "edges": 63
+            },
+            "height": 0.05,
+            "layer": 0
+          },
+          "rotation_degrees": -120
+        },
+        1
+      ],
+      [
+        {
+          "asset_id": 18,
           "cell": {
             "coord": {
               "a": 0,
-              "r": 4,
+              "r": 3,
+              "c": 6
+            },
+            "boundary": {
+              "edges": 63
+            },
+            "height": 0.05,
+            "layer": 0
+          },
+          "rotation_degrees": -60
+        },
+        3
+      ]
+    ],
+    "45": [
+      [
+        {
+          "asset_id": 17,
+          "cell": {
+            "coord": {
+              "a": 1,
+              "r": 1,
+              "c": 0
+            },
+            "boundary": {
+              "edges": 63
+            },
+            "height": 0.05,
+            "layer": 0
+          },
+          "rotation_degrees": -120
+        },
+        1
+      ],
+      [
+        {
+          "asset_id": 18,
+          "cell": {
+            "coord": {
+              "a": 0,
+              "r": 1,
+              "c": 0
+            },
+            "boundary": {
+              "edges": 63
+            },
+            "height": 0.05,
+            "layer": 0
+          },
+          "rotation_degrees": -60
+        },
+        1
+      ]
+    ],
+    "78": [
+      [
+        {
+          "asset_id": 23,
+          "cell": {
+            "coord": {
+              "a": 0,
+              "r": 3,
               "c": 9
             },
             "boundary": {
@@ -7939,18 +4679,18 @@
             "height": 0.05,
             "layer": 0
           },
-          "rotation_degrees": -180
+          "rotation_degrees": 60
         },
-        2
+        3
       ],
       [
         {
-          "asset_id": 15,
+          "asset_id": 20,
           "cell": {
             "coord": {
-              "a": 0,
-              "r": 4,
-              "c": 10
+              "a": 1,
+              "r": 2,
+              "c": 8
             },
             "boundary": {
               "edges": 63
@@ -7958,7 +4698,7 @@
             "height": 0.05,
             "layer": 0
           },
-          "rotation_degrees": 0
+          "rotation_degrees": 60
         },
         1
       ]
@@ -8003,14 +4743,14 @@
         2
       ]
     ],
-    "96": [
+    "51": [
       [
         {
-          "asset_id": 26,
+          "asset_id": 19,
           "cell": {
             "coord": {
-              "a": 1,
-              "r": 4,
+              "a": 0,
+              "r": 0,
               "c": 6
             },
             "boundary": {
@@ -8019,10 +4759,191 @@
             "height": 0.05,
             "layer": 0
           },
-          "rotation_degrees": -120
+          "rotation_degrees": -60
+        },
+        2
+      ],
+      [
+        {
+          "asset_id": 20,
+          "cell": {
+            "coord": {
+              "a": 0,
+              "r": 1,
+              "c": 6
+            },
+            "boundary": {
+              "edges": 63
+            },
+            "height": 0.05,
+            "layer": 0
+          },
+          "rotation_degrees": -60
+        },
+        2
+      ]
+    ],
+    "23": [
+      [
+        {
+          "asset_id": 25,
+          "cell": {
+            "coord": {
+              "a": 0,
+              "r": 4,
+              "c": 9
+            },
+            "boundary": {
+              "edges": 63
+            },
+            "height": 0.05,
+            "layer": 0
+          },
+          "rotation_degrees": -180
+        },
+        2
+      ],
+      [
+        {
+          "asset_id": 15,
+          "cell": {
+            "coord": {
+              "a": 0,
+              "r": 4,
+              "c": 10
+            },
+            "boundary": {
+              "edges": 63
+            },
+            "height": 0.05,
+            "layer": 0
+          },
+          "rotation_degrees": 0
+        },
+        1
+      ]
+    ],
+    "9": [
+      [
+        {
+          "asset_id": 12,
+          "cell": {
+            "coord": {
+              "a": 0,
+              "r": 1,
+              "c": 11
+            },
+            "boundary": {
+              "edges": 63
+            },
+            "height": 0.05,
+            "layer": 0
+          },
+          "rotation_degrees": 0
         },
         1
       ],
+      [
+        {
+          "asset_id": 43,
+          "cell": {
+            "coord": {
+              "a": 0,
+              "r": 2,
+              "c": 11
+            },
+            "boundary": {
+              "edges": 63
+            },
+            "height": 0.05,
+            "layer": 0
+          },
+          "rotation_degrees": 0
+        },
+        2
+      ]
+    ],
+    "10": [
+      [
+        {
+          "asset_id": 46,
+          "cell": {
+            "coord": {
+              "a": 1,
+              "r": 5,
+              "c": 1
+            },
+            "boundary": {
+              "edges": 63
+            },
+            "height": 0.05,
+            "layer": 0
+          },
+          "rotation_degrees": 0
+        },
+        1
+      ],
+      [
+        {
+          "asset_id": 19,
+          "cell": {
+            "coord": {
+              "a": 1,
+              "r": 4,
+              "c": 2
+            },
+            "boundary": {
+              "edges": 63
+            },
+            "height": 0.05,
+            "layer": 0
+          },
+          "rotation_degrees": -180
+        },
+        2
+      ]
+    ],
+    "1": [
+      [
+        {
+          "asset_id": 43,
+          "cell": {
+            "coord": {
+              "a": 0,
+              "r": 2,
+              "c": 11
+            },
+            "boundary": {
+              "edges": 63
+            },
+            "height": 0.05,
+            "layer": 0
+          },
+          "rotation_degrees": 0
+        },
+        1
+      ],
+      [
+        {
+          "asset_id": 7,
+          "cell": {
+            "coord": {
+              "a": 0,
+              "r": 2,
+              "c": 10
+            },
+            "boundary": {
+              "edges": 63
+            },
+            "height": 0.05,
+            "layer": 0
+          },
+          "rotation_degrees": 0
+        },
+        1
+      ]
+    ],
+    "87": [
       [
         {
           "asset_id": 18,
@@ -8040,18 +4961,16 @@
           },
           "rotation_degrees": -60
         },
-        3
-      ]
-    ],
-    "84": [
+        1
+      ],
       [
         {
-          "asset_id": 44,
+          "asset_id": 20,
           "cell": {
             "coord": {
-              "a": 0,
-              "r": 6,
-              "c": 10
+              "a": 1,
+              "r": 2,
+              "c": 6
             },
             "boundary": {
               "edges": 63
@@ -8060,17 +4979,238 @@
             "layer": 0
           },
           "rotation_degrees": 0
+        },
+        1
+      ]
+    ],
+    "6": [
+      [
+        {
+          "asset_id": 19,
+          "cell": {
+            "coord": {
+              "a": 1,
+              "r": 4,
+              "c": 2
+            },
+            "boundary": {
+              "edges": 63
+            },
+            "height": 0.05,
+            "layer": 0
+          },
+          "rotation_degrees": -180
+        },
+        2
+      ],
+      [
+        {
+          "asset_id": 17,
+          "cell": {
+            "coord": {
+              "a": 0,
+              "r": 4,
+              "c": 3
+            },
+            "boundary": {
+              "edges": 63
+            },
+            "height": 0.05,
+            "layer": 0
+          },
+          "rotation_degrees": -180
+        },
+        1
+      ]
+    ],
+    "25": [
+      [
+        {
+          "asset_id": 46,
+          "cell": {
+            "coord": {
+              "a": 1,
+              "r": 5,
+              "c": 1
+            },
+            "boundary": {
+              "edges": 63
+            },
+            "height": 0.05,
+            "layer": 0
+          },
+          "rotation_degrees": 0
+        },
+        2
+      ],
+      [
+        {
+          "asset_id": 19,
+          "cell": {
+            "coord": {
+              "a": 1,
+              "r": 4,
+              "c": 2
+            },
+            "boundary": {
+              "edges": 63
+            },
+            "height": 0.05,
+            "layer": 0
+          },
+          "rotation_degrees": -180
+        },
+        2
+      ]
+    ],
+    "3": [
+      [
+        {
+          "asset_id": 23,
+          "cell": {
+            "coord": {
+              "a": 0,
+              "r": 0,
+              "c": 3
+            },
+            "boundary": {
+              "edges": 63
+            },
+            "height": 0.05,
+            "layer": 0
+          },
+          "rotation_degrees": 60
         },
         1
       ],
       [
         {
-          "asset_id": 15,
+          "asset_id": 19,
+          "cell": {
+            "coord": {
+              "a": 0,
+              "r": 0,
+              "c": 6
+            },
+            "boundary": {
+              "edges": 63
+            },
+            "height": 0.05,
+            "layer": 0
+          },
+          "rotation_degrees": -60
+        },
+        3
+      ]
+    ],
+    "17": [
+      [
+        {
+          "asset_id": 20,
+          "cell": {
+            "coord": {
+              "a": 0,
+              "r": 1,
+              "c": 6
+            },
+            "boundary": {
+              "edges": 63
+            },
+            "height": 0.05,
+            "layer": 0
+          },
+          "rotation_degrees": -60
+        },
+        1
+      ],
+      [
+        {
+          "asset_id": 19,
+          "cell": {
+            "coord": {
+              "a": 0,
+              "r": 0,
+              "c": 6
+            },
+            "boundary": {
+              "edges": 63
+            },
+            "height": 0.05,
+            "layer": 0
+          },
+          "rotation_degrees": -60
+        },
+        2
+      ]
+    ],
+    "43": [
+      [
+        {
+          "asset_id": 23,
+          "cell": {
+            "coord": {
+              "a": 0,
+              "r": 3,
+              "c": 9
+            },
+            "boundary": {
+              "edges": 63
+            },
+            "height": 0.05,
+            "layer": 0
+          },
+          "rotation_degrees": 60
+        },
+        1
+      ],
+      [
+        {
+          "asset_id": 20,
           "cell": {
             "coord": {
               "a": 1,
-              "r": 6,
-              "c": 10
+              "r": 2,
+              "c": 8
+            },
+            "boundary": {
+              "edges": 63
+            },
+            "height": 0.05,
+            "layer": 0
+          },
+          "rotation_degrees": 60
+        },
+        1
+      ]
+    ],
+    "93": [
+      [
+        {
+          "asset_id": 19,
+          "cell": {
+            "coord": {
+              "a": 0,
+              "r": 0,
+              "c": 9
+            },
+            "boundary": {
+              "edges": 63
+            },
+            "height": 0.05,
+            "layer": 0
+          },
+          "rotation_degrees": 60
+        },
+        1
+      ],
+      [
+        {
+          "asset_id": 12,
+          "cell": {
+            "coord": {
+              "a": 0,
+              "r": 1,
+              "c": 11
             },
             "boundary": {
               "edges": 63
@@ -8080,7 +5220,7 @@
           },
           "rotation_degrees": 0
         },
-        1
+        3
       ]
     ]
   }

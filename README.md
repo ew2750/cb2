@@ -1,36 +1,34 @@
 # CerealBar fMRI Task
 
+This experiment integrates CerealBar2 (or CB2), found at [`cb2.ai`](http://cb2.ai/) with an fMRI experiment about the language and working memory/multiple-demand systems. In this directory we house code specifically pertaining to running the experiment in an fMRI scanner. The parent directory is a fork of the [cb2 repository](https://github.com/lil-lab/cb2), also found at [https://github.com/EvLab-MIT/cb2](https://github.com/EvLab-MIT/cb2).
+
 The task is controlled by Python, while the visible game is a Unity WebGL game
 running in Chrome.
 
+The current branch contains a easy macOS installation version and task setup GUI.
+
+## Running on a Mac
+
+1. Double-click `macos/Install CerealBar fMRI.command` once.
+2. Double-click `macos/Run CerealBar fMRI.command` for each run.
+3. Choose mode 1 (fMRI), 2 (practice), or 3 (test dry run). fMRI mode then asks
+   for participant ID, session ID, material set (`1`–`10`), run (`1`–`8`),
+   monitor, and layout. Practice and dry-run modes automatically use
+   `set_prac/run_prac`, WASD, display 1, and layout 1.
+   The scanner reads the block order from the selected set's
+   `condition_order.txt`.
+4. When ready (after the game is loaded), press key `5`.
+
 ## Task structure
-
-The launcher asks for:
-
-- Task mode
-- Participant ID
-- Session ID (used only for output naming and metadata)
-- Run set
-- Optional WASD controls
-- Monitor
-- Window layout
-
-Python starts a local CB2 game server. Chrome and Unity then load in the
-background.
-
-The screen displays:
-
-> Waiting for scanner — trigger: 5
-
-Scanner key `5` starts the timing clock.
 
 Three timing modes are available:
 
-| Launcher choice | Mode | Task block | Between blocks | Onset/offset |
-|---|---|---:|---:|---:|
-| `1` | fMRI task | 30 s | 10 s | 20 s |
-| `2` | practice | 30 s | 3 s | 3 s |
-| `3` | test dry run | 3 s | 1 s | 2 s |
+
+| Launcher choice | Mode         | Task block | Between blocks | Onset/offset |
+| --------------- | ------------ | ---------: | -------------: | -----------: |
+| `1`             | fMRI task    |       30 s |           10 s |         20 s |
+| `2`             | practice     |       30 s |            3 s |          3 s |
+| `3`             | test dry run |        3 s |            1 s |          2 s |
 
 The fMRI task and test dry run display a centered `+` during fixation. Practice
 mode instead displays a short explanation that the actual task will show a `+`
@@ -46,22 +44,17 @@ The four experimental conditions are:
 
 For counterbalancing, these are labeled `A`, `B`, `C`, and `D` in this order:
 
-| Label | Condition |
-|---|---|
-| `A` | Hard language + fog |
-| `B` | Hard language + clear environment |
-| `C` | Easy language + fog |
-| `D` | Easy language + clear environment |
 
-Each run contains eight 30-second blocks. The condition order is hard-coded by
-run set:
+| Label | Condition                         |
+| ----- | --------------------------------- |
+| `A`   | Hard language + fog               |
+| `B`   | Hard language + clear environment |
+| `C`   | Easy language + fog               |
+| `D`   | Easy language + clear environment |
 
-| Run sets | Block order |
-|---|---|
-| `A`, `E` | `D B C A A C B D` |
-| `B`, `F` | `D C B A A B C D` |
-| `C`, `G` | `D C A B B A C D` |
-| `D`, `H` | `D A B C C B A D` |
+Each run contains eight 30-second blocks. Every material-set-run condition order is set by `condition_order.txt` file that is in the directory. The scanner reads that file at runtime.
+
+Every order begins with `D`, the easy-environment/easy-language condition.
 
 The complete timeline is:
 
@@ -85,23 +78,35 @@ Therefore, a complete run contains:
 - 20-second onset fixation + 20-second offset fixation = 40 seconds
 - 350 seconds total = 5 minutes 50 seconds
 
-All eight blocks use the same scenario ID and its material-supplied map,
-landmark layout, cards, and instructions. At every block boundary, the player's
-position and facing direction carry
-over continuously from the end of the preceding block. The cards reset, the
-unfinished target from the preceding block is discarded, the next target is
-initialized, and fog changes when required. Cards completed within the
-preceding block are also skipped, so a new block never resumes or repeats the
+All eight blocks use the selected run's material-supplied map, landmark layout, cards, and instructions. At every block boundary, the player's position and facing direction carry over continuously from the end of the preceding block. The cards reset, the unfinished target from the preceding block is discarded, the next target is initialized, and fog changes when required. Cards completed within the preceding block are also skipped, so a new block never resumes or repeats the
 card that the participant had reached at its boundary.
-The common instruction–target order is shuffled reproducibly using participant
-ID and map. Hard and easy wording always remains paired with the correct card.
+The instruction–target order stored in the material is preserved. Hard and easy wording always remains paired with the correct card.
 
-Material files are authoritative. The scanner does not crop or resize their
-maps, remove or replace cards/landmarks, rewrite landmark wording, filter
-targets, or generate additional instructions. The bundled local folder
-currently contains scenario IDs 001–003 for every run set A–H, with eight
-condition files per scenario. Unless `--scenario-id` is supplied, the scanner
-uses the lowest scenario ID shared by all four conditions.
+Material files are pre-set. They use this naming structure:
+
+```text
+materials/
+  set1/
+    condition_order.txt
+    run1_env_easy_lang_easy.json
+    run1_env_easy_lang_hard.json
+    run1_env_hard_lang_easy.json
+    run1_env_hard_lang_hard.json
+    ...
+    run8_env_hard_lang_hard.json
+  ...
+  set10/
+  set_prac/
+    condition_order.txt
+    run_prac_env_easy_lang_easy.json
+    ...
+```
+
+## Reproducbility
+
+All materials are preset and task order fixed in `materials`.
+
+`sample.py` generates 10 sets × 8 runs = **80 unique landscapes**, with four condition files per landscape (320 JSON files total). Pink cards are removed, pink-house tiles are replaced with ordinary path tiles. The bundled local folder must be generated into the new `materials/set1`–`set10` structure before this runner is used.
 
 ## Python software
 
@@ -118,18 +123,12 @@ It performs the following jobs:
 - Controls the 20/30/10-second timing
 - Changes experimental conditions
 - Displays fixation crosses
-- Loads and shuffles instructions
+- Loads instructions in their material-defined order
 - Moves Chrome to the chosen monitor
 - Controls the game-window size
 - Focuses Chrome automatically
 - Writes event files
-- Counts correctly selected cards and displays the total when the run ends
-
-The launcher starts it with approximately:
-
-```bash
-.venv/bin/python -m cb2game.fmri.scanner_task
-```
+- Counts correctly selected cards and displays the total when the run end
 
 The project uses Python 3.9 inside:
 
@@ -158,24 +157,26 @@ Unity renders:
 Python does not render the game world. It controls the experiment surrounding
 the Unity game.
 
-## Controls
+## Key controls
 
-| Key | Action |
-|---|---|
-| `2` | Forward |
-| `3` | Backward |
-| `4` | Turn left |
-| `5` | Turn right |
+
+| Key | Action      |
+| --- | ----------- |
+| `2` | Forward     |
+| `3` | Backward    |
+| `4` | Turn left   |
+| `5` | Turn right  |
 | `6` | Select card |
 
 Optional pilot controls:
 
-| Key | Action |
-|---|---|
-| `W` | Forward |
-| `S` | Backward |
-| `A` | Left |
-| `D` | Right |
+
+| Key | Action      |
+| --- | ----------- |
+| `W` | Forward     |
+| `S` | Backward    |
+| `A` | Left        |
+| `D` | Right       |
 | `6` | Select card |
 
 ## Event data
@@ -189,19 +190,20 @@ Event files are saved in:
 Their names include both identifiers, for example:
 
 ```text
-sub-001_ses-02_task-cerealbar_runset-A_events.tsv
+sub-001_ses-02_task-cerealbar_set-01_run-01_events.tsv
 ```
 
 Session ID is also stored in the runtime scenario metadata. It does not affect
-the map, instructions, shuffle order, condition order, timing, or other run
+the map, instructions, condition order, timing, or other run
 settings.
 
 Each `.tsv` file contains:
 
-| Column | Description |
-|---|---|
-| `onset` | Seconds after the scanner trigger |
-| `duration` | Measured task-epoch duration |
+
+| Column       | Description                        |
+| ------------ | ---------------------------------- |
+| `onset`      | Seconds after the scanner trigger  |
+| `duration`   | Measured task-epoch duration       |
 | `trial_type` | Language and environment condition |
 
 A completed run should contain 8 event rows. The 20-second onset/offset
@@ -209,3 +211,17 @@ fixations and seven inter-block fixations are not written as task events.
 
 Other local game data is stored in `/Users/exw/projects/cb2/data/server`, and
 the latest server log is stored in `/Users/exw/projects/cb2/data/server.log`.
+
+# 20260818 CB2 fMRI task changes from the original repository
+
+- Added a macOS installer and one-command launcher for the local Python server, Chrome, and Unity WebGL task.
+- Made the task single-player and local-only; removed participant-facing online, follower/leader, matchmaking, rating, and feedback steps.
+- Covered Unity startup with a scanner-wait screen, added trigger key `5`, kept one Unity session/map for the whole run, and logged monotonic trigger-relative event timing.
+- Added fMRI, practice, and dry-run timing modes. An fMRI run is eight task blocks with 20-second onset/offset and 10-second inter-block fixations (350 seconds total).
+- Added automatic window focus, monitor/layout selection, scanner controls `2/3/4/5/6`, and automatic WASD controls for practice/dry runs.
+- Preserved player position and heading between blocks, discarded the active target at each boundary, shuffled paired instructions/targets, and displayed the final correct-card score.
+- Added non-overwriting session-labelled event files and runtime metadata.
+- Reorganized materials as `set1`–`set10`, `run1`–`run8`, plus `set_prac/run_prac`; retained only the four named 2×2 condition files. Kept `fog=3` for approiate hard fog level.can potentially change in all the .json
+- Downsize the map to 12x12, accordingly the number of target card is 15 and distractor is 2.
+- Moved each set's eight-block order to `condition_order.txt` that is within each set materials; Python reads and validates it.
+- Removed pink cards and pink-house tiles from scanner materials. The generator excludes pink content and preserves the local material map size/layout.

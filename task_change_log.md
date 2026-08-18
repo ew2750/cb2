@@ -38,8 +38,9 @@ double-clickable macOS helpers in `macos/`.
 
 ### Large-window presentation
 
-- Chrome opens as a large normal `1280 × 800` window, not in macOS fullscreen
-  mode. This avoids switching between macOS fullscreen Spaces.
+- Chrome opens as a large normal window sized from the selected monitor, not
+  in macOS fullscreen mode. This avoids switching between macOS fullscreen
+  Spaces.
 - The WebGL container and Unity canvas fill the browser viewport, rather than
   using the previous smaller fixed-aspect container.
 - Scanner waiting and fixation displays use pygame fullscreen and are raised
@@ -84,11 +85,10 @@ scenario across blocks, wider browser view, and end-of-run card score.
 
 ### Local-material authority revision (2026-08-14)
 
-The earlier runtime crop, pink-asset filtering, terminology rewriting, and
-manual target augmentation were retired. The crop and augmentation helper
-scripts were removed. The scanner now loads the maps, props, landmarks, and
-instruction text directly from `src/cb2game/fmri/materials`. That folder
-currently contains scenario IDs 001–003 for every run set A–H (192 JSON files).
+The earlier runtime crop, terminology rewriting, and manual target
+augmentation were retired. The scanner loads maps, props, landmarks, and
+instruction text directly from `src/cb2game/fmri/materials`. The former A–H
+scenario layout was superseded by the ten-set/eight-run redesign below.
 
 ### Ten-set/eight-run material redesign (2026-08-17)
 
@@ -97,11 +97,14 @@ A full pre-change backup was saved at:
 `/Users/exw/projects/cb2_backup_2026-08-17_before_set_run_redesign`
 
 `sample.py` now targets `set1`–`set10`, with `run1`–`run8` inside each set.
-Each run produces only `t0_l0`, `t0_l1`, `t2_l0`, and `t2_l1`. This is 80
-unique base landscapes and 320 condition JSON files. Each set also receives a
-human-editable `condition_order.txt`, which is the scanner runner's sole source
-for block order. Generated materials reject pink cards and instructions and
-replace any pink-house tile with a normal path tile.
+Each run produces only the four named clear/fog × easy/hard language files.
+This is 80 unique base landscapes and 320 condition JSON files, plus four
+practice files. Each set has a human-editable `condition_order.txt`, which is
+the scanner runner's sole source for block order. It defines separate orders
+for `run1` through `run8`; each set uses all six D-first palindromic orders plus
+two counterbalanced repeats, with assignments varied between sets. Generated
+materials reject pink cards and instructions and replace any pink-house tile
+with a normal path tile.
 
 ## Runtime-only cleanup (2026-08-09)
 

@@ -7,11 +7,9 @@ startup screens and browser reloads.
 
 import argparse
 import csv
-import hashlib
 import json
 import logging
 import os
-import random
 import re
 import time
 import uuid
@@ -27,7 +25,6 @@ from cb2game.fmri.main import (
     MATERIALS_DIR,
     grab_pygame_focus,
     restore_unity_focus_after_rating,
-    validate_scenario_files,
 )
 from cb2game.fmri.utils import (
     browser_window_geometry,
@@ -39,10 +36,6 @@ from cb2game.pyclient.remote_client import RemoteClient
 
 
 logger = logging.getLogger(__name__)
-TASK_SECONDS = 30.0
-FIXATION_SECONDS = 10.0
-RUN_ONSET_FIXATION_SECONDS = 20.0
-RUN_OFFSET_FIXATION_SECONDS = 20.0
 TIMING_PROFILES = {
     "fmri": {
         "task": 30.0,
@@ -53,44 +46,61 @@ TIMING_PROFILES = {
     "practice": {
         "task": 30.0,
         "fixation": 3.0,
-        "onset_fixation": 10.0,
-        "offset_fixation": 5.0,
+        "onset_fixation": 3.0,
+        "offset_fixation": 3.0,
     },
     "dry-run": {
-        "task": 30000.0,
+        "task": 3.0,
         "fixation": 1.0,
         "onset_fixation": 2.0,
         "offset_fixation": 2.0,
     },
 }
+# The fMRI profile is the single source for actual-task durations. These
+# aliases support fallback timing and practice-screen explanatory text.
+TASK_SECONDS = TIMING_PROFILES["fmri"]["task"]
+FIXATION_SECONDS = TIMING_PROFILES["fmri"]["fixation"]
+RUN_ONSET_FIXATION_SECONDS = TIMING_PROFILES["fmri"]["onset_fixation"]
+RUN_OFFSET_FIXATION_SECONDS = TIMING_PROFILES["fmri"]["offset_fixation"]
 GAME_POLL_INTERVAL_NS = 50_000_000
 EVENT_COLUMNS = ("onset", "duration", "trial_type")
-RUNSET_CONDITION_ORDERS = {
-    "A": ("D", "B", "C", "A", "A", "C", "B", "D"),
-    "E": ("D", "B", "C", "A", "A", "C", "B", "D"),
-    "B": ("D", "C", "B", "A", "A", "B", "C", "D"),
-    "F": ("D", "C", "B", "A", "A", "B", "C", "D"),
-    "C": ("D", "C", "A", "B", "B", "A", "C", "D"),
-    "G": ("D", "C", "A", "B", "B", "A", "C", "D"),
-    "D": ("D", "A", "B", "C", "C", "B", "A", "D"),
-    "H": ("D", "A", "B", "C", "C", "B", "A", "D"),
+CONDITION_ORDER_FILENAME = "condition_order.txt"
+CONDITION_FILES = {
+    "A": ((2, 1), "env_hard_lang_hard"),
+    "B": ((0, 1), "env_easy_lang_hard"),
+    "C": ((2, 0), "env_hard_lang_easy"),
+    "D": ((0, 0), "env_easy_lang_easy"),
 }
+N_MATERIAL_SETS = 10
+N_RUNS_PER_SET = 8
+MATERIAL_VARIANT_SUFFIX_RE = (
+    r"_(?:env_(?:easy|hard)_lang_(?:easy|hard)|t\d+_l\d+)$"
+)
 
 
 def _safe_label(value):
     return re.sub(r"[^A-Za-z0-9]+", "-", str(value)).strip("-") or "unknown"
 
 
+def _material_label(value):
+    """Format numbered materials while also supporting the practice labels."""
+    try:
+        return f"{int(value):02d}"
+    except (TypeError, ValueError):
+        return _safe_label(value)
+
+
 class EventFile:
     """Incremental BIDS-compatible event writer using scanner-trigger time zero."""
 
-    def __init__(self, output_dir, subject_id, session_id, run_set):
+    def __init__(self, output_dir, subject_id, session_id,
+                 set_number, run_number):
         output_dir = Path(output_dir).expanduser().resolve()
         output_dir.mkdir(parents=True, exist_ok=True)
         filename = (
             f"sub-{_safe_label(subject_id)}_ses-{_safe_label(session_id)}_"
-            f"task-cerealbar_"
-            f"runset-{_safe_label(str(run_set).removeprefix('runset_'))}_events.tsv"
+            f"task-cerealbar_set-{_material_label(set_number)}_"
+            f"run-{_material_label(run_number)}_events.tsv"
         )
         self.path = output_dir / filename
         repeat = 2
@@ -107,13 +117,11 @@ class EventFile:
         self._handle.flush()
 
     def append(self, onset, duration, trial_type):
-        self._writer.writerow(
-            {
-                "onset": f"{onset:.6f}",
-                "duration": f"{duration:.6f}",
-                "trial_type": trial_type,
-            }
-        )
+        self._writer.writerow({
+            "onset": f"{onset:.6f}",
+            "duration": f"{duration:.6f}",
+            "trial_type": trial_type,
+        })
         self._handle.flush()
         os.fsync(self._handle.fileno())
 
@@ -122,62 +130,105 @@ class EventFile:
             self._handle.close()
 
 
-def _condition_paths(materials_dir, run_set, hard_environment, hard_language,
-                     template_number=None, scenario_id=None):
-    # A/B/C/D denote HH/EH/HE/EE. The order is fixed by run set and cannot be
-    # changed by any external template argument.
-    condition_lookup = {
-        "A": (hard_environment, hard_language),
-        "B": (0, hard_language),
-        "C": (hard_environment, 0),
-        "D": (0, 0),
-    }
-    run_set_letter = str(run_set).removeprefix("runset_").upper()
-    if run_set_letter not in RUNSET_CONDITION_ORDERS:
+def _numbered_value(value, prefix, minimum, maximum):
+    text = str(value).strip().lower()
+    if text.startswith(prefix):
+        text = text[len(prefix):]
+    try:
+        number = int(text)
+    except ValueError as error:
         raise ValueError(
-            f"Run set must be A-H, received {run_set!r}"
+            f"{prefix} must be a number from {minimum} to {maximum}: {value!r}"
+        ) from error
+    if number < minimum or number > maximum:
+        raise ValueError(
+            f"{prefix} must be from {minimum} to {maximum}: {number}"
         )
-    labels = RUNSET_CONDITION_ORDERS[run_set_letter]
-    if template_number is not None:
-        logger.warning(
-            "Ignoring condition template %s; runset_%s has fixed order %s",
-            template_number, run_set_letter, " ".join(labels),
-        )
-    required = list(condition_lookup.values())
-    directory_ok, errors, available = validate_scenario_files(
-        str(materials_dir), run_set, required
-    )
-    if not directory_ok:
-        raise FileNotFoundError(f"Cannot read materials for {run_set}: {errors}")
+    return number
 
-    missing = [condition for condition in required if not available.get(condition)]
+
+def _validate_condition_sequence(path, run_label, tokens):
+    if (len(tokens) != 8
+            or any(token not in CONDITION_FILES for token in tokens)
+            or any(tokens.count(token) != 2 for token in CONDITION_FILES)):
+        raise ValueError(
+            f"{path} {run_label} must contain exactly eight condition codes "
+            f"with each of A/B/C/D appearing twice; found {tokens}"
+        )
+    if tokens[0] != "D":
+        raise ValueError(
+            f"{path} {run_label} must start with D "
+            f"(env_easy_lang_easy); found {tokens[0]}"
+        )
+    if tokens != list(reversed(tokens)):
+        raise ValueError(
+            f"{path} {run_label} must be palindromic; found {tokens}"
+        )
+
+
+def _read_condition_order(set_path, run_label):
+    path = Path(set_path) / CONDITION_ORDER_FILENAME
+    if not path.is_file():
+        raise FileNotFoundError(f"Missing condition order file: {path}")
+    orders = {}
+    for line in path.read_text(encoding="utf-8").splitlines():
+        content = line.split("#", 1)[0].strip()
+        if not content:
+            continue
+        label, separator, sequence = content.partition(":")
+        if not separator:
+            raise ValueError(
+                f"{path} must use run-specific lines such as "
+                "'run1: D A B C C B A D'"
+            )
+        normalized_label = label.strip().lower().replace("-", "_")
+        tokens = sequence.upper().replace(",", " ").split()
+        if normalized_label in orders:
+            raise ValueError(f"Duplicate {normalized_label} entry in {path}")
+        _validate_condition_sequence(path, normalized_label, tokens)
+        orders[normalized_label] = tuple(tokens)
+    normalized_run = str(run_label).strip().lower().replace("-", "_")
+    if normalized_run not in orders:
+        raise ValueError(
+            f"{path} has no condition order for {normalized_run}; "
+            f"available entries are {sorted(orders)}"
+        )
+    return orders[normalized_run]
+
+
+def _condition_paths(materials_dir, set_number, run_number):
+    materials_path = Path(materials_dir).expanduser().resolve()
+    practice_aliases = {"prac", "practice", "set_prac", "run_prac"}
+    if (str(set_number).strip().lower() in practice_aliases
+            or str(run_number).strip().lower() in practice_aliases):
+        set_number = "prac"
+        run_number = "prac"
+        set_path = materials_path / "set_prac"
+        run_stem = "run_prac"
+    else:
+        set_number = _numbered_value(set_number, "set", 1, N_MATERIAL_SETS)
+        run_number = _numbered_value(run_number, "run", 1, N_RUNS_PER_SET)
+        set_path = materials_path / f"set{set_number}"
+        run_stem = f"run{run_number}"
+    labels = _read_condition_order(set_path, run_stem)
+
+    condition_paths = {}
+    missing = []
+    for label, (condition, variant_name) in CONDITION_FILES.items():
+        path = set_path / f"{run_stem}_{variant_name}.json"
+        condition_paths[label] = (condition, path)
+        if not path.is_file():
+            missing.append(path)
     if missing:
-        raise FileNotFoundError(f"Missing 2x2 condition materials: {missing}")
-
-    shared_ids = set.intersection(
-        *(
-            {entry["scenario_id"] for entry in available[condition]}
-            for condition in required
-        )
-    )
-    if not shared_ids:
-        raise FileNotFoundError("No scenario ID is shared by all four conditions")
-    selected_id = min(shared_ids) if scenario_id is None else int(scenario_id)
-    if selected_id not in shared_ids:
+        formatted = "\n".join(f"- {path}" for path in missing)
         raise FileNotFoundError(
-            f"Scenario {selected_id} is not available in all four conditions"
+            f"Missing condition materials for set{set_number}/run{run_number}:\n"
+            f"{formatted}"
         )
-
-    schedule = []
-    for label in labels:
-        condition = condition_lookup[label]
-        entry = next(
-            item
-            for item in available[condition]
-            if item["scenario_id"] == selected_id
-        )
-        schedule.append((label, condition, Path(entry["full_path"])))
-    return schedule
+    return [
+        (label, condition_paths[label][0], condition_paths[label][1])
+        for label in labels
+    ]
 
 
 def _serialized_location(location):
@@ -236,9 +287,7 @@ def _apply_player_pose(scenario, player_pose, path):
     material_cells = {
         tuple(normalized[key] for key in ("a", "r", "c"))
         for tile in scenario.get("map", {}).get("tiles", [])
-        for normalized in [
-            _serialized_location(tile.get("cell", {}).get("coord"))
-        ]
+        for normalized in [_serialized_location(tile.get("cell", {}).get("coord"))]
         if normalized is not None
     }
     pose_cell = tuple(player_pose["location"][key] for key in ("a", "r", "c"))
@@ -259,9 +308,7 @@ def _apply_player_pose(scenario, player_pose, path):
     }
     logger.info(
         "Carried player pose into %s: location=%s heading=%s",
-        Path(path).name,
-        player_pose["location"],
-        player_pose["rotation_degrees"],
+        Path(path).name, player_pose["location"], player_pose["rotation_degrees"],
     )
 
 
@@ -275,6 +322,10 @@ def _load_scenario(path, subject_id, session_id, block_index=0,
     })
     scenario["kvals"] = scenario.get("kvals") or {}
     scenario["kvals"]["fmri_session_id"] = str(session_id)
+    scenario["kvals"]["fmri_material_set"] = Path(path).parent.name
+    scenario["kvals"]["fmri_material_run"] = re.sub(
+        MATERIAL_VARIANT_SUFFIX_RE, "", Path(path).stem
+    )
     scenario["kvals"]["fmri_auto_advance_instructions"] = True
     _apply_player_pose(scenario, player_pose, path)
 
@@ -285,42 +336,25 @@ def _load_scenario(path, subject_id, session_id, block_index=0,
             f"Instruction/target count mismatch in {path}: "
             f"{len(objectives)} instructions, {len(target_groups)} targets"
         )
-    paired_trials = list(zip(objectives, target_groups))
-    scenario_stem = re.sub(
-        r"_t\d+_l\d+$", "", Path(path).stem
-    )
-    material_key = f"{Path(path).parent.name}/{scenario_stem}"
-    seed_text = f"{subject_id}:{material_key}"
-    shuffle_seed = int.from_bytes(
-        hashlib.sha256(seed_text.encode("utf-8")).digest()[:8], "big"
-    )
-    random.Random(shuffle_seed).shuffle(paired_trials)
-    # Every block starts from the next target in one shared shuffled sequence.
-    # ``trial_offset`` is advanced by the number completed in the prior block
-    # plus one, which discards the unfinished target that was active when the
-    # block ended. Because language variants share target IDs, their rephrased
-    # instructions remain attached to the correct cards after this rotation.
-    if paired_trials:
+    # Preserve material order. Rotation only advances past items completed in
+    # the preceding block and the unfinished item discarded at its boundary.
+    if objectives:
         if trial_offset is None:
             trial_offset = block_index
-        rotation = int(trial_offset) % len(paired_trials)
-        paired_trials = paired_trials[rotation:] + paired_trials[:rotation]
-    if paired_trials:
-        shuffled_objectives, shuffled_targets = zip(*paired_trials)
-        scenario["objectives"] = list(shuffled_objectives)
-        scenario["target_card_ids"] = list(shuffled_targets)
+        rotation = int(trial_offset) % len(objectives)
+        scenario["objectives"] = objectives[rotation:] + objectives[:rotation]
+        scenario["target_card_ids"] = (
+            target_groups[rotation:] + target_groups[:rotation]
+        )
     scenario["kvals"]["fmri_instruction_order"] = [
         list(group) for group in scenario.get("target_card_ids", [])
     ]
     logger.info(
-        "Shuffled instruction order for %s with seed %s: %s",
-        Path(path).name, shuffle_seed,
+        "Material instruction order for %s: %s", Path(path).name,
         scenario["kvals"]["fmri_instruction_order"],
     )
 
     for index, objective in enumerate(scenario.get("objectives", [])):
-        # The supplied materials use empty objective UUIDs. Unique UUIDs are
-        # required for reliable completion and activation of the next item.
         if not objective.get("uuid"):
             objective["uuid"] = str(uuid.uuid5(
                 uuid.NAMESPACE_URL,
@@ -539,8 +573,6 @@ def _show_fixation(display, game, fallback_state=None, scenario_data=None,
     if scenario_data is not None:
         _send_scenario_load(game, scenario_data)
         logger.info("Queued next condition while fixation remains visible")
-        # Loading a new Unity scenario can cause the browser to repaint or
-        # reclaim focus on macOS. Raise and redraw the fixation immediately.
         _draw_fixation(display, instruction_lines)
         grab_pygame_focus()
     latest_state = _wait_until(
@@ -551,13 +583,12 @@ def _show_fixation(display, game, fallback_state=None, scenario_data=None,
     return latest_state
 
 
-def run_scanner_task(subject_id, session_id, run_set, hard_environment,
-                     hard_language, materials_dir=MATERIALS_DIR,
-                     output_dir="data/events", template_number=None,
-                     scenario_id=None, host=HOST, lobby=LOBBY,
+def run_scanner_task(subject_id, session_id, set_number, run_number,
+                     materials_dir=MATERIALS_DIR,
+                     output_dir="data/events", host=HOST, lobby=LOBBY,
                      browser_name="firefox", not_in_scanner=False,
-                     timing_mode="fmri",
-                     pilot_wasd=False, display_number=1, window_layout=1):
+                     timing_mode="fmri", pilot_wasd=False,
+                     display_number=1, window_layout=1):
     if not str(session_id).strip():
         raise ValueError("sessionID cannot be blank")
     if timing_mode not in TIMING_PROFILES:
@@ -573,11 +604,14 @@ def run_scanner_task(subject_id, session_id, run_set, hard_environment,
     practice_mode = timing_mode == "practice"
     logger.info("Using %s timing profile: %s", timing_mode, timing)
 
-    run_set = run_set if str(run_set).startswith("runset_") else f"runset_{run_set}"
-    schedule = _condition_paths(
-        materials_dir, run_set, int(hard_environment), int(bool(hard_language)),
-        template_number, scenario_id,
-    )
+    if timing_mode in ("practice", "dry-run"):
+        set_number = "prac"
+        run_number = "prac"
+        pilot_wasd = True
+    else:
+        set_number = _numbered_value(set_number, "set", 1, N_MATERIAL_SETS)
+        run_number = _numbered_value(run_number, "run", 1, N_RUNS_PER_SET)
+    schedule = _condition_paths(materials_dir, set_number, run_number)
 
     pygame.init()
     displays = display_layout()
@@ -617,32 +651,27 @@ def run_scanner_task(subject_id, session_id, run_set, hard_environment,
 
         trial_offset = 0
         first_label, _, first_path = schedule[0]
-        game_state = game.step(
-            Action.LoadScenario(
-                _load_scenario(
-                    first_path, subject_id, session_id, block_index=0,
-                    trial_offset=trial_offset,
-                )
-            )
-        )
+        game_state = game.step(Action.LoadScenario(_load_scenario(
+            first_path, subject_id, session_id, block_index=0,
+            trial_offset=trial_offset,
+        )))
         logger.info("Preloaded first condition %s behind scanner screen", first_label)
 
-        # Chrome necessarily comes to the front while Unity loads. Recreate the
-        # pygame fullscreen window afterwards so the waiting screen, rather
-        # than the game, remains visible until the scanner trigger.
         display.hide()
         display.show()
         display.clear()
         display.draw_text("Waiting for scanner — trigger: 5")
         grab_pygame_focus()
 
-        # perf_counter_ns is captured immediately after the trigger event and is
-        # the sole run timebase used for event onsets.
         display.await_trigger(in_scanner=not not_in_scanner)
         run_zero_ns = time.perf_counter_ns()
         trigger_utc = datetime.now(timezone.utc).isoformat()
-        events = EventFile(output_dir, subject_id, session_id, run_set)
-        logger.info("Scanner trigger received at %s; events=%s", trigger_utc, events.path)
+        events = EventFile(
+            output_dir, subject_id, session_id, set_number, run_number
+        )
+        logger.info(
+            "Scanner trigger received at %s; events=%s", trigger_utc, events.path
+        )
 
         scheduled_seconds = onset_fixation_seconds
         game_state = _show_fixation(
@@ -653,8 +682,7 @@ def run_scanner_task(subject_id, session_id, run_set, hard_environment,
                 if practice_mode else None
             ),
             deadline_ns=(
-                run_zero_ns
-                + int(onset_fixation_seconds * 1_000_000_000)
+                run_zero_ns + int(onset_fixation_seconds * 1_000_000_000)
             ),
         )
 
@@ -674,10 +702,6 @@ def run_scanner_task(subject_id, session_id, run_set, hard_environment,
             block_score = _completed_instruction_count(game_state)
             block_scores.append(block_score)
             total_cards_found += block_score
-            # The completed instructions have already advanced past their
-            # targets. Advance once more to discard the unfinished card that
-            # was active at the exact block boundary. If every available item
-            # was completed, there is no active card to discard.
             discarded_card = int(_has_unfinished_instruction(game_state))
             trial_offset += block_score + discarded_card
             logger.info(
@@ -744,24 +768,20 @@ def run_scanner_task(subject_id, session_id, run_set, hard_environment,
 
 def main():
     parser = argparse.ArgumentParser(description="Run the local CerealBar fMRI task")
-    parser.add_argument("subject_id")
+    parser.add_argument("subject_id", nargs="?")
     parser.add_argument(
-        "--session-id", required=True,
+        "--session-id",
         help="Naming/metadata identifier; does not affect run settings",
     )
-    parser.add_argument("run_set")
-    parser.add_argument("hard_environment", type=int, help="Hard fog value (normally 3)")
-    parser.add_argument("hard_language", type=int, help="1 for hard language")
+    parser.add_argument("set_number", nargs="?", help="Material set, 1-10")
+    parser.add_argument("run_number", nargs="?", help="Landscape run, 1-8")
     parser.add_argument("--materials-dir", default=MATERIALS_DIR)
     parser.add_argument("--output-dir", default="data/events")
-    parser.add_argument(
-        "--condition-template", type=int, choices=range(1, 5),
-        help="Deprecated and ignored; condition order is fixed by run set",
-    )
-    parser.add_argument("--scenario-id", type=int)
     parser.add_argument("--host", default=HOST)
     parser.add_argument("--lobby", default=LOBBY)
-    parser.add_argument("--browser", choices=("firefox", "chrome"), default="firefox")
+    parser.add_argument(
+        "--browser", choices=("firefox", "chrome"), default="firefox"
+    )
     parser.add_argument(
         "--mode", choices=("fmri", "practice", "dry-run"), default="fmri",
         help="Timing and fixation-presentation mode (default: fmri)",
@@ -780,11 +800,26 @@ def main():
         help="1=max non-fullscreen, 2=upper two-thirds, 3=centered half-size",
     )
     args = parser.parse_args()
+    if args.mode == "fmri":
+        missing = [
+            name for name, value in (
+                ("subject_id", args.subject_id),
+                ("--session-id", args.session_id),
+                ("set_number", args.set_number),
+                ("run_number", args.run_number),
+            ) if value is None
+        ]
+        if missing:
+            parser.error("fMRI mode requires: " + ", ".join(missing))
+    else:
+        args.subject_id = args.subject_id or args.mode
+        args.session_id = args.session_id or args.mode
+        args.set_number = "prac"
+        args.run_number = "prac"
+        args.pilot_wasd = True
     run_scanner_task(
-        args.subject_id, args.session_id, args.run_set,
-        args.hard_environment, args.hard_language,
+        args.subject_id, args.session_id, args.set_number, args.run_number,
         materials_dir=args.materials_dir, output_dir=args.output_dir,
-        template_number=args.condition_template, scenario_id=args.scenario_id,
         host=args.host, lobby=args.lobby, browser_name=args.browser,
         not_in_scanner=args.not_in_scanner, timing_mode=args.mode,
         pilot_wasd=args.pilot_wasd,

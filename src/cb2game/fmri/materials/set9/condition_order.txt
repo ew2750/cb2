@@ -1,0 +1,14 @@
+# A=env_hard_lang_hard
+# B=env_easy_lang_hard
+# C=env_hard_lang_easy
+# D=env_easy_lang_easy
+# Each set uses all six unique D-first palindromes plus two repeats.
+# Run assignments were randomized once and are now fixed in this file.
+run1: D A C B B C A D
+run2: D B C A A C B D
+run3: D C B A A B C D
+run4: D B A C C A B D
+run5: D C B A A B C D
+run6: D A B C C B A D
+run7: D C A B B A C D
+run8: D B C A A C B D

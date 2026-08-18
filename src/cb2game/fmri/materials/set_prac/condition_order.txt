@@ -1,0 +1,5 @@
+# A=env_hard_lang_hard
+# B=env_easy_lang_hard
+# C=env_hard_lang_easy
+# D=env_easy_lang_easy
+run_prac: D B C A A C B D

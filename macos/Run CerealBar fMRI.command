@@ -30,23 +30,46 @@ case "${MODE_CHOICE:-1}" in
     ;;
 esac
 
-read "SUBJECT_ID?Participant ID: "
-read "SESSION_ID?sessionID: "
-if [[ -z "${SESSION_ID//[[:space:]]/}" ]]; then
-  echo "Session ID cannot be blank."
-  read "?Press Return to close."
-  exit 1
+if [[ "$TASK_MODE" == "fmri" ]]; then
+  read "SUBJECT_ID?Participant ID: "
+  read "SESSION_ID?Session ID: "
+  if [[ -z "${SUBJECT_ID//[[:space:]]/}" || -z "${SESSION_ID//[[:space:]]/}" ]]; then
+    echo "Participant ID and Session ID cannot be blank."
+    read "?Press Return to close."
+    exit 1
+  fi
+
+  read "SET_NUMBER?Material set (1-10): "
+  if [[ ! "$SET_NUMBER" =~ '^(10|[1-9])$' ]]; then
+    echo "Invalid material set. Choose a number from 1 to 10."
+    read "?Press Return to close."
+    exit 1
+  fi
+
+  read "RUN_NUMBER?Run (1-8): "
+  if [[ ! "$RUN_NUMBER" =~ '^[1-8]$' ]]; then
+    echo "Invalid run. Choose a number from 1 to 8."
+    read "?Press Return to close."
+    exit 1
+  fi
+
+  read "DISPLAY_NUMBER?Display number (1=main, 2=extended; blank=1): "
+  DISPLAY_NUMBER=${DISPLAY_NUMBER:-1}
+  echo "Window layout:"
+  echo "  1 = maximum size without fullscreen"
+  echo "  2 = upper two-thirds of the selected screen"
+  echo "  3 = centered at 50% of the selected screen"
+  read "WINDOW_LAYOUT?Choose window layout (1-3; blank=1): "
+  WINDOW_LAYOUT=${WINDOW_LAYOUT:-1}
+else
+  SUBJECT_ID="$TASK_MODE"
+  SESSION_ID="$TASK_MODE"
+  SET_NUMBER="prac"
+  RUN_NUMBER="prac"
+  DISPLAY_NUMBER=1
+  WINDOW_LAYOUT=1
+  echo "Using practice materials, WASD controls, display 1, and layout 1."
 fi
-read "RUN_SET?Run set (A-H): "
-read "PILOT_WASD?Enable W/A/S/D pilot controls? (y/N): "
-read "DISPLAY_NUMBER?Display number (1=main, 2=extended; blank=1): "
-DISPLAY_NUMBER=${DISPLAY_NUMBER:-1}
-echo "Window layout:"
-echo "  1 = maximum size without fullscreen"
-echo "  2 = upper two-thirds of the selected screen"
-echo "  3 = centered at 50% of the selected screen"
-read "WINDOW_LAYOUT?Choose window layout (1-3; blank=1): "
-WINDOW_LAYOUT=${WINDOW_LAYOUT:-1}
 
 mkdir -p "$OUTPUT_DIR" "$SERVER_DATA_DIR"
 SERVER_LOG="$DATA_DIR/server.log"
@@ -85,7 +108,7 @@ if [[ "$SERVER_READY" -ne 1 ]]; then
 fi
 
 ARGS=(
-  "$SUBJECT_ID" "$RUN_SET" 3 1
+  "$SUBJECT_ID" "$SET_NUMBER" "$RUN_NUMBER"
   --session-id "$SESSION_ID"
   --output-dir "$OUTPUT_DIR"
   --host http://127.0.0.1:8080
@@ -94,7 +117,7 @@ ARGS=(
   --display-number "$DISPLAY_NUMBER"
   --window-layout "$WINDOW_LAYOUT"
 )
-if [[ "${PILOT_WASD:l}" == "y" || "${PILOT_WASD:l}" == "yes" ]]; then
+if [[ "$TASK_MODE" != "fmri" ]]; then
   ARGS+=(--pilot-wasd)
 fi
 

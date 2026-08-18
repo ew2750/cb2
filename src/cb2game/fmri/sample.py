@@ -1,21 +1,24 @@
-from datetime import timedelta, time
-import string
+import copy
+import hashlib
 import logging
 import json
-import sys
 import os
-import subprocess
 import argparse
-import time
-from datetime import datetime, timedelta
+import shutil
+from pathlib import Path
 
 import numpy as np
-import pandas as pd
-
 from cb2game.pyclient.remote_client import RemoteClient
-from cb2game.pyclient.game_endpoint import Action
-from cb2game.fmri.utils import N_LANDMARKS, ID_TO_ASSET, LANDMARK_NAME_TO_TEXT, N_RUNSETS, N_SCENARIOS, \
-    MAX_TRIAL_DURATION, MAX_SCENARIO_DURATION, open_browser, get_distance, set_difficulty
+from cb2game.fmri.utils import (
+    ASSET_TO_ID,
+    ID_TO_ASSET,
+    LANDMARK_NAME_TO_TEXT,
+    MAX_SCENARIO_DURATION,
+    N_LANDMARKS,
+    get_distance,
+    open_browser,
+    set_difficulty,
+)
 
 
 logging.basicConfig(level=logging.INFO)
@@ -28,8 +31,167 @@ MAX_CARDS = None
 N_TARGETS = 15
 N_DISTRACTORS = 2
 CARD_COVERS = True
-N_RUNSETS = 10
-N_SCENARIOS = 8
+N_SETS = 10
+N_RUNS_PER_SET = 8
+CONDITION_ORDER_FILENAME = "condition_order.txt"
+DEFAULT_CONDITION_ORDER_DIR = Path(__file__).resolve().parent / "materials"
+CONDITION_VARIANTS = {
+    "env_easy_lang_easy": (0, 0),
+    "env_easy_lang_hard": (0, 1),
+    "env_hard_lang_easy": (2, 0),
+    "env_hard_lang_hard": (2, 1),
+}
+EXPECTED_ENVIRONMENT_LEVELS = {0, 2}
+PINK_CARD_COLOR_ID = 5
+PINK_HOUSE_ASSET_ID = ASSET_TO_ID["GROUND_TILE_HOUSE_PINK"]
+PATH_TILE_ASSET_ID = ASSET_TO_ID["GROUND_TILE_PATH"]
+MAX_UNIQUE_LANDSCAPE_ATTEMPTS = 50
+
+
+def validate_condition_variants():
+    """Keep output restricted to clear t0 and hard-fog t2 variants."""
+    environment_levels = {
+        environment for environment, _ in CONDITION_VARIANTS.values()
+    }
+    if environment_levels != EXPECTED_ENVIRONMENT_LEVELS:
+        raise ValueError(
+            "Scanner materials must use exactly environment levels t0 and t2; "
+            f"found {sorted(environment_levels)}"
+        )
+
+def validate_condition_order_file(set_path):
+    """Validate eight run-specific, material-owned counterbalance orders."""
+    path = Path(set_path) / CONDITION_ORDER_FILENAME
+    if not path.is_file():
+        raise FileNotFoundError(
+            f"Create {path} before sampling; it must contain run1 through "
+            "run8 condition orders"
+        )
+    orders = {}
+    for line in path.read_text(encoding="utf-8").splitlines():
+        content = line.split("#", 1)[0].strip()
+        if not content:
+            continue
+        label, separator, sequence = content.partition(":")
+        if not separator:
+            raise ValueError(
+                f"{path} must use lines such as "
+                "'run1: D A B C C B A D'"
+            )
+        run_label = label.strip().lower().replace("-", "_")
+        if run_label in orders:
+            raise ValueError(f"Duplicate {run_label} entry in {path}")
+        tokens = sequence.upper().replace(",", " ").split()
+        if (len(tokens) != 8 or tokens[0] != "D"
+                or any(token not in "ABCD" for token in tokens)
+                or any(tokens.count(token) != 2 for token in "ABCD")
+                or tokens != list(reversed(tokens))):
+            raise ValueError(
+                f"Invalid order for {run_label} in {path}: {tokens}; expected "
+                "a D-first palindrome containing each A/B/C/D twice"
+            )
+        orders[run_label] = tuple(tokens)
+    expected_runs = {f"run{run_number}" for run_number in range(1, 9)}
+    if set(orders) != expected_runs:
+        raise ValueError(
+            f"{path} must define exactly run1 through run8; found "
+            f"{sorted(orders)}"
+        )
+    order_values = list(orders.values())
+    counts = sorted(order_values.count(order) for order in set(order_values))
+    if len(set(order_values)) != 6 or counts != [1, 1, 1, 1, 2, 2]:
+        raise ValueError(
+            f"{path} must use all six unique D-first palindromes plus two "
+            "single repeats"
+        )
+
+
+def ensure_condition_order_file(
+        set_path, set_number,
+        condition_order_dir=DEFAULT_CONDITION_ORDER_DIR):
+    """Seed a new output set from the material-owned order templates."""
+    destination = Path(set_path) / CONDITION_ORDER_FILENAME
+    requested_source = (
+        Path(condition_order_dir)
+        / f"set{set_number}"
+        / CONDITION_ORDER_FILENAME
+    )
+    bundled_source = (
+        DEFAULT_CONDITION_ORDER_DIR
+        / f"set{set_number}"
+        / CONDITION_ORDER_FILENAME
+    )
+    destination_is_legacy = destination.is_file() and not any(
+        line.split("#", 1)[0].strip().lower().startswith("run1:")
+        for line in destination.read_text(encoding="utf-8").splitlines()
+    )
+    if not destination.is_file() or destination_is_legacy:
+        source = next(
+            (
+                candidate for candidate in (requested_source, bundled_source)
+                if candidate.is_file()
+                and candidate.resolve() != destination.resolve()
+            ),
+            None,
+        )
+        if source is None:
+            raise FileNotFoundError(
+                f"Missing condition-order template for set{set_number}; "
+                f"checked {requested_source} and {bundled_source}"
+            )
+        shutil.copyfile(source, destination)
+        logger.info("Copied condition order %s -> %s", source, destination)
+    validate_condition_order_file(set_path)
+
+
+def remove_pink_components(scenario):
+    """Remove pink cards and replace pink-house tiles with ordinary paths."""
+    props = scenario.get("prop_update", {}).get("props", [])
+    scenario["prop_update"]["props"] = [
+        prop for prop in props
+        if (prop.get("card_init") or {}).get("color") != PINK_CARD_COLOR_ID
+    ]
+    for tile in scenario.get("map", {}).get("tiles", []):
+        if tile.get("asset_id") == PINK_HOUSE_ASSET_ID:
+            tile["asset_id"] = PATH_TILE_ASSET_ID
+    return scenario
+
+
+def validate_no_pink_components(scenario):
+    """Fail generation rather than writing a material that contains pink."""
+    pink_cards = [
+        prop.get("id")
+        for prop in scenario.get("prop_update", {}).get("props", [])
+        if (prop.get("card_init") or {}).get("color") == PINK_CARD_COLOR_ID
+    ]
+    pink_tiles = [
+        tile.get("cell", {}).get("coord")
+        for tile in scenario.get("map", {}).get("tiles", [])
+        if tile.get("asset_id") == PINK_HOUSE_ASSET_ID
+    ]
+    pink_instructions = [
+        objective.get("text", "")
+        for objective in scenario.get("objectives", [])
+        if "pink" in objective.get("text", "").lower()
+    ]
+    if pink_cards or pink_tiles or pink_instructions:
+        raise ValueError(
+            "Pink content remained after filtering: "
+            f"cards={pink_cards}, tiles={pink_tiles}, "
+            f"instructions={pink_instructions}"
+        )
+
+
+def landscape_signature(scenario):
+    """Return a stable signature for enforcing one unique map per run."""
+    map_data = scenario.get("map", {})
+    payload = {
+        "rows": map_data.get("rows"),
+        "cols": map_data.get("cols"),
+        "tiles": map_data.get("tiles", []),
+    }
+    serialized = json.dumps(payload, sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(serialized.encode("utf-8")).hexdigest()
 
 
 def clean_scenario(scenario, card_covers=CARD_COVERS):
@@ -92,13 +254,22 @@ def sample_scenario(
     browser.get(url + suffix)
     logger.info(f"Trying to connect to {host} and lobby {lobby}")
     client = RemoteClient(url=host, render=False, lobby_name=lobby)
-    connected, reason = client.Connect()
-    logger.info(f"Client connected: {connected}")
+    game = None
+    try:
+        connected, reason = client.Connect()
+        if not connected:
+            raise ConnectionError(f"Could not connect to sampler lobby: {reason}")
+        logger.info("Client connected")
 
-    game, _ = client.JoinGame()
-    logger.info(f"Attached scenario.")
-    scenario = game._state().to_dict()
-    game.close()
+        game, reason = client.JoinGame()
+        if game is None:
+            raise ConnectionError(f"Could not join sampler game: {reason}")
+        logger.info("Attached scenario")
+        scenario = game._state().to_dict()
+    finally:
+        if game is not None:
+            game.close()
+        client.Reset()
 
     scenario = clean_scenario(scenario)
     scenario = resample_scenario(scenario)
@@ -173,6 +344,7 @@ def resample_scenario(
         n_landmarks=N_LANDMARKS,
         max_cards=MAX_CARDS
 ):
+    remove_pink_components(scenario)
     cards = scenario['prop_update']['props']
     assets = []
     for asset in scenario['map']['tiles']:
@@ -188,6 +360,11 @@ def resample_scenario(
     scenario['prop_update']['props'] = list(cards)
 
     _cards = cards[1:]  # For some reason selection borders are buggy when card 0 is a target, so exclude
+    if len(_cards) < n_targets:
+        raise ValueError(
+            f"Not enough non-pink cards for {n_targets} targets: "
+            f"only {len(_cards)} eligible cards"
+        )
     target_set = np.random.choice(_cards, size=n_targets, replace=False)
     targets = {card['id']: card for card in target_set}
     target_ids = [int(x) for x in np.random.permutation(list(targets.keys()))]
@@ -219,6 +396,11 @@ def resample_scenario(
     for target_id in target_ids:
         _target_properties = target_properties[target_id]
         _available_ids = list(set(list(available_cards.keys())) - excluded_distractor_card_ids[target_id])
+        if len(_available_ids) < n_distractors:
+            raise ValueError(
+                f"Not enough eligible distractors for target {target_id}: "
+                f"needed {n_distractors}, found {len(_available_ids)}"
+            )
         distractor_ids = np.random.choice(_available_ids, size=n_distractors, replace=False)
         distractor_ids = list(distractor_ids)
         for distractor_id in distractor_ids:
@@ -231,63 +413,108 @@ def resample_scenario(
     return scenario
 
 
-def sample_runset(
-        name,
+def sample_set(
+        set_number,
         browser,
-        n_scenarios=N_SCENARIOS,
+        n_runs=N_RUNS_PER_SET,
         host=HOST,
         lobby=LOBBY,
         outdir='scenarios_sampled',
-        overwrite=False
+        condition_order_dir=DEFAULT_CONDITION_ORDER_DIR,
+        overwrite=False,
+        seen_landscapes=None,
 ):
-    for i in range(n_scenarios):
-        logger.info(f"Sampling {name}, trial {i + 1}")
-        runset_path = os.path.join(outdir, name)
-        if not os.path.exists(runset_path):
-            os.makedirs(runset_path)
-        execute = True
-        if not overwrite and (
-                    os.path.exists(os.path.join(runset_path, 'scenario_%04d_t0_l0.json' % (i + 1))) and
-                    os.path.exists(os.path.join(runset_path, 'scenario_%04d_t0_l1.json' % (i + 1))) and
-                    os.path.exists(os.path.join(runset_path, 'scenario_%04d_t1_l0.json' % (i + 1))) and
-                    os.path.exists(os.path.join(runset_path, 'scenario_%04d_t1_l1.json' % (i + 1)))
-               ):  # Skip execution only if not overwrite and all expected output files are present
-            execute = False
-        if execute:
-            scenario = sample_scenario(browser, host=host, lobby=lobby)
-            for task_difficulty in range(4):
-                for linguistic_complexity in range(2):
-                    scenario_id = 'scenario_%04d_t%d_l%d' % (i + 1, task_difficulty, linguistic_complexity)
-                    scenario['scenario_id'] = 'trial_id'
-                    scenario = set_difficulty(
-                        scenario,
-                        task_difficulty=task_difficulty,
-                        linguistic_complexity=linguistic_complexity
-                    )
-                    path = os.path.join(runset_path, '%s.json' % scenario_id)
-                    with open(path, 'w') as f:
-                        json.dump(scenario, f, indent=2)
+    validate_condition_variants()
+    if int(set_number) < 1 or int(set_number) > N_SETS:
+        raise ValueError(f"Set number must be 1-{N_SETS}: {set_number}")
+    if seen_landscapes is None:
+        seen_landscapes = set()
+
+    set_path = Path(outdir) / f"set{set_number}"
+    set_path.mkdir(parents=True, exist_ok=True)
+    ensure_condition_order_file(
+        set_path, set_number, condition_order_dir=condition_order_dir
+    )
+
+    for run_number in range(1, n_runs + 1):
+        logger.info("Sampling set%s, run%s", set_number, run_number)
+        expected_paths = [
+            set_path / f"run{run_number}_{variant_name}.json"
+            for variant_name in CONDITION_VARIANTS
+        ]
+        if not overwrite and all(path.exists() for path in expected_paths):
+            with expected_paths[0].open(encoding="utf-8") as handle:
+                seen_landscapes.add(landscape_signature(json.load(handle)))
+            logger.info("All four files exist; skipping set%s/run%s", set_number, run_number)
+            continue
+
+        scenario = None
+        for attempt in range(1, MAX_UNIQUE_LANDSCAPE_ATTEMPTS + 1):
+            try:
+                candidate = sample_scenario(browser, host=host, lobby=lobby)
+            except ValueError as error:
+                logger.warning(
+                    "Rejected set%s/run%s attempt %s: %s",
+                    set_number, run_number, attempt, error,
+                )
+                continue
+            signature = landscape_signature(candidate)
+            if signature in seen_landscapes:
+                logger.warning(
+                    "Rejected duplicate landscape for set%s/run%s attempt %s",
+                    set_number, run_number, attempt,
+                )
+                continue
+            seen_landscapes.add(signature)
+            scenario = candidate
+            break
+        if scenario is None:
+            raise RuntimeError(
+                f"Could not sample a valid unique landscape for "
+                f"set{set_number}/run{run_number} after "
+                f"{MAX_UNIQUE_LANDSCAPE_ATTEMPTS} attempts"
+            )
+
+        for variant_name, (environment, language) in CONDITION_VARIANTS.items():
+            variant = set_difficulty(
+                copy.deepcopy(scenario),
+                task_difficulty=environment,
+                linguistic_complexity=language,
+            )
+            variant["scenario_id"] = f"run{run_number}"
+            validate_no_pink_components(variant)
+            path = set_path / f"run{run_number}_{variant_name}.json"
+            with path.open("w", encoding="utf-8") as handle:
+                json.dump(variant, handle, indent=2)
 
 
 def main(
         browser,
-        n_runsets=N_RUNSETS,
-        n_scenarios=N_SCENARIOS,
+        n_sets=N_SETS,
+        n_runs=N_RUNS_PER_SET,
         host=HOST,
         lobby=LOBBY,
-        outdir='materials',
+        outdir=Path(__file__).resolve().parent / "materials",
+        condition_order_dir=DEFAULT_CONDITION_ORDER_DIR,
         overwrite=False
 ):
-    for code in list(string.ascii_uppercase)[:n_runsets]:
-        name = 'runset_%s' % code
-        sample_runset(
-            name,
+    if n_sets != N_SETS or n_runs != N_RUNS_PER_SET:
+        logger.warning(
+            "Requested %s sets x %s runs; the scanner design expects %s x %s",
+            n_sets, n_runs, N_SETS, N_RUNS_PER_SET,
+        )
+    seen_landscapes = set()
+    for set_number in range(1, n_sets + 1):
+        sample_set(
+            set_number,
             browser,
-            n_scenarios=N_SCENARIOS,
+            n_runs=n_runs,
             host=host,
             lobby=lobby,
             outdir=outdir,
-            overwrite=overwrite
+            condition_order_dir=condition_order_dir,
+            overwrite=overwrite,
+            seen_landscapes=seen_landscapes,
         )
 
 
@@ -295,7 +522,17 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser("fmri")
     parser.add_argument("--host", type=str, default=HOST)
     parser.add_argument("--lobby", type=str, default=LOBBY)
-    parser.add_argument("--outdir", type=str, default='materials_12x12')
+    parser.add_argument(
+        "--outdir", type=str,
+        default=str(Path(__file__).resolve().parent / "materials"),
+    )
+    parser.add_argument(
+        "--condition-orders-dir", type=str,
+        default=str(DEFAULT_CONDITION_ORDER_DIR),
+        help="Directory containing setN/condition_order.txt templates",
+    )
+    parser.add_argument("--sets", type=int, default=N_SETS)
+    parser.add_argument("--runs", type=int, default=N_RUNS_PER_SET)
     parser.add_argument("--overwrite", action='store_true')
     args = parser.parse_args()
 
@@ -306,7 +543,12 @@ if __name__ == '__main__':
 
     excp = None
     try:
-        main(browser, host=host, lobby=lobby, outdir=args.outdir, overwrite=args.overwrite)
+        main(
+            browser, n_sets=args.sets, n_runs=args.runs,
+            host=host, lobby=lobby, outdir=args.outdir,
+            condition_order_dir=args.condition_orders_dir,
+            overwrite=args.overwrite,
+        )
     except Exception as e:
         excp = e
 

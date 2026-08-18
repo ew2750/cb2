@@ -52,7 +52,11 @@ For counterbalancing, these are labeled `A`, `B`, `C`, and `D` in this order:
 | `C`   | Easy language + fog               |
 | `D`   | Easy language + clear environment |
 
-Each run contains eight 30-second blocks. Every material-set-run condition order is set by `condition_order.txt` file that is in the directory. The scanner reads that file at runtime.
+Each run contains eight 30-second blocks. Each set's `condition_order.txt`
+contains a separate order for `run1` through `run8`; the scanner reads the
+selected run's order at runtime. Every set uses all six possible D-first
+palindromic orders, plus two counterbalanced repeats. Their run assignments are
+varied between sets.
 
 Every order begins with `D`, the easy-environment/easy-language condition.
 
@@ -208,6 +212,8 @@ Each `.tsv` file contains:
 
 A completed run should contain 8 event rows. The 20-second onset/offset
 fixations and seven inter-block fixations are not written as task events.
+If the same identifiers are used again, the existing file is preserved and a
+new `_repeat-02`, `_repeat-03`, and so on file is created.
 
 Other local game data is stored in `/Users/exw/projects/cb2/data/server`, and
 the latest server log is stored in `/Users/exw/projects/cb2/data/server.log`.
@@ -219,9 +225,9 @@ the latest server log is stored in `/Users/exw/projects/cb2/data/server.log`.
 - Covered Unity startup with a scanner-wait screen, added trigger key `5`, kept one Unity session/map for the whole run, and logged monotonic trigger-relative event timing.
 - Added fMRI, practice, and dry-run timing modes. An fMRI run is eight task blocks with 20-second onset/offset and 10-second inter-block fixations (350 seconds total).
 - Added automatic window focus, monitor/layout selection, scanner controls `2/3/4/5/6`, and automatic WASD controls for practice/dry runs.
-- Preserved player position and heading between blocks, discarded the active target at each boundary, shuffled paired instructions/targets, and displayed the final correct-card score.
+- Preserved player position and heading between blocks, discarded the active target at each boundary, retained the instruction/target order supplied by the materials, and displayed the final correct-card score.
 - Added non-overwriting session-labelled event files and runtime metadata.
-- Reorganized materials as `set1`–`set10`, `run1`–`run8`, plus `set_prac/run_prac`; retained only the four named 2×2 condition files. Kept `fog=3` for approiate hard fog level.can potentially change in all the .json
-- Downsize the map to 12x12, accordingly the number of target card is 15 and distractor is 2.
+- Reorganized materials as `set1`–`set10`, `run1`–`run8`, plus `set_prac/run_prac`; retained only the four named 2×2 condition files. The material JSON files define the clear and hard-fog distances.
+- Reduced generated maps to 12 × 12, with 15 target cards and 2 distractors per target instruction.
 - Moved each set's eight-block order to `condition_order.txt` that is within each set materials; Python reads and validates it.
 - Removed pink cards and pink-house tiles from scanner materials. The generator excludes pink content and preserves the local material map size/layout.

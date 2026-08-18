@@ -7,10 +7,10 @@ running in Chrome.
 
 The launcher asks for:
 
+- Task mode
 - Participant ID
-- Run number
+- Session ID (used only for output naming and metadata)
 - Run set
-- Condition-order template
 - Optional WASD controls
 - Monitor
 - Window layout
@@ -23,6 +23,19 @@ The screen displays:
 > Waiting for scanner — trigger: 5
 
 Scanner key `5` starts the timing clock.
+
+Three timing modes are available:
+
+| Launcher choice | Mode | Task block | Between blocks | Onset/offset |
+|---|---|---:|---:|---:|
+| `1` | fMRI task | 30 s | 10 s | 20 s |
+| `2` | practice | 30 s | 3 s | 3 s |
+| `3` | test dry run | 3 s | 1 s | 2 s |
+
+The fMRI task and test dry run display a centered `+` during fixation. Practice
+mode instead displays a short explanation that the actual task will show a `+`
+for 10 seconds between blocks or 20 seconds at run onset/offset, and asks the
+participant to rest and keep still.
 
 The four experimental conditions are:
 
@@ -40,15 +53,15 @@ For counterbalancing, these are labeled `A`, `B`, `C`, and `D` in this order:
 | `C` | Easy language + fog |
 | `D` | Easy language + clear environment |
 
-Each run contains eight 30-second blocks in a palindrome. The four templates
-are:
+Each run contains eight 30-second blocks. The condition order is hard-coded by
+run set:
 
-| Template | Block order |
+| Run sets | Block order |
 |---|---|
-| `1` | `A B C D D C B A` |
-| `2` | `B C D A A D C B` |
-| `3` | `C D A B B A D C` |
-| `4` | `D A B C C B A D` |
+| `A`, `E` | `D B C A A C B D` |
+| `B`, `F` | `D C B A A B C D` |
+| `C`, `G` | `D C A B B A C D` |
+| `D`, `H` | `D A B C C B A D` |
 
 The complete timeline is:
 
@@ -72,34 +85,23 @@ Therefore, a complete run contains:
 - 20-second onset fixation + 20-second offset fixation = 40 seconds
 - 350 seconds total = 5 minutes 50 seconds
 
-All eight blocks use the same 12 × 12 map, landmark layout, and non-pink card
-set. At every block boundary, the player is placed at a new randomized safe
-position and heading on the same map, the cards reset, the unfinished target
-from the preceding block is discarded, the next target is initialized, and fog
-changes when required. Spawn positions exclude cards, landmarks, blocked cells,
-and isolated parts of the map. Cards completed within the preceding block are
-also skipped, so a new block never resumes or repeats the card that the
-participant had reached at its boundary.
+All eight blocks use the same scenario ID and its material-supplied map,
+landmark layout, cards, and instructions. At every block boundary, the player's
+position and facing direction carry
+over continuously from the end of the preceding block. The cards reset, the
+unfinished target from the preceding block is discarded, the next target is
+initialized, and fog changes when required. Cards completed within the
+preceding block are also skipped, so a new block never resumes or repeats the
+card that the participant had reached at its boundary.
 The common instruction–target order is shuffled reproducibly using participant
-ID, run number, and map. Hard and easy wording always remains paired with the
-correct card. Spawn randomization is likewise reproducible from participant ID,
-run number, map, and block number, allowing a run to be audited or repeated.
+ID and map. Hard and easy wording always remains paired with the correct card.
 
-Pink cards and the pink-house landmark are excluded because they are visually
-confusing. A removed pink house is replaced by `GROUND_TILE_PATH` (asset ID 28).
-All light landmarks are called “lamppost” in task instructions.
-
-Only scenario 001 is retained in run sets A–H, with eight condition files per
-run set. For E and F, the better filtered scenario 003 layouts were promoted
-and renamed to scenario 001; their previous scenario 001/002 layouts were
-removed. Every run set now has 18 target–instruction pairs; retained ground-card
-counts are A 59, B 60, C 56, D 52, E 59, F 59, G 57, and H 53.
-Material-audit history is recorded in
-`SCENARIO_0001_12X12_AUDIT.md` and
-`SCENARIO_EF_003_PROMOTED_TO_001_AUDIT.md`.
-The complete current target IDs, unique card attributes, landmark chains, and
-paired easy/hard instructions for A–H are recorded in
-`ALL_RUNSETS_TARGET_AUGMENTATION_AUDIT.md`.
+Material files are authoritative. The scanner does not crop or resize their
+maps, remove or replace cards/landmarks, rewrite landmark wording, filter
+targets, or generate additional instructions. The bundled local folder
+currently contains scenario IDs 001–003 for every run set A–H, with eight
+condition files per scenario. Unless `--scenario-id` is supplied, the scanner
+uses the lowest scenario ID shared by all four conditions.
 
 ## Python software
 
@@ -183,6 +185,16 @@ Event files are saved in:
 ```text
 /Users/exw/projects/cb2/data/events
 ```
+
+Their names include both identifiers, for example:
+
+```text
+sub-001_ses-02_task-cerealbar_runset-A_events.tsv
+```
+
+Session ID is also stored in the runtime scenario metadata. It does not affect
+the map, instructions, shuffle order, condition order, timing, or other run
+settings.
 
 Each `.tsv` file contains:
 

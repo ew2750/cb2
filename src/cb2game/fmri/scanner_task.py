@@ -15,7 +15,6 @@ import random
 import re
 import time
 import uuid
-from collections import deque
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -26,7 +25,6 @@ from cb2game.fmri.main import (
     HOST,
     LOBBY,
     MATERIALS_DIR,
-    PREDEFINED_FORWARD_CONDITION_LABELS,
     grab_pygame_focus,
     restore_unity_focus_after_rating,
     validate_scenario_files,
@@ -38,7 +36,6 @@ from cb2game.fmri.utils import (
 )
 from cb2game.pyclient.game_endpoint import Action
 from cb2game.pyclient.remote_client import RemoteClient
-from cb2game.server.hex import HecsCoord, HexBoundary
 
 
 logger = logging.getLogger(__name__)
@@ -46,13 +43,38 @@ TASK_SECONDS = 30.0
 FIXATION_SECONDS = 10.0
 RUN_ONSET_FIXATION_SECONDS = 20.0
 RUN_OFFSET_FIXATION_SECONDS = 20.0
-MAP_SIZE = 12
-PINK_CARD_COLOR = 5
-PINK_HOUSE_ASSET_ID = 22
-PATH_TILE_ASSET_ID = 28
+TIMING_PROFILES = {
+    "fmri": {
+        "task": 30.0,
+        "fixation": 10.0,
+        "onset_fixation": 20.0,
+        "offset_fixation": 20.0,
+    },
+    "practice": {
+        "task": 30.0,
+        "fixation": 3.0,
+        "onset_fixation": 10.0,
+        "offset_fixation": 5.0,
+    },
+    "dry-run": {
+        "task": 30000.0,
+        "fixation": 1.0,
+        "onset_fixation": 2.0,
+        "offset_fixation": 2.0,
+    },
+}
 GAME_POLL_INTERVAL_NS = 50_000_000
 EVENT_COLUMNS = ("onset", "duration", "trial_type")
-SPAWNABLE_TILE_ASSET_IDS = {0, 3, PATH_TILE_ASSET_ID}
+RUNSET_CONDITION_ORDERS = {
+    "A": ("D", "B", "C", "A", "A", "C", "B", "D"),
+    "E": ("D", "B", "C", "A", "A", "C", "B", "D"),
+    "B": ("D", "C", "B", "A", "A", "B", "C", "D"),
+    "F": ("D", "C", "B", "A", "A", "B", "C", "D"),
+    "C": ("D", "C", "A", "B", "B", "A", "C", "D"),
+    "G": ("D", "C", "A", "B", "B", "A", "C", "D"),
+    "D": ("D", "A", "B", "C", "C", "B", "A", "D"),
+    "H": ("D", "A", "B", "C", "C", "B", "A", "D"),
+}
 
 
 def _safe_label(value):
@@ -62,12 +84,13 @@ def _safe_label(value):
 class EventFile:
     """Incremental BIDS-compatible event writer using scanner-trigger time zero."""
 
-    def __init__(self, output_dir, subject_id, run_number):
+    def __init__(self, output_dir, subject_id, session_id, run_set):
         output_dir = Path(output_dir).expanduser().resolve()
         output_dir.mkdir(parents=True, exist_ok=True)
         filename = (
-            f"sub-{_safe_label(subject_id)}_task-cerealbar_"
-            f"run-{int(run_number):02d}_events.tsv"
+            f"sub-{_safe_label(subject_id)}_ses-{_safe_label(session_id)}_"
+            f"task-cerealbar_"
+            f"runset-{_safe_label(str(run_set).removeprefix('runset_'))}_events.tsv"
         )
         self.path = output_dir / filename
         repeat = 2
@@ -100,17 +123,26 @@ class EventFile:
 
 
 def _condition_paths(materials_dir, run_set, hard_environment, hard_language,
-                     template_number, scenario_id):
+                     template_number=None, scenario_id=None):
+    # A/B/C/D denote HH/EH/HE/EE. The order is fixed by run set and cannot be
+    # changed by any external template argument.
     condition_lookup = {
-        "HH": (hard_environment, hard_language),
-        "EH": (0, hard_language),
-        "HE": (hard_environment, 0),
-        "EE": (0, 0),
+        "A": (hard_environment, hard_language),
+        "B": (0, hard_language),
+        "C": (hard_environment, 0),
+        "D": (0, 0),
     }
-    template_index = (int(template_number) - 1) % len(
-        PREDEFINED_FORWARD_CONDITION_LABELS
-    )
-    labels = PREDEFINED_FORWARD_CONDITION_LABELS[template_index]
+    run_set_letter = str(run_set).removeprefix("runset_").upper()
+    if run_set_letter not in RUNSET_CONDITION_ORDERS:
+        raise ValueError(
+            f"Run set must be A-H, received {run_set!r}"
+        )
+    labels = RUNSET_CONDITION_ORDERS[run_set_letter]
+    if template_number is not None:
+        logger.warning(
+            "Ignoring condition template %s; runset_%s has fixed order %s",
+            template_number, run_set_letter, " ".join(labels),
+        )
     required = list(condition_lookup.values())
     directory_ok, errors, available = validate_scenario_files(
         str(materials_dir), run_set, required
@@ -136,7 +168,7 @@ def _condition_paths(materials_dir, run_set, hard_environment, hard_language,
             f"Scenario {selected_id} is not available in all four conditions"
         )
 
-    forward = []
+    schedule = []
     for label in labels:
         condition = condition_lookup[label]
         entry = next(
@@ -144,241 +176,107 @@ def _condition_paths(materials_dir, run_set, hard_environment, hard_language,
             for item in available[condition]
             if item["scenario_id"] == selected_id
         )
-        forward.append((label, condition, Path(entry["full_path"])))
-    # A/B/C/D denote HH/EH/HE/EE. Each run uses one cyclic forward order and
-    # then its mirror: run 1 = A B C D D C B A, run 2 = B C D A A D C B, etc.
-    return forward + list(reversed(forward))
+        schedule.append((label, condition, Path(entry["full_path"])))
+    return schedule
 
 
-def _inside_runtime_map(location):
-    """Return whether a serialized HECS coordinate fits the runtime map.
+def _serialized_location(location):
+    """Return a normalized HECS location without assuming any map size."""
+    if not isinstance(location, dict):
+        return None
+    try:
+        return {key: int(location[key]) for key in ("a", "r", "c")}
+    except (KeyError, TypeError, ValueError):
+        return None
 
-    Scenario coordinates use HECS ``(a, r, c)`` coordinates, whereas Unity's
-    map dimensions are offset-grid rows and columns.  A HECS coordinate's
-    offset row is ``2 * r + a``; comparing ``r`` directly with ``rows`` leaves
-    out-of-range cells in a cropped map and crashes the WebGL client while it
-    populates its tile array.
-    """
-    if location is None:
-        return False
-    offset_row = 2 * int(location.get("r", -1)) + int(location.get("a", -1))
-    offset_col = int(location.get("c", -1))
-    return (
-        0 <= offset_row < MAP_SIZE
-        and 0 <= offset_col < MAP_SIZE
+
+def _player_pose_from_state(game_state):
+    """Extract the playable actor's pose at a task-block boundary."""
+    if game_state is None:
+        return None
+    state = game_state.to_dict()
+    actors = state.get("actors", [])
+    actor = next(
+        (item for item in actors if int(item.get("actor_role", -1)) == 1),
+        None,
     )
-
-
-def _prepare_runtime_materials(scenario, path):
-    """Apply scanner presentation constraints to one static scenario."""
-    map_data = scenario.get("map", {})
-    map_data["rows"] = MAP_SIZE
-    map_data["cols"] = MAP_SIZE
-    cropped_tiles = []
-    for tile in map_data.get("tiles", []):
-        location = tile.get("cell", {}).get("coord")
-        if not _inside_runtime_map(location):
-            continue
-        if tile.get("asset_id") == PINK_HOUSE_ASSET_ID:
-            tile["asset_id"] = PATH_TILE_ASSET_ID
-        cropped_tiles.append(tile)
-    map_data["tiles"] = cropped_tiles
-
-    props = []
-    for prop in scenario.get("prop_update", {}).get("props", []):
-        card = prop.get("card_init")
-        location = prop.get("prop_info", {}).get("location")
-        if not _inside_runtime_map(location):
-            continue
-        if card is not None and card.get("color") == PINK_CARD_COLOR:
-            continue
-        if card is not None:
-            card["selected"] = 0
-        props.append(prop)
-    scenario.setdefault("prop_update", {})["props"] = props
-    valid_prop_ids = {prop.get("id") for prop in props}
-
-    landmarks = scenario.get("landmarks", {})
-    retained_trials = []
-    for objective, target_group in zip(
-        scenario.get("objectives", []), scenario.get("target_card_ids", [])
-    ):
-        text = objective.get("text", "")
-        text = re.sub(r"\bstreetlights\b", "lampposts", text, flags=re.IGNORECASE)
-        text = re.sub(r"\bstreetlight\b", "lamppost", text, flags=re.IGNORECASE)
-        objective["text"] = text
-        target_ids = [int(target_id) for target_id in target_group]
-        target_landmarks = []
-        for target_id in target_ids:
-            target_landmarks.extend(
-                landmarks.get(str(target_id), landmarks.get(target_id, []))
-            )
-        landmarks_are_valid = all(
-            landmark[0].get("asset_id") != PINK_HOUSE_ASSET_ID
-            and _inside_runtime_map(
-                landmark[0].get("cell", {}).get("coord")
-            )
-            for landmark in target_landmarks
+    if actor is None:
+        logger.warning("Could not carry player pose: role-1 actor is missing")
+        return None
+    location = _serialized_location(actor.get("location"))
+    if location is None:
+        logger.warning(
+            "Could not carry player pose: invalid map location %s", location
         )
-        if (
-            all(target_id in valid_prop_ids for target_id in target_ids)
-            and landmarks_are_valid
-            and "pink house" not in text.lower()
-        ):
-            retained_trials.append((objective, target_group))
-
-    if not retained_trials:
-        raise ValueError(f"No eligible non-pink targets remain in {path}")
-    scenario["objectives"] = [trial[0] for trial in retained_trials]
-    scenario["target_card_ids"] = [trial[1] for trial in retained_trials]
-    retained_target_ids = {
-        int(target_id)
-        for _, target_group in retained_trials
-        for target_id in target_group
+        return None
+    return {
+        "location": {
+            "a": location["a"],
+            "r": location["r"],
+            "c": location["c"],
+        },
+        "rotation_degrees": float(actor.get("rotation_degrees", 0.0)),
     }
-    scenario["landmarks"] = {
-        str(target_id): landmarks.get(str(target_id), landmarks.get(target_id, []))
-        for target_id in retained_target_ids
-    }
-    return scenario
 
 
-def _randomize_player_spawn(scenario, path, subject_id, run_number,
-                            block_index):
-    """Place the playable actor on a reproducibly random reachable cell."""
-    tiles = scenario.get("map", {}).get("tiles", [])
-    tiles_by_coord = {
-        (
-            int(tile["cell"]["coord"]["a"]),
-            int(tile["cell"]["coord"]["r"]),
-            int(tile["cell"]["coord"]["c"]),
-        ): tile
-        for tile in tiles
-    }
-    if not tiles_by_coord:
-        raise ValueError(f"No map tiles available for randomized spawn in {path}")
-
-    def neighbors(coord_key):
-        coord = HecsCoord(*coord_key)
-        tile = tiles_by_coord[coord_key]
-        boundary = HexBoundary(int(tile["cell"]["boundary"]["edges"]))
-        for neighbor in coord.neighbors():
-            neighbor_key = (neighbor.a, neighbor.r, neighbor.c)
-            neighbor_tile = tiles_by_coord.get(neighbor_key)
-            if neighbor_tile is None:
-                continue
-            neighbor_boundary = HexBoundary(
-                int(neighbor_tile["cell"]["boundary"]["edges"])
-            )
-            if boundary.get_edge_between(coord, neighbor):
-                continue
-            if neighbor_boundary.get_edge_between(neighbor, coord):
-                continue
-            yield neighbor_key
-
-    # Identify the largest mutually reachable part of the map so a random
-    # start cannot land in an isolated pocket behind map boundaries.
-    unseen = set(tiles_by_coord)
-    components = []
-    while unseen:
-        start = min(unseen)
-        component = set()
-        queue = deque([start])
-        while queue:
-            current = queue.popleft()
-            if current in component:
-                continue
-            component.add(current)
-            unseen.discard(current)
-            queue.extend(neighbor for neighbor in neighbors(current)
-                         if neighbor not in component)
-        components.append(component)
-    largest_component = max(components, key=lambda component: (len(component), -min(component)[1]))
-
-    occupied = {
-        (
-            int(prop["prop_info"]["location"]["a"]),
-            int(prop["prop_info"]["location"]["r"]),
-            int(prop["prop_info"]["location"]["c"]),
-        )
-        for prop in scenario.get("prop_update", {}).get("props", [])
-        if prop.get("prop_info", {}).get("location") is not None
-    }
-    actors = scenario.get("actor_state", {}).get("actors", [])
+def _apply_player_pose(scenario, player_pose, path):
+    """Apply the preceding block's player pose to the next condition."""
+    if player_pose is None:
+        return
     playable_actors = [
-        actor for actor in actors if int(actor.get("actor_role", -1)) == 1
+        actor
+        for actor in scenario.get("actor_state", {}).get("actors", [])
+        if int(actor.get("actor_role", -1)) == 1
     ]
     if len(playable_actors) != 1:
         raise ValueError(
             f"Expected one playable role-1 actor in {path}, found "
             f"{len(playable_actors)}"
         )
-    for actor in actors:
-        if actor is playable_actors[0]:
-            continue
-        location = actor.get("location")
-        if location is not None:
-            occupied.add(
-                (int(location.get("a", -1)), int(location.get("r", -1)),
-                 int(location.get("c", -1)))
-            )
-
-    candidates = sorted(
-        coord_key for coord_key in largest_component
-        if coord_key not in occupied
-        and int(tiles_by_coord[coord_key].get("asset_id", -1))
-        in SPAWNABLE_TILE_ASSET_IDS
-        and sum(1 for _ in neighbors(coord_key)) >= 2
-    )
-    if len(candidates) < 8:
-        raise ValueError(
-            f"Only {len(candidates)} safe randomized spawn cells remain in {path}"
-        )
-
-    scenario_stem = re.sub(r"_t\d+_l\d+$", "", Path(path).stem)
-    material_key = f"{Path(path).parent.name}/{scenario_stem}"
-    seed_text = f"{subject_id}:{run_number}:{material_key}:spawn"
-    spawn_seed = int.from_bytes(
-        hashlib.sha256(seed_text.encode("utf-8")).digest()[:8], "big"
-    )
-    rng = random.Random(spawn_seed)
-    rng.shuffle(candidates)
-    spawn = candidates[int(block_index) % len(candidates)]
-    headings = [0, 60, 120, 180, 240, 300]
-    heading_rng = random.Random(f"{spawn_seed}:{block_index}:heading")
-    heading = heading_rng.choice(headings)
-
-    playable_actors[0]["location"] = {
-        "a": spawn[0], "r": spawn[1], "c": spawn[2]
+    material_cells = {
+        tuple(normalized[key] for key in ("a", "r", "c"))
+        for tile in scenario.get("map", {}).get("tiles", [])
+        for normalized in [
+            _serialized_location(tile.get("cell", {}).get("coord"))
+        ]
+        if normalized is not None
     }
-    playable_actors[0]["rotation_degrees"] = float(heading)
-    scenario.setdefault("kvals", {})["fmri_spawn"] = {
-        "block_index": int(block_index),
-        "coord": {"a": spawn[0], "r": spawn[1], "c": spawn[2]},
-        "offset_row": 2 * spawn[1] + spawn[0],
-        "offset_col": spawn[2],
-        "rotation_degrees": heading,
-        "seed": spawn_seed,
+    pose_cell = tuple(player_pose["location"][key] for key in ("a", "r", "c"))
+    if pose_cell not in material_cells:
+        logger.warning(
+            "Could not carry player pose into %s: location %s is absent from "
+            "the material map; using the material's actor start",
+            Path(path).name, player_pose["location"],
+        )
+        return
+    playable_actors[0]["location"] = dict(player_pose["location"])
+    playable_actors[0]["rotation_degrees"] = float(
+        player_pose["rotation_degrees"]
+    )
+    scenario.setdefault("kvals", {})["fmri_pose_carryover"] = {
+        "location": dict(player_pose["location"]),
+        "rotation_degrees": float(player_pose["rotation_degrees"]),
     }
     logger.info(
-        "Randomized block %s spawn to HECS=%s offset=(%s,%s) heading=%s",
-        block_index + 1, spawn, 2 * spawn[1] + spawn[0], spawn[2], heading,
+        "Carried player pose into %s: location=%s heading=%s",
+        Path(path).name,
+        player_pose["location"],
+        player_pose["rotation_degrees"],
     )
 
 
-def _load_scenario(path, subject_id, run_number, block_index=0,
-                   trial_offset=None):
+def _load_scenario(path, subject_id, session_id, block_index=0,
+                   trial_offset=None, player_pose=None):
     with Path(path).open(encoding="utf-8") as handle:
         scenario = json.load(handle)
-    scenario = _prepare_runtime_materials(scenario, path)
-    scenario.setdefault("subject", {}).update(
-        {"subject_id": str(subject_id), "run": int(run_number)}
-    )
+    scenario.setdefault("subject", {}).update({
+        "subject_id": str(subject_id),
+        "session_id": str(session_id),
+    })
     scenario["kvals"] = scenario.get("kvals") or {}
+    scenario["kvals"]["fmri_session_id"] = str(session_id)
     scenario["kvals"]["fmri_auto_advance_instructions"] = True
-    _randomize_player_spawn(
-        scenario, path, subject_id, run_number, block_index
-    )
+    _apply_player_pose(scenario, player_pose, path)
 
     objectives = scenario.get("objectives", [])
     target_groups = scenario.get("target_card_ids", [])
@@ -392,7 +290,7 @@ def _load_scenario(path, subject_id, run_number, block_index=0,
         r"_t\d+_l\d+$", "", Path(path).stem
     )
     material_key = f"{Path(path).parent.name}/{scenario_stem}"
-    seed_text = f"{subject_id}:{run_number}:{material_key}"
+    seed_text = f"{subject_id}:{material_key}"
     shuffle_seed = int.from_bytes(
         hashlib.sha256(seed_text.encode("utf-8")).digest()[:8], "big"
     )
@@ -426,7 +324,7 @@ def _load_scenario(path, subject_id, run_number, block_index=0,
         if not objective.get("uuid"):
             objective["uuid"] = str(uuid.uuid5(
                 uuid.NAMESPACE_URL,
-                f"cb2-fmri:{Path(path).resolve()}:{subject_id}:{run_number}:"
+                f"cb2-fmri:{Path(path).resolve()}:{subject_id}:"
                 f"{block_index}:{index}",
             ))
     scenario["duration_s"] = 3600
@@ -597,9 +495,42 @@ def _send_scenario_load(game, scenario_data):
     game.socket.send_message(message)
 
 
+def _draw_fixation(display, instruction_lines=None):
+    """Draw a normal cross or centered practice-mode rest instructions."""
+    if not instruction_lines:
+        display.show_cross()
+        return
+    display.show()
+    display.clear()
+    rendered = [
+        display.font.render(line, True, pygame.Color(display.foreground_color))
+        for line in instruction_lines
+    ]
+    line_gap = max(12, display.font.get_linesize() // 2)
+    total_height = sum(surface.get_height() for surface in rendered)
+    total_height += line_gap * (len(rendered) - 1)
+    y = (display.H - total_height) // 2
+    for surface in rendered:
+        rect = surface.get_rect(
+            center=(display.W // 2, y + surface.get_height() // 2)
+        )
+        display.screen.blit(surface, rect)
+        y += surface.get_height() + line_gap
+    pygame.display.flip()
+
+
+def _practice_fixation_text(actual_seconds):
+    return (
+        "In the actual fMRI task, you will now look at a +",
+        f"for {int(actual_seconds)} seconds.",
+        "Rest your brain and keep still.",
+    )
+
+
 def _show_fixation(display, game, fallback_state=None, scenario_data=None,
-                   duration_s=FIXATION_SECONDS, deadline_ns=None):
-    display.show_cross()
+                   duration_s=FIXATION_SECONDS, deadline_ns=None,
+                   instruction_lines=None):
+    _draw_fixation(display, instruction_lines)
     grab_pygame_focus()
     start_ns = time.perf_counter_ns()
     if deadline_ns is None:
@@ -610,7 +541,7 @@ def _show_fixation(display, game, fallback_state=None, scenario_data=None,
         logger.info("Queued next condition while fixation remains visible")
         # Loading a new Unity scenario can cause the browser to repaint or
         # reclaim focus on macOS. Raise and redraw the fixation immediately.
-        display.show_cross()
+        _draw_fixation(display, instruction_lines)
         grab_pygame_focus()
     latest_state = _wait_until(
         deadline_ns, game=game, fallback_state=fallback_state
@@ -620,14 +551,29 @@ def _show_fixation(display, game, fallback_state=None, scenario_data=None,
     return latest_state
 
 
-def run_scanner_task(subject_id, run_number, run_set, hard_environment,
+def run_scanner_task(subject_id, session_id, run_set, hard_environment,
                      hard_language, materials_dir=MATERIALS_DIR,
                      output_dir="data/events", template_number=None,
                      scenario_id=None, host=HOST, lobby=LOBBY,
                      browser_name="firefox", not_in_scanner=False,
+                     timing_mode="fmri",
                      pilot_wasd=False, display_number=1, window_layout=1):
+    if not str(session_id).strip():
+        raise ValueError("sessionID cannot be blank")
+    if timing_mode not in TIMING_PROFILES:
+        raise ValueError(
+            f"Timing mode must be one of {tuple(TIMING_PROFILES)}, "
+            f"received {timing_mode!r}"
+        )
+    timing = TIMING_PROFILES[timing_mode]
+    task_seconds = timing["task"]
+    fixation_seconds = timing["fixation"]
+    onset_fixation_seconds = timing["onset_fixation"]
+    offset_fixation_seconds = timing["offset_fixation"]
+    practice_mode = timing_mode == "practice"
+    logger.info("Using %s timing profile: %s", timing_mode, timing)
+
     run_set = run_set if str(run_set).startswith("runset_") else f"runset_{run_set}"
-    template_number = template_number or ((int(run_number) - 1) % 4 + 1)
     schedule = _condition_paths(
         materials_dir, run_set, int(hard_environment), int(bool(hard_language)),
         template_number, scenario_id,
@@ -674,7 +620,7 @@ def run_scanner_task(subject_id, run_number, run_set, hard_environment,
         game_state = game.step(
             Action.LoadScenario(
                 _load_scenario(
-                    first_path, subject_id, run_number, block_index=0,
+                    first_path, subject_id, session_id, block_index=0,
                     trial_offset=trial_offset,
                 )
             )
@@ -695,16 +641,20 @@ def run_scanner_task(subject_id, run_number, run_set, hard_environment,
         display.await_trigger(in_scanner=not not_in_scanner)
         run_zero_ns = time.perf_counter_ns()
         trigger_utc = datetime.now(timezone.utc).isoformat()
-        events = EventFile(output_dir, subject_id, run_number)
+        events = EventFile(output_dir, subject_id, session_id, run_set)
         logger.info("Scanner trigger received at %s; events=%s", trigger_utc, events.path)
 
-        scheduled_seconds = RUN_ONSET_FIXATION_SECONDS
+        scheduled_seconds = onset_fixation_seconds
         game_state = _show_fixation(
             display, game, fallback_state=game_state,
-            duration_s=RUN_ONSET_FIXATION_SECONDS,
+            duration_s=onset_fixation_seconds,
+            instruction_lines=(
+                _practice_fixation_text(RUN_ONSET_FIXATION_SECONDS)
+                if practice_mode else None
+            ),
             deadline_ns=(
                 run_zero_ns
-                + int(RUN_ONSET_FIXATION_SECONDS * 1_000_000_000)
+                + int(onset_fixation_seconds * 1_000_000_000)
             ),
         )
 
@@ -714,7 +664,7 @@ def run_scanner_task(subject_id, run_number, run_set, hard_environment,
             code = _trial_type(condition)
             display.hide()
             restore_unity_focus_after_rating(browser)
-            scheduled_seconds += TASK_SECONDS
+            scheduled_seconds += task_seconds
             game_state = _run_task_epoch(
                 game, run_zero_ns, code, events, fallback_state=game_state,
                 deadline_ns=(
@@ -739,24 +689,35 @@ def run_scanner_task(subject_id, run_number, run_set, hard_environment,
 
             if block_index + 1 < len(schedule):
                 _, _, next_path = schedule[block_index + 1]
+                player_pose = _player_pose_from_state(game_state)
                 next_scenario_data = _load_scenario(
-                    next_path, subject_id, run_number,
+                    next_path, subject_id, session_id,
                     block_index=block_index + 1,
                     trial_offset=trial_offset,
+                    player_pose=player_pose,
                 )
-                scheduled_seconds += FIXATION_SECONDS
+                scheduled_seconds += fixation_seconds
                 game_state = _show_fixation(
                     display, game, fallback_state=game_state,
                     scenario_data=next_scenario_data,
+                    duration_s=fixation_seconds,
+                    instruction_lines=(
+                        _practice_fixation_text(FIXATION_SECONDS)
+                        if practice_mode else None
+                    ),
                     deadline_ns=(
                         run_zero_ns + int(scheduled_seconds * 1_000_000_000)
                     ),
                 )
             else:
-                scheduled_seconds += RUN_OFFSET_FIXATION_SECONDS
+                scheduled_seconds += offset_fixation_seconds
                 game_state = _show_fixation(
                     display, game, fallback_state=game_state,
-                    duration_s=RUN_OFFSET_FIXATION_SECONDS,
+                    duration_s=offset_fixation_seconds,
+                    instruction_lines=(
+                        _practice_fixation_text(RUN_OFFSET_FIXATION_SECONDS)
+                        if practice_mode else None
+                    ),
                     deadline_ns=(
                         run_zero_ns + int(scheduled_seconds * 1_000_000_000)
                     ),
@@ -784,17 +745,27 @@ def run_scanner_task(subject_id, run_number, run_set, hard_environment,
 def main():
     parser = argparse.ArgumentParser(description="Run the local CerealBar fMRI task")
     parser.add_argument("subject_id")
-    parser.add_argument("run_number", type=int)
+    parser.add_argument(
+        "--session-id", required=True,
+        help="Naming/metadata identifier; does not affect run settings",
+    )
     parser.add_argument("run_set")
     parser.add_argument("hard_environment", type=int, help="Hard fog value (normally 3)")
     parser.add_argument("hard_language", type=int, help="1 for hard language")
     parser.add_argument("--materials-dir", default=MATERIALS_DIR)
     parser.add_argument("--output-dir", default="data/events")
-    parser.add_argument("--condition-template", type=int, choices=range(1, 5))
+    parser.add_argument(
+        "--condition-template", type=int, choices=range(1, 5),
+        help="Deprecated and ignored; condition order is fixed by run set",
+    )
     parser.add_argument("--scenario-id", type=int)
     parser.add_argument("--host", default=HOST)
     parser.add_argument("--lobby", default=LOBBY)
     parser.add_argument("--browser", choices=("firefox", "chrome"), default="firefox")
+    parser.add_argument(
+        "--mode", choices=("fmri", "practice", "dry-run"), default="fmri",
+        help="Timing and fixation-presentation mode (default: fmri)",
+    )
     parser.add_argument("--not-in-scanner", action="store_true")
     parser.add_argument(
         "--pilot-wasd", action="store_true",
@@ -810,12 +781,13 @@ def main():
     )
     args = parser.parse_args()
     run_scanner_task(
-        args.subject_id, args.run_number, args.run_set,
+        args.subject_id, args.session_id, args.run_set,
         args.hard_environment, args.hard_language,
         materials_dir=args.materials_dir, output_dir=args.output_dir,
         template_number=args.condition_template, scenario_id=args.scenario_id,
         host=args.host, lobby=args.lobby, browser_name=args.browser,
-        not_in_scanner=args.not_in_scanner, pilot_wasd=args.pilot_wasd,
+        not_in_scanner=args.not_in_scanner, timing_mode=args.mode,
+        pilot_wasd=args.pilot_wasd,
         display_number=args.display_number,
         window_layout=args.window_layout,
     )

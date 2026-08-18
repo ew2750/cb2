@@ -16,6 +16,10 @@ and event-file specification are documented in
 double-click `macos/Install CerealBar fMRI.command` once and then use
 `macos/Run CerealBar fMRI.command` for each scan run.
 
+The scanner launcher requests `sessionID`. This value is included in the event
+filename and runtime scenario metadata only; it does not affect condition
+order, material selection, instruction shuffling, timing, or any run setting.
+
 The sections below describe the legacy research runner and are retained for
 reproducibility.
 
@@ -49,7 +53,7 @@ The experiment driver program is run as a module from the parent directory. Open
 python -m cb2game.fmri.main <ARGS>
 ```
 
-`<ARGS>` should contain parameters for `subject_id`, `run_number`, `run_set`, `task_difficulty`, and `linguistic_complexity`.
+`<ARGS>` should contain parameters for `subject_id`, `run_set`, `task_difficulty`, and `linguistic_complexity`.
 
 ### Behavioral mode (palindrome protocol)
 
@@ -59,7 +63,7 @@ Use `--behavioral` to run the fixed-timing palindrome FMRI protocol.
 - `task_difficulty`: use `3` for hard fog (H setting), `0` for easy fog (E setting).
 - `linguistic_complexity`: binarized (`0` = easy language, any nonzero = hard language).
 - `--condition-template N`: choose predefined forward condition order (`N` in `1-4`).
-  - If omitted, template is selected by `run_number`.
+  - If omitted, template 1 is used.
 - `--scenario-id ID`: pin to a specific shared `scenario_id` across HH/EH/HE/EE.
   - If omitted, the lowest shared `scenario_id` is used.
 - `--no-ratings`: disable post-condition rating prompts.
@@ -81,14 +85,14 @@ Legend: `H` setting = `task_difficulty > 0`; `E` setting = `task_difficulty = 0`
 Examples:
 
 ```bash
-# Default behavioral run (template from run_number, lowest shared scenario_id)
-python -m cb2game.fmri.main 1 1 A 3 1 --behavioral
+# Default behavioral run (template 1, lowest shared scenario_id)
+python -m cb2game.fmri.main 1 A 3 1 --behavioral
 
 # Explicit template and scenario selection
-python -m cb2game.fmri.main 1 1 A 3 1 --behavioral --condition-template 2 --scenario-id 1
+python -m cb2game.fmri.main 1 A 3 1 --behavioral --condition-template 2 --scenario-id 1
 
 # Skip both ratings and buttonbox test
-python -m cb2game.fmri.main 1 1 A 3 1 --behavioral --no-ratings --no-test-button-box
+python -m cb2game.fmri.main 1 A 3 1 --behavioral --no-ratings --no-test-button-box
 ```
 
 ### macOS notes
@@ -105,17 +109,25 @@ The dedicated `scanner_task` runner and macOS launcher use `2`/`3`/`4`/`5`
 for movement and `6` for pickup. The launcher can optionally enable pilot
 controls `W`/`S`/`A`/`D` for movement; pickup remains `6`. Correct target-card
 selection automatically completes the active instruction and reveals the next
-one. The scanner run uses an eight-block palindrome (four forward conditions,
-then their reverse), with one 30-second task period per block. It begins and
+one. The scanner run uses eight fixed condition blocks, with one 30-second task
+period per block. A/B/C/D denote HH/EH/HE/EE. Run sets A/E use
+`D B C A A C B D`; B/F use `D C B A A B C D`; C/G use
+`D C A B B A C D`; and D/H use `D A B C C B A D`. The legacy
+condition-template option cannot alter these scanner-task orders. It begins and
 ends with 20 seconds of fixation and uses 10 seconds of fixation between the
 seven block transitions, for a total duration of 350 seconds (5:50).
+The Mac launcher first offers three modes: `1` fMRI (30/10/20-second timing),
+`2` practice (30-second task and 3-second fixations), and `3` dry run
+(3-second task, 1-second inter-block fixation, and 2-second onset/offset).
+Practice fixations replace the cross with explanatory rest text describing the
+10- or 20-second cross that will appear in the actual fMRI task.
 At every block boundary, the active unfinished card is discarded. The new
 block starts with the next card–instruction pair in the shuffled sequence after
-any cards that were completed during the preceding block. It also starts at a
-new randomized safe position and heading on the same map. The eight starts are
-distinct within a run and exclude cards, landmarks, blocked cells, and isolated
-map regions. Randomization is reproducibly seeded by participant ID, run number,
-map, and block number.
+any cards that were completed during the preceding block. The player's ending
+position and facing direction are copied into the next condition, keeping
+navigation continuous across all eight blocks on the shared map. Card,
+instruction, condition, and score state are still reset or advanced according
+to the block protocol.
 The Mac launcher also accepts a display number: `1` uses the primary display
 and `2` normally uses the first extended monitor. All task presentation windows
 are placed on the selected display.
@@ -136,10 +148,10 @@ For laptop testing outside the scanner, use `--not-in-scanner` so the startup sc
 python -m cb2game.server.main --config_filepath=cb2fmri.yaml
 
 # Terminal 2: run a Mac laptop test
-python -m cb2game.fmri.main 1 1 A 3 1 --behavioral --not-in-scanner --materials-dir ~/cb2main-old/materials
+python -m cb2game.fmri.main 1 A 3 1 --behavioral --not-in-scanner --materials-dir ~/cb2main-old/materials
 
 # Optional: enable ratings and buttonbox practice
-python -m cb2game.fmri.main 1 1 A 3 1 --behavioral --not-in-scanner --ratings --test-button-box
+python -m cb2game.fmri.main 1 A 3 1 --behavioral --not-in-scanner --ratings --test-button-box
 ```
 
 The experiment driver uses pygame 2.1.2, which can cause problems on ARM Macs. The game will still run properly with pygame 2.1.3. If running the experiment causes an error, try installing the pynput package independently with the following command:
@@ -154,6 +166,6 @@ python -m cb2game.server.main --config_filepath=cb2fmri.yaml
 
 # in a separate terminal window
 conda activate cb2
-python -m cb2game.fmri.main 1 1 A 3 1 --behavioral --materials-dir ~/cb2main-old/materials
+python -m cb2game.fmri.main 1 A 3 1 --behavioral --materials-dir ~/cb2main-old/materials
 # before resampling, we are testing using the old repo's materials sample
 ```

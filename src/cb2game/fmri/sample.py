@@ -25,9 +25,11 @@ HZ = 10
 HOST = 'http://localhost:8080'
 LOBBY = 'open'
 MAX_CARDS = None
-N_TARGETS = 18
-N_DISTRACTORS = 3
+N_TARGETS = 15
+N_DISTRACTORS = 2
 CARD_COVERS = True
+N_RUNSETS = 10
+N_SCENARIOS = 8
 
 
 def clean_scenario(scenario, card_covers=CARD_COVERS):
@@ -293,7 +295,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser("fmri")
     parser.add_argument("--host", type=str, default=HOST)
     parser.add_argument("--lobby", type=str, default=LOBBY)
-    parser.add_argument("--outdir", type=str, default='materials')
+    parser.add_argument("--outdir", type=str, default='materials_12x12')
     parser.add_argument("--overwrite", action='store_true')
     args = parser.parse_args()
 

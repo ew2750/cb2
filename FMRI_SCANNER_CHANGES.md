@@ -44,29 +44,33 @@ double-clickable macOS helpers in `macos/`.
   the waiting screen rather than initiating the load.
 - The scanner trigger is keyboard key `5`. Before the trigger it starts the
   run; after the waiting screen closes, key `5` is the turn-right control.
+- The launcher begins with a mode choice. Mode 1 is the actual fMRI timing
+  (30-second task, 10-second inter-block fixation, 20-second onset/offset).
+  Mode 2 is practice timing (30-second task and 3-second fixations). During
+  practice fixations, explanatory rest text replaces the cross and states the
+  corresponding 10- or 20-second duration in the actual task. Mode 3 is a dry
+  run (3-second task, 1-second inter-block fixation, 2-second onset/offset) and
+  retains the normal fixation cross.
 - A run contains eight 30-second blocks. The four conditions are labeled
   `A=HH`, `B=EH`, `C=HE`, and `D=EE`, where the first letter is environment
-  (`H` = fog) and the second is language (`H` = hard). Template 1 is
-  `A B C D D C B A`; templates 2–4 cyclically shift the forward half and then
-  mirror it.
+  (`H` = fog) and the second is language (`H` = hard). Condition order is
+  hard-coded by run set: A/E use `D B C A A C B D`; B/F use
+  `D C B A A B C D`; C/G use `D C A B B A C D`; and D/H use
+  `D A B C C B A D`.
 - The trigger is followed by 20 seconds of onset fixation. Each adjacent pair
   of blocks is separated by 10 seconds of fixation (seven intervals), and the
   eighth block is followed by 20 seconds of offset fixation. Scheduled time is
   therefore `40 + 240 + 70 = 350` seconds, or 5 minutes 50 seconds.
 - The next block is loaded in the background while the inter-block cross stays
-  visible. All blocks use the same scenario ID, baked 12 × 12 map, landmarks,
-  and card layout. New map generation is also configured for 12 × 12 with 70
-  cards. At every boundary the player moves to a new randomized safe ground or
-  path cell and receives a randomized 60-degree heading; cards reset, the next
-  target is initialized, and the fog setting changes if required. Spawn cells
-  cannot contain cards or landmarks, must have at least two open exits, and must
-  lie in the map's largest reachable region. Player pose is intentionally not
-  carried between blocks.
-- Block spawns are deterministically seeded from participant ID, run number,
-  run-set/scenario, and block index. The eight blocks therefore have distinct
-  positions within a run, while repeating the same inputs recreates the same
-  positions. The selected coordinate, heading, and seed are retained in the
-  scenario's `fmri_spawn` metadata and written to the runtime log.
+  visible. All blocks use the same scenario ID and its material-supplied map,
+  landmarks, cards, and instructions. At every boundary the playable actor's
+  ending position and facing
+  direction are copied into the next condition, so navigation is spatially
+  continuous across the entire run. Cards reset, the next target is initialized,
+  and the fog setting changes if required. Only player pose carries over; card,
+  instruction, condition, and scoring state continue to follow the block reset
+  rules. The carried coordinate and heading are retained in the scenario's
+  `fmri_pose_carryover` metadata and written to the runtime log.
 - Timing uses `time.perf_counter_ns()`, a monotonic nanosecond clock. Time zero
   is captured immediately after receipt of the scanner trigger. Actual measured
   onsets/durations are logged rather than planned values.
@@ -103,27 +107,31 @@ the participant does not need to manually deselect the first card. A correct
 second attempt therefore advances immediately.
 
 Instruction order is shuffled as linked `(instruction, target card)` pairs. A
-common order is reproducible from participant ID, run number, and shared map;
+common order is reproducible from participant ID and shared map;
 each block advances past every card completed in the preceding block and then
 discards the unfinished card active at the boundary. The next block therefore
 starts with the next new card and instruction rather than resuming or repeating
 the previous item. Hard/easy wording remains attached to the same target IDs.
 The resulting order is stored in scenario metadata/logs for auditability.
 
-Pink cards and the short pink-house landmark are removed at load time. Any
-instruction depending on either is excluded. Existing “streetlight” wording is
-normalized to “lamppost.” The final scanner screen and terminal report the sum
-of correctly completed targets across all eight blocks.
-Former pink-house cells use the `GROUND_TILE_PATH` asset (ID 28), preserving a
-visible path tile at those locations rather than replacing the house with plain
-ground.
+The local material JSON is authoritative. At load time the scanner does not
+crop or resize maps, remove or replace props, rewrite instruction wording,
+filter target pairs, or add generated instructions. It only shuffles the linked
+instruction–target pairs already present, advances them at block boundaries,
+adds runtime identifiers/metadata, and carries the player's pose. The final
+scanner screen and terminal report the sum of correctly completed supplied
+targets across all eight blocks.
 
 ### Events file
 
 One tab-separated BIDS-style event file is created per run in
 `cb2/data/events`:
 
-`sub-<participant>_task-cerealbar_run-<run>_events.tsv`
+`sub-<participant>_ses-<sessionID>_task-cerealbar_runset-<A-H>_events.tsv`
+
+The launcher requests a Session ID. It is written to the runtime scenario
+metadata and used in the event filename, but is deliberately excluded from the
+instruction shuffle seed and all run-setting decisions.
 
 It contains exactly these columns:
 
@@ -136,7 +144,7 @@ It contains exactly these columns:
 Each row is flushed and synced to disk immediately. A complete run produces
 eight task-event rows. Fixations are not included because the
 requested event type is the 30-second task epoch. Repeating the same participant
-and run number creates a `_repeat-02` file instead of overwriting prior data.
+and run set creates a `_repeat-02` file instead of overwriting prior data.
 
 All run data now stays inside the project folder:
 
@@ -176,9 +184,10 @@ The launcher creates these directories automatically. Move or copy the whole
 
 1. Double-click `macos/Install CerealBar fMRI.command` once.
 2. Double-click `macos/Run CerealBar fMRI.command` for each run.
-3. Enter participant ID, run number, run set (`A` through `H`), and optionally
-   a condition template (`1` through `4`).
-4. When the scanner is ready, send key `5`.
+3. Choose mode 1 (fMRI), 2 (practice), or 3 (test dry run), then enter
+   participant ID and run set (`A` through `H`). The run set automatically
+   selects its hard-coded condition order.
+4. When ready, send key `5`.
 
 The launcher uses hard environment level `3` and hard language level `1`; easy
 variants are level `0`. It chooses the same scenario ID across all conditions,
@@ -188,7 +197,7 @@ For laptop testing, run:
 
 ```bash
 .venv/bin/python -m cb2game.fmri.scanner_task \
-  TEST 1 A 3 1 --not-in-scanner --browser chrome \
+  TEST A 3 1 --not-in-scanner --browser chrome \
   --host http://127.0.0.1:8080
 ```
 
@@ -213,50 +222,16 @@ materials, and compiled client, was saved before this revision at:
 
 `/Users/exw/Documents/Codex/backups/cb2-before-palindrome-20260813`
 
-This revision introduced the eight-block palindrome, exact 350-second timeline,
-single 12 × 12 map with blockwise state reset, pink visual exclusions,
-“lamppost” terminology, wider browser view, and end-of-run card score described
-above.
+This revision introduced the eight-block schedule, exact fMRI timeline, shared
+scenario across blocks, wider browser view, and end-of-run card score.
 
-### Scenario-001-only material revision
+### Local-material authority revision (2026-08-14)
 
-Scenario 001 was initially made the only retained scenario in run sets A–H. All
-64 of its
-condition files were converted from 15 × 15 to native 12 × 12 materials. Cards
-outside the retained map and pink cards were removed, followed by every
-instruction whose target or required landmark was no longer present. The 128
-scenario-002/003 files were removed from this runtime version. A complete,
-human-readable inventory is stored in `SCENARIO_0001_12X12_AUDIT.md`; the
-original files remain recoverable from Git and the pre-revision backup.
-
-Scenario 002 and 003 were subsequently restored for run sets E and F only and
-filtered into the same native 12 × 12 format. Their retained card/target counts
-are E/002 44/6, E/003 59/8, F/002 43/5, and F/003 59/7. See
-the material history below.
-
-The restored scenario 003 layout was then promoted to scenario 001 for both E
-and F. Their older scenario 001 and the temporary scenario 002 were removed,
-leaving exactly one scenario ID in every run set. Current E/001 retains 59
-cards and 8 target pairs; F/001 retains 59 cards and 7 target pairs. See
-`SCENARIO_EF_003_PROMOTED_TO_001_AUDIT.md`.
-
-All run sets were subsequently augmented to 18 target–instruction pairs without
-changing their maps, card positions, or card appearances. Added cards have
-visual color–shape–count combinations unique within their retained map. Each
-uses two nearby non-pink landmarks and paired easy/hard instructions generated
-by the existing task language generator. All target IDs, landmark chains, and
-instruction texts are in `ALL_RUNSETS_TARGET_AUGMENTATION_AUDIT.md`.
-
-### Empty-map correction
-
-The first 12 × 12 crop compared serialized HECS row values directly with the
-Unity map's offset-grid row count. That retained cells outside Unity's resized
-tile array, causing a WebGL `memory access out of bounds` failure and leaving
-only the empty ground plane visible. Runtime filtering now converts every HECS
-coordinate with `offset row = 2 × r + a` before checking map bounds. All 192
-material files were validated as complete 144-cell maps, and the compiled
-Unity client was tested through all eight condition transitions without an
-alert or rendering failure.
+The earlier runtime crop, pink-asset filtering, terminology rewriting, and
+manual target augmentation were retired. The crop and augmentation helper
+scripts were removed. The scanner now loads the maps, props, landmarks, and
+instruction text directly from `src/cb2game/fmri/materials`. That folder
+currently contains scenario IDs 001–003 for every run set A–H (192 JSON files).
 
 ## Runtime-only cleanup (2026-08-09)
 

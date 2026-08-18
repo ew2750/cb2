@@ -55,7 +55,6 @@ CSV_LOCK_PATH = 'behavioral_data.csv.lock'
 # CSV column headers
 CSV_HEADERS = [
     'subject_id',
-    'run_number',
     'experiment_start_utc',
     'scenario_position',
     'condition_code',
@@ -81,7 +80,7 @@ END_FIXATION_S = 10
 # Predefined forward condition templates for one palindrome (counterbalanced, deterministic).
 # These templates are expanded into concrete tuples using HH/EH/HE/EE labels.
 PREDEFINED_FORWARD_CONDITION_LABELS = [
-    ['HH', 'EH', 'HE', 'EE'],
+    ['EE', 'EH', 'HE', 'HH'],
     ['EH', 'HE', 'EE', 'HH'],
     ['HE', 'EE', 'HH', 'EH'],
     ['EE', 'HH', 'EH', 'HE'],
@@ -1553,7 +1552,6 @@ def practice_arrow_keys(display=None):
 
 def run_palindrome_behavioral(
         subject_id,
-        run_number,
         run_set,
         task_difficulty,
         linguistic_complexity,
@@ -1579,7 +1577,7 @@ def run_palindrome_behavioral(
         time.sleep(duration_s)
         display.hide()
 
-    subject_kwargs = {"subject_id": subject_id, "run": run_number}
+    subject_kwargs = {"subject_id": subject_id}
 
     # Define the 4 condition tuples for this run.
     condition_lookup = {
@@ -1620,10 +1618,10 @@ def run_palindrome_behavioral(
         if not practice_success:
             logger.warning("Buttonbox practice was not fully successful, but continuing with experiment")
 
-    # Pick a predefined forward condition list.
-    # Default: cycle templates by run number. Override with --condition-template.
+    # Pick a predefined forward condition list. The first template is the
+    # default when no explicit legacy template is supplied.
     if condition_template is None:
-        order_ix = (int(run_number) - 1) % len(PREDEFINED_FORWARD_CONDITION_LABELS)
+        order_ix = 0
     else:
         order_ix = int(condition_template) - 1
         if order_ix < 0 or order_ix >= len(PREDEFINED_FORWARD_CONDITION_LABELS):
@@ -1776,7 +1774,6 @@ def run_palindrome_behavioral(
         task_diff, ling_comp = condition
         trial_data = {
             'subject_id': subject_id,
-            'run_number': run_number,
             'experiment_start_utc': experiment_start_utc,
             'scenario_position': i + 1,
             'condition_code': condition_to_code(task_diff, ling_comp),
@@ -1810,7 +1807,6 @@ def run_palindrome_behavioral(
 
 def normal_main(
         subject_id,
-        run_number,
         run_set,
         task_difficulty,
         linguistic_complexity,
@@ -1827,8 +1823,8 @@ def normal_main(
     if display is None:
         display = Display()
 
-    subject_kwargs = {"subject_id": subject_id, "run": run_number}
-    logger.info(f'SUBJECT_ID: {subject_kwargs["subject_id"]}\nRUN#: {repr(subject_kwargs["run"])}')
+    subject_kwargs = {"subject_id": subject_id}
+    logger.info(f'SUBJECT_ID: {subject_kwargs["subject_id"]}')
 
     # ask the participant to test their controls - need to implement this for in the scanner
     if not no_test_button_box:
@@ -1885,7 +1881,9 @@ def normal_main(
     behavioral['linguistic_complexity'] = linguistic_complexity
     if not os.path.exists('behavioral'):
         os.makedirs('behavioral')
-    behavioral.to_csv(os.path.join('behavioral', f'{subject_id}_run{run_number}.csv'), index=False)
+    behavioral.to_csv(
+        os.path.join('behavioral', f'{subject_id}_{run_set}.csv'), index=False
+    )
 
     return None  # Fixed: was returning undefined 'client'
 
@@ -1893,7 +1891,6 @@ def normal_main(
 if __name__ == "__main__":
     parser = argparse.ArgumentParser("fmri")
     parser.add_argument('subject_id')
-    parser.add_argument('run_number')
     parser.add_argument('run_set')
     parser.add_argument('task_difficulty', type=int)
     parser.add_argument('linguistic_complexity', type=int)
@@ -1950,7 +1947,7 @@ if __name__ == "__main__":
         help=(
             "1-based index for predefined forward condition template in behavioral mode "
             f"(1-{len(PREDEFINED_FORWARD_CONDITION_LABELS)}). "
-            "Default cycles by run_number."
+            "Default uses template 1."
         )
     )
     parser.add_argument(
@@ -1966,7 +1963,6 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     subject_id = args.subject_id
-    run_number = int(args.run_number)
     run_set = args.run_set
     if not run_set.startswith('runset'):
         run_set = f'runset_{run_set}'
@@ -1997,7 +1993,6 @@ if __name__ == "__main__":
         if args.behavioral:
             run_palindrome_behavioral(
                 subject_id=subject_id,
-                run_number=run_number,
                 run_set=run_set,
                 task_difficulty=task_difficulty,
                 linguistic_complexity=linguistic_complexity,
@@ -2015,7 +2010,6 @@ if __name__ == "__main__":
         else:
             client = normal_main(
                 subject_id=subject_id,
-                run_number=run_number,
                 run_set=run_set,
                 task_difficulty=task_difficulty,
                 linguistic_complexity=linguistic_complexity,

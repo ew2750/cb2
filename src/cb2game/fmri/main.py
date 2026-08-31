@@ -937,17 +937,34 @@ class Display:
                     escape = True
             pygame.time.wait(10)
 
+        if escape:
+            raise SystemExit("Escape key pressed")
         return success
 
     def await_trigger(self, in_scanner=True):
         if in_scanner:
-            instruction = "Waiting for scanner — trigger: 5"
-            key = pygame.K_5
+            instruction = "Waiting for scanner — trigger: 5 or t"
+            key = None
         else:
             instruction = 'Press any key to continue...'
             key = None
 
-        self.await_keypress(key, instruction)
+        self.show()
+        self.clear()
+        self.draw_text(instruction)
+        pygame.display.flip()
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN:
+                    if event.key in (pygame.K_5, pygame.K_t):
+                        return
+                    if event.key == pygame.K_ESCAPE:
+                        raise SystemExit("Escape key pressed")
+                elif event.type == pygame.QUIT:
+                    raise SystemExit("Pygame window closed")
+            if not in_scanner:
+                return
+            pygame.time.wait(10)
 
     def show_result(self, success, interrupted):
         self.show()
@@ -1188,11 +1205,17 @@ def prompt_for_rating(display, browser=None):
     focus_received = focus_grabbed  # if we successfully grabbed focus, skip manual window click requirement
 
     valid_keys_mapping = {
-        pygame.K_1: 1, pygame.K_2: 2, pygame.K_3: 3, pygame.K_4: 4,
-        pygame.K_5: 5, pygame.K_6: 6, pygame.K_7: 7,
+        pygame.K_4: "forward",
+        pygame.K_3: "turn_left",
+        pygame.K_6: "backward",
+        pygame.K_1: "turn_right",
+        pygame.K_2: "pickup_card",
         # numpad keys (in case laptop has that instead of top row numbers)
-        pygame.K_KP1: 1, pygame.K_KP2: 2, pygame.K_KP3: 3, pygame.K_KP4: 4,
-        pygame.K_KP5: 5, pygame.K_KP6: 6, pygame.K_KP7: 7
+        pygame.K_KP4: "forward",
+        pygame.K_KP3: "turn_left",
+        pygame.K_KP6: "backward",
+        pygame.K_KP1: "turn_right",
+        pygame.K_KP2: "pickup_card",
     }
 
     def update_display(instruction, input_text="", feedback_color="black"):
@@ -1253,28 +1276,27 @@ def prompt_for_rating(display, browser=None):
 
                 if event.key in valid_keys_mapping:
                     rating = valid_keys_mapping[event.key]
-                    logger.info(f"Valid rating received: {rating}")
+                    logger.info(f"Valid key action received: {rating}")
 
                     # Show confirmation feedback
                     update_display(base_instruction, f"{rating} (Confirmed!)", "green")
                     pygame.time.wait(1000)  # Show confirmation for 1 second
 
                 elif event.key == pygame.K_ESCAPE:
-                    logger.info("Escape key pressed, returning default rating")
-                    update_display(base_instruction, "Escaped - using default", "orange")
-                    pygame.time.wait(500)
-                    rating = 4  # Default rating
+                    logger.info("Escape key pressed, exiting program")
+                    update_display(base_instruction, "Exiting...", "orange")
+                    pygame.time.wait(300)
+                    raise SystemExit("Escape key pressed")
 
                 else:
                     # Show invalid key feedback
-                    invalid_feedback = f"{key_name} (Invalid - use 1-7)"
+                    invalid_feedback = f"{key_name} (Invalid - use 1,2,3,4,6)"
                     update_display(base_instruction, invalid_feedback, "red")
                     logger.info(f"Invalid key during rating: {event.key} ({key_name})")
 
             elif event.type == pygame.QUIT:
                 logger.info("Pygame QUIT event received during rating")
-                rating = 4  # Default rating
-                break
+                raise SystemExit("Pygame window closed")
 
         pygame.time.wait(10)
 

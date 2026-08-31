@@ -94,7 +94,7 @@ scenario layout was superseded by the ten-set/eight-run redesign below.
 
 A full pre-change backup was saved at:
 
-`/Users/exw/projects/cb2_backup_2026-08-17_before_set_run_redesign`
+`<repo>/cb2_backup_2026-08-17_before_set_run_redesign`
 
 `sample.py` now targets `set1`–`set10`, with `run1`–`run8` inside each set.
 Each run produces only the four named clear/fog × easy/hard language files.

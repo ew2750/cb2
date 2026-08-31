@@ -7,7 +7,7 @@ running in Chrome.
 
 The current branch contains a easy macOS installation version and task setup GUI.
 
-## Running on a Mac
+## Running on macOS
 
 1. Double-click `macos/Install CerealBar fMRI.command` once.
 2. Double-click `macos/Run CerealBar fMRI.command` for each run.
@@ -18,6 +18,14 @@ The current branch contains a easy macOS installation version and task setup GUI
    The scanner reads the block order from the selected set's
    `condition_order.txt`.
 4. When ready (after the game is loaded), press key `5`.
+
+## Running on Linux
+
+1. Run `linux/Install CerealBar fMRI.sh` once.
+2. Run `linux/Run CerealBar fMRI.sh` for each run.
+3. Choose the same fMRI, practice, or dry-run mode as on macOS.
+4. The Linux launcher uses the same Python task runner, same materials
+   structure, same event format, and same browser-based Unity game.
 
 ## Task structure
 
@@ -123,7 +131,7 @@ cb2game.fmri.scanner_task
 It performs the following jobs:
 
 - Displays the scanner-waiting screen
-- Detects trigger key `5`
+- Detects trigger key `5` or `t`
 - Controls the 20/30/10-second timing
 - Changes experimental conditions
 - Displays fixation crosses
@@ -137,7 +145,7 @@ It performs the following jobs:
 The project uses Python 3.9 inside:
 
 ```text
-/Users/exw/projects/cb2/.venv
+<repo>/.venv
 ```
 
 Important Python packages include:
@@ -166,11 +174,11 @@ the Unity game.
 
 | Key | Action      |
 | --- | ----------- |
-| `2` | Forward     |
-| `3` | Backward    |
-| `4` | Turn left   |
-| `5` | Turn right  |
-| `6` | Select card |
+| `4` | Forward     |
+| `3` | Turn left   |
+| `6` | Backward    |
+| `1` | Turn right  |
+| `2` | Pick up card |
 
 Optional pilot controls:
 
@@ -181,14 +189,14 @@ Optional pilot controls:
 | `S` | Backward    |
 | `A` | Left        |
 | `D` | Right       |
-| `6` | Select card |
+| `2` | Pick up card |
 
 ## Event data
 
 Event files are saved in:
 
 ```text
-/Users/exw/projects/cb2/data/events
+<repo>/data/events
 ```
 
 Their names include both identifiers, for example:
@@ -215,8 +223,8 @@ fixations and seven inter-block fixations are not written as task events.
 If the same identifiers are used again, the existing file is preserved and a
 new `_repeat-02`, `_repeat-03`, and so on file is created.
 
-Other local game data is stored in `/Users/exw/projects/cb2/data/server`, and
-the latest server log is stored in `/Users/exw/projects/cb2/data/server.log`.
+Other local game data is stored in `<repo>/data/server`, and the latest server
+log is stored in `<repo>/data/server.log`.
 
 # 20260818 CB2 fMRI task changes from the original repository
 

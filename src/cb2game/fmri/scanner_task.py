@@ -378,11 +378,11 @@ def _install_runtime_keymap(browser, pilot_wasd=False):
         if (!window.cb2ScannerKeymapInstalled) {
           window.cb2ScannerKeymapInstalled = true;
           const mapping = {
-            '2': ['ArrowUp', 'ArrowUp', 38],
-            '3': ['ArrowDown', 'ArrowDown', 40],
-            '4': ['ArrowLeft', 'ArrowLeft', 37],
-            '5': ['ArrowRight', 'ArrowRight', 39],
-            '6': ['s', 'KeyS', 83]
+            '4': ['ArrowUp', 'ArrowUp', 38],
+            '3': ['ArrowLeft', 'ArrowLeft', 37],
+            '6': ['ArrowDown', 'ArrowDown', 40],
+            '1': ['ArrowRight', 'ArrowRight', 39],
+            '2': ['s', 'KeyS', 83]
           };
           __PILOT_ENTRIES__
           for (const type of ['keydown', 'keyup']) {

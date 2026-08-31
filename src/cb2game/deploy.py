@@ -45,10 +45,11 @@ def sudo_run(
 
 
 def write_service_file(content):
-    with open("/tmp/{}".format(SERVICE_NAME), "w") as f:
+    service_temp_path = os.path.join(tempfile.gettempdir(), SERVICE_NAME)
+    with open(service_temp_path, "w") as f:
         f.write(content)
     sudo_run(
-        ["mv", "/tmp/{}".format(SERVICE_NAME), os.path.join(SERVICE_PATH, SERVICE_NAME)]
+        ["mv", service_temp_path, os.path.join(SERVICE_PATH, SERVICE_NAME)]
     )
 
 

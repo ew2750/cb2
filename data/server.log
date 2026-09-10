@@ -1,384 +1,912 @@
-[2026-08-31 10:54:20,587] root INFO [main:main:1476] Config file parsed.
-[2026-08-31 10:54:20,588] root INFO [main:main:1477] data prefix: data/server
-[2026-08-31 10:54:20,588] root INFO [main:main:1478] Log directory: data/server/game_records
-[2026-08-31 10:54:20,588] root INFO [main:main:1479] Assets directory: data/server/assets
-[2026-08-31 10:54:20,588] root INFO [main:main:1480] Database path: data/server/game_data.db
-[2026-08-31 10:54:20,588] cb2game.server.schemas.base INFO [base:SetDatabase:30] Pragmas: [('journal_mode', 'wal'), ('cache_size', -65536), ('foreign_keys', '1'), ('synchronous', 'off')]
-[2026-08-31 10:54:20,825] aiohttp.access INFO [web_log:log:206] 127.0.0.1 [31/Aug/2026:17:54:20 +0000] "GET /data/config HTTP/1.1" 200 15148 "-" "curl/8.7.1"
-[2026-08-31 10:54:27,584] aiohttp.access INFO [web_log:log:206] 127.0.0.1 [31/Aug/2026:17:54:27 +0000] "GET /play?lobby_name=scenario-lobby&auto=join_game_queue HTTP/1.1" 200 235 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"
-[2026-08-31 10:54:27,591] aiohttp.access INFO [web_log:log:206] 127.0.0.1 [31/Aug/2026:17:54:27 +0000] "GET /TemplateData/style.css HTTP/1.1" 200 234 "http://127.0.0.1:8080/play?lobby_name=scenario-lobby&auto=join_game_queue" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"
-[2026-08-31 10:54:27,806] aiohttp.access INFO [web_log:log:206] 127.0.0.1 [31/Aug/2026:17:54:27 +0000] "GET /Build/WebGL.loader.js HTTP/1.1" 200 243 "http://127.0.0.1:8080/play?lobby_name=scenario-lobby&auto=join_game_queue" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"
-[2026-08-31 10:54:28,453] aiohttp.access INFO [web_log:log:206] 127.0.0.1 [31/Aug/2026:17:54:28 +0000] "GET /Build/WebGL.framework.js HTTP/1.1" 200 245 "http://127.0.0.1:8080/play?lobby_name=scenario-lobby&auto=join_game_queue" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"
-[2026-08-31 10:54:28,480] aiohttp.access INFO [web_log:log:206] 127.0.0.1 [31/Aug/2026:17:54:28 +0000] "GET /TemplateData/favicon.ico HTTP/1.1" 200 240 "http://127.0.0.1:8080/play?lobby_name=scenario-lobby&auto=join_game_queue" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"
-[2026-08-31 10:54:28,543] aiohttp.access INFO [web_log:log:206] 127.0.0.1 [31/Aug/2026:17:54:28 +0000] "GET /Build/WebGL.data HTTP/1.1" 200 258 "http://127.0.0.1:8080/play?lobby_name=scenario-lobby&auto=join_game_queue" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"
-[2026-08-31 10:54:28,606] aiohttp.access INFO [web_log:log:206] 127.0.0.1 [31/Aug/2026:17:54:28 +0000] "GET /Build/WebGL.wasm HTTP/1.1" 200 250 "http://127.0.0.1:8080/play?lobby_name=scenario-lobby&auto=join_game_queue" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"
-[2026-08-31 10:54:29,270] aiohttp.access INFO [web_log:log:206] 127.0.0.1 [31/Aug/2026:17:54:29 +0000] "GET /data/config HTTP/1.1" 200 15148 "-" "python-requests/2.28.1"
-[2026-08-31 10:54:29,272] root INFO [main:PlayerEndpoint:1268] Player connecting to lobby: scenario-lobby | type: 6
-[2026-08-31 10:54:29,272] root INFO [main:PlayerEndpoint:1299] player connected from : 127.0.0.1
-[2026-08-31 10:54:29,274] root INFO [main:PlayerEndpoint:1319] Player connected. Type: <UserType.BOT: 4>
-[2026-08-31 10:54:29,275] root INFO [main:receive_agent_updates:1191] receive_agent_updates(<Request GET /player_endpoint >, <WebSocketResponse Switching Protocols GET /player_endpoint >, <cb2game.server.lobbies.scenario_lobby.ScenarioLobby object at 0x10c735ca0>)
-[2026-08-31 10:54:29,275] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:29,326] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:29,378] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:29,430] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:29,482] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:29,534] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:29,586] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:29,636] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:29,688] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:29,739] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:29,791] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:29,843] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:29,894] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:29,946] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:29,997] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:30,049] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:30,100] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:30,152] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:30,204] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:30,255] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:30,307] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:30,359] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:30,411] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:30,463] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:30,515] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:30,566] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:30,618] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:30,670] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:30,721] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:30,772] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:30,823] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:30,875] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:30,926] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:30,978] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:31,029] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:31,080] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:31,131] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:31,179] root INFO [main:PlayerEndpoint:1268] Player connecting to lobby: scenario-lobby | type: 6
-[2026-08-31 10:54:31,180] root INFO [main:PlayerEndpoint:1299] player connected from : 127.0.0.1
-[2026-08-31 10:54:31,181] root INFO [main:PlayerEndpoint:1319] Player connected. Type: <UserType.OPEN: 2>
-[2026-08-31 10:54:31,182] root INFO [main:receive_agent_updates:1191] receive_agent_updates(<Request GET /player_endpoint >, <WebSocketResponse Switching Protocols GET /player_endpoint >, <cb2game.server.lobbies.scenario_lobby.ScenarioLobby object at 0x10c735ca0>)
-[2026-08-31 10:54:31,183] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:31,184] aiohttp.access INFO [web_log:log:206] 127.0.0.1 [31/Aug/2026:17:54:31 +0000] "GET /data/config HTTP/1.1" 200 15148 "http://127.0.0.1:8080/play?lobby_name=scenario-lobby&auto=join_game_queue" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"
-[2026-08-31 10:54:31,235] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:31,286] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:31,338] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:31,390] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:31,442] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:31,494] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:31,546] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:31,596] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:31,648] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:31,700] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:31,752] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:31,803] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:31,854] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:31,906] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:31,957] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:32,009] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:32,060] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:32,112] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:32,164] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
-[2026-08-31 10:54:32,172] cb2game.server.lobbies.scenario_lobby INFO [scenario_lobby:handle_join_request:43] Received join request from <WebSocketResponse Switching Protocols GET /player_endpoint >.
-[2026-08-31 10:54:32,177] cb2game.server.lobby INFO [lobby:matchmake:311] Creating room for <WebSocketResponse Switching Protocols GET /player_endpoint >. Queue size: 0 Follower Queue: 0
-[2026-08-31 10:54:32,220] cb2game.server.room INFO [room:__init__:70] Lobby object: <cb2game.server.lobbies.scenario_lobby.ScenarioLobby object at 0x10c735ca0> | name: scenario-lobby | lobby type: 6 | typeinfo: <class 'cb2game.server.lobbies.scenario_lobby.ScenarioLobby'>
-[2026-08-31 10:54:32,251] root INFO [room:start:282] Room 238 started game.
-[2026-08-31 10:54:32,267] cb2game.server.lobby INFO [lobby:handle_scenario_request:717] room 238 has scenario 
-[2026-08-31 10:54:32,271] cb2game.server.lobby INFO [lobby:drain_message:1012] Drained scenario response type ScenarioResponseType.LOADED for <WebSocketResponse Switching Protocols GET /player_endpoint >.
-[2026-08-31 10:54:32,273] aiohttp.access INFO [web_log:log:206] 127.0.0.1 [31/Aug/2026:17:54:32 +0000] "GET /data/config HTTP/1.1" 200 15148 "http://127.0.0.1:8080/play?lobby_name=scenario-lobby&auto=join_game_queue" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"
-[2026-08-31 10:54:32,337] cb2game.server.user_info_fetcher INFO [user_info_fetcher:handle_userinfo_request:46] User info request for 
-[2026-08-31 10:54:32,337] root INFO [main:stream_game_state:1125] message: MessageFromServer(transmit_time=datetime.datetime(2026, 8, 31, 17, 54, 32, 337455), type=<MessageType.USER_INFO: 12>, actions=None, map_update=None, state=None, room_management_response=None, objectives=None, turn_state=None, tutorial_response=None, live_feedback=None, prop_update=None, state_machine_tick=None, google_auth_confirmation=None, user_info=UserInfo(user_name='', user_type=<UserType.OPEN: 2>), prop_spawn=None, prop_despawn=None, replay_response=None, scenario_response=None, menu_options=None, sound_trigger=None, feedback_question=None)
-[2026-08-31 10:54:32,743] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.SCENARIO_REQUEST for player 1.
-[2026-08-31 10:55:15,089] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:55:15,154] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:55:15,154] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
-[2026-08-31 10:55:15,636] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:55:15,652] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:55:15,653] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
-[2026-08-31 10:55:15,920] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:55:15,936] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:55:15,936] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
-[2026-08-31 10:55:16,587] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:55:16,603] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:55:16,603] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
-[2026-08-31 10:55:17,021] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:55:17,036] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:55:17,036] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
-[2026-08-31 10:55:19,105] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:55:19,122] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:55:19,122] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
-[2026-08-31 10:55:20,005] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:55:20,021] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:55:20,021] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
-[2026-08-31 10:55:20,656] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:55:20,671] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:55:20,672] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
-[2026-08-31 10:55:21,855] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:55:21,855] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.S
-[2026-08-31 10:55:21,855] cb2game.server.state INFO [state:_select_if_on_card:835] Stepped on card is None.
-[2026-08-31 10:55:22,940] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:55:22,956] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:55:22,956] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
-[2026-08-31 10:55:23,340] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:55:23,340] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.S
-[2026-08-31 10:55:23,341] cb2game.server.state INFO [state:_select_if_on_card:870] Selected card 27 with color: Color(r=0, g=0, b=1, a=1), selected: True
-[2026-08-31 10:55:25,090] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:55:25,107] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:55:25,107] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
-[2026-08-31 10:55:26,025] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:55:26,042] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:55:26,042] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
-[2026-08-31 10:55:26,558] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:55:26,575] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:55:26,575] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
-[2026-08-31 10:55:26,908] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:55:26,925] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:55:26,926] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
-[2026-08-31 10:55:28,387] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.SCENARIO_REQUEST for player 1.
-[2026-08-31 10:55:43,149] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:55:43,214] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:55:43,214] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
-[2026-08-31 10:55:44,700] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:55:44,717] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:55:44,717] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
-[2026-08-31 10:55:46,167] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:55:46,167] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.S
-[2026-08-31 10:55:46,167] cb2game.server.state INFO [state:_select_if_on_card:870] Selected card 71 with color: Color(r=0, g=0, b=1, a=1), selected: True
-[2026-08-31 10:55:47,635] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:55:47,651] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:55:47,651] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
-[2026-08-31 10:55:48,185] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:55:48,202] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:55:48,202] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
-[2026-08-31 10:55:48,851] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:55:48,868] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:55:48,868] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
-[2026-08-31 10:55:49,436] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:55:49,453] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:55:49,453] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
-[2026-08-31 10:55:50,669] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:55:50,669] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.S
-[2026-08-31 10:55:50,670] cb2game.server.state INFO [state:_select_if_on_card:870] Selected card 71 with color: Color(r=1, g=0, b=0, a=1), selected: False
-[2026-08-31 10:55:51,420] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:55:51,420] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.S
-[2026-08-31 10:55:51,420] cb2game.server.state INFO [state:_select_if_on_card:870] Selected card 71 with color: Color(r=0, g=0, b=1, a=1), selected: True
-[2026-08-31 10:55:53,188] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:55:53,204] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:55:53,205] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.DOWN
-[2026-08-31 10:55:53,888] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:55:53,904] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:55:53,904] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.DOWN
-[2026-08-31 10:56:03,392] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:56:03,392] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.S
-[2026-08-31 10:56:03,392] cb2game.server.state INFO [state:_select_if_on_card:835] Stepped on card is None.
-[2026-08-31 10:56:03,943] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:56:03,995] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:56:03,995] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
-[2026-08-31 10:56:04,476] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:56:04,493] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:56:04,494] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
-[2026-08-31 10:56:06,160] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:56:06,177] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:56:06,177] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
-[2026-08-31 10:56:06,826] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:56:06,843] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:56:06,843] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
-[2026-08-31 10:56:08,331] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.SCENARIO_REQUEST for player 1.
-[2026-08-31 10:56:19,717] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:56:19,769] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:56:19,769] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
-[2026-08-31 10:56:20,284] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:56:20,299] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:56:20,299] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
-[2026-08-31 10:56:20,784] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:56:20,801] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:56:20,801] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
-[2026-08-31 10:56:21,117] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:56:21,133] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:56:21,133] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
-[2026-08-31 10:56:21,534] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:56:21,551] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:56:21,551] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
-[2026-08-31 10:56:22,618] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:56:22,635] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:56:22,635] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
-[2026-08-31 10:56:23,402] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:56:23,417] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:56:23,417] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
-[2026-08-31 10:56:24,835] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:56:24,836] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.S
-[2026-08-31 10:56:24,836] cb2game.server.state INFO [state:_select_if_on_card:870] Selected card 13 with color: Color(r=0, g=0, b=1, a=1), selected: True
-[2026-08-31 10:56:32,522] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:56:32,538] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:56:32,538] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
-[2026-08-31 10:56:33,756] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:56:33,772] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:56:33,772] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
-[2026-08-31 10:56:34,173] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:56:34,190] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:56:34,190] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
-[2026-08-31 10:56:35,091] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:56:35,091] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.S
-[2026-08-31 10:56:35,091] cb2game.server.state INFO [state:_select_if_on_card:870] Selected card 13 with color: Color(r=1, g=0, b=0, a=1), selected: False
-[2026-08-31 10:56:35,791] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:56:35,791] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.S
-[2026-08-31 10:56:35,791] cb2game.server.state INFO [state:_select_if_on_card:870] Selected card 13 with color: Color(r=0, g=0, b=1, a=1), selected: True
-[2026-08-31 10:56:36,891] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:56:36,908] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:56:36,908] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
-[2026-08-31 10:56:37,257] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:56:37,274] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:56:37,274] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
-[2026-08-31 10:56:37,824] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:56:37,841] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:56:37,841] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
-[2026-08-31 10:56:38,592] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:56:38,609] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:56:38,609] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
-[2026-08-31 10:56:39,425] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:56:39,425] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.S
-[2026-08-31 10:56:39,425] cb2game.server.state INFO [state:_select_if_on_card:860] Replaced previous fMRI card selection 13 with 50.
-[2026-08-31 10:56:39,425] cb2game.server.state INFO [state:_select_if_on_card:870] Selected card 50 with color: Color(r=0, g=0, b=1, a=1), selected: True
-[2026-08-31 10:56:41,126] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:56:41,143] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:56:41,143] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
-[2026-08-31 10:56:41,793] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:56:41,810] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:56:41,810] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
-[2026-08-31 10:56:48,269] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.SCENARIO_REQUEST for player 1.
-[2026-08-31 10:57:24,598] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:57:24,651] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:57:24,652] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
-[2026-08-31 10:57:25,548] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:57:25,548] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.S
-[2026-08-31 10:57:25,548] cb2game.server.state INFO [state:_select_if_on_card:870] Selected card 50 with color: Color(r=0, g=0, b=1, a=1), selected: True
-[2026-08-31 10:57:26,348] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:57:26,348] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.S
-[2026-08-31 10:57:26,348] cb2game.server.state INFO [state:_select_if_on_card:870] Selected card 50 with color: Color(r=1, g=0, b=0, a=1), selected: False
-[2026-08-31 10:57:26,931] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:57:26,948] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:57:26,948] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
-[2026-08-31 10:57:27,781] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:57:27,799] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:57:27,799] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
-[2026-08-31 10:57:28,926] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.SCENARIO_REQUEST for player 1.
-[2026-08-31 10:57:39,254] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:57:39,271] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:57:39,271] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
-[2026-08-31 10:57:40,487] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:57:40,487] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.S
-[2026-08-31 10:57:40,487] cb2game.server.state INFO [state:_select_if_on_card:835] Stepped on card is None.
-[2026-08-31 10:57:41,221] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:57:41,238] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:57:41,238] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
-[2026-08-31 10:57:43,206] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:57:43,222] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:57:43,222] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
-[2026-08-31 10:57:44,857] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:57:44,872] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:57:44,873] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
-[2026-08-31 10:57:46,507] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:57:46,507] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.S
-[2026-08-31 10:57:46,508] cb2game.server.state INFO [state:_select_if_on_card:870] Selected card 66 with color: Color(r=0, g=0, b=1, a=1), selected: True
-[2026-08-31 10:57:48,774] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:57:48,792] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:57:48,792] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
-[2026-08-31 10:57:49,342] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:57:49,358] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:57:49,358] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
-[2026-08-31 10:57:51,876] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:57:51,893] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:57:51,893] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.DOWN
-[2026-08-31 10:58:08,352] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.SCENARIO_REQUEST for player 1.
-[2026-08-31 10:58:26,043] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:58:26,099] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:58:26,099] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
-[2026-08-31 10:58:27,376] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:58:27,376] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.S
-[2026-08-31 10:58:27,376] cb2game.server.state INFO [state:_select_if_on_card:870] Selected card 66 with color: Color(r=0, g=0, b=1, a=1), selected: True
-[2026-08-31 10:58:28,460] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
-[2026-08-31 10:58:28,476] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:58:28,476] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
-[2026-08-31 10:58:29,260] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
-[2026-08-31 10:58:29,260] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.S
-[2026-08-31 10:58:29,260] cb2game.server.state INFO [state:_select_if_on_card:870] Selected card 66 with color: Color(r=1, g=0, b=0, a=1), selected: False
-[2026-08-31 10:58:48,354] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.SCENARIO_REQUEST for player 1.
-[2026-08-31 10:59:28,858] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.SCENARIO_REQUEST for player 1.
-[2026-08-31 10:59:32,292] aiohttp.access INFO [web_log:log:206] 127.0.0.1 [31/Aug/2026:17:59:32 +0000] "GET /data/config HTTP/1.1" 200 15148 "http://127.0.0.1:8080/play?lobby_name=scenario-lobby&auto=join_game_queue" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"
-[2026-08-31 11:00:29,984] root INFO [main:PlayerEndpoint:1327] =====================================
-[2026-08-31 11:00:29,984] root INFO [main:PlayerEndpoint:1328] player disconnected from : 127.0.0.1
-[2026-08-31 11:00:29,994] cb2game.server.lobby INFO [lobby:disconnect_socket:224] disconnect_socket()
-[2026-08-31 11:00:29,994] cb2game.server.lobby WARNING [lobby:remove_socket_from_queue:901] Socket not found in queue!
-[2026-08-31 11:00:29,994] cb2game.server.lobby WARNING [lobby:remove_socket_from_queue:913] Socket not found in follower queue!
-[2026-08-31 11:00:29,994] cb2game.server.lobby WARNING [lobby:remove_socket_from_queue:925] Socket not found in leader queue!
-[2026-08-31 11:00:29,994] cb2game.server.lobby INFO [lobby:disconnect_socket:235] disconnect_socket() removed role: Role.SPECTATOR
-[2026-08-31 11:00:29,994] root INFO [state:mark_player_disconnected:288] Setting kvals: {'fmri_session_id': '33309', 'fmri_material_set': 'set2', 'fmri_material_run': 'run1', 'fmri_auto_advance_instructions': True, 'fmri_instruction_order': [[44], [61], [32], [62], [39], [34], [29], [37], [70], [59], [4], [23], [25], [40], [65]], 'fmri_pose_carryover': {'location': {'a': 1, 'r': 3, 'c': 5}, 'rotation_degrees': 300.0}, 'disconnected': ['SPECTATOR']}
-[2026-08-31 11:00:30,000] aiohttp.access INFO [web_log:log:206] 127.0.0.1 [31/Aug/2026:17:54:29 +0000] "GET /player_endpoint?is_bot=true&lobby_name=scenario-lobby HTTP/1.1" 101 0 "-" "Python/3.9 aiohttp/3.8.4"
-[2026-08-31 11:00:30,002] root INFO [main:PlayerEndpoint:1327] =====================================
-[2026-08-31 11:00:30,002] root INFO [main:PlayerEndpoint:1328] player disconnected from : 127.0.0.1
-[2026-08-31 11:00:30,003] cb2game.server.lobby INFO [lobby:disconnect_socket:224] disconnect_socket()
-[2026-08-31 11:00:30,003] cb2game.server.lobby WARNING [lobby:remove_socket_from_queue:901] Socket not found in queue!
-[2026-08-31 11:00:30,003] cb2game.server.lobby WARNING [lobby:remove_socket_from_queue:913] Socket not found in follower queue!
-[2026-08-31 11:00:30,003] cb2game.server.lobby WARNING [lobby:remove_socket_from_queue:925] Socket not found in leader queue!
-[2026-08-31 11:00:30,003] cb2game.server.lobby INFO [lobby:disconnect_socket:235] disconnect_socket() removed role: Role.FOLLOWER
-[2026-08-31 11:00:30,003] cb2game.server.state WARNING [state:mark_player_disconnected:285] Player ['SPECTATOR'] already disconnected.
-[2026-08-31 11:00:30,003] root INFO [state:mark_player_disconnected:288] Setting kvals: {'fmri_session_id': '33309', 'fmri_material_set': 'set2', 'fmri_material_run': 'run1', 'fmri_auto_advance_instructions': True, 'fmri_instruction_order': [[44], [61], [32], [62], [39], [34], [29], [37], [70], [59], [4], [23], [25], [40], [65]], 'fmri_pose_carryover': {'location': {'a': 1, 'r': 3, 'c': 5}, 'rotation_degrees': 300.0}, 'disconnected': ['FOLLOWER']}
-[2026-08-31 11:00:30,003] root INFO [room:stop:299] Room /238 ending game.
-[2026-08-31 11:00:30,004] aiohttp.access INFO [web_log:log:206] 127.0.0.1 [31/Aug/2026:17:54:31 +0000] "GET /player_endpoint?lobby_name=scenario-lobby&auto=join_game_queue HTTP/1.1" 101 0 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"
-[2026-08-31 11:00:30,004] cb2game.server.leaderboard INFO [leaderboard:UpdateLeaderboard:37] Updating leaderboard for game 238
-[2026-08-31 11:00:30,005] root INFO [google_experience:UpdateGoogleUserExperienceTable:92] Updating google experience...
-[2026-08-31 11:00:30,005] root INFO [google_experience:UpdateGoogleUserExperienceTable:101] Game type scenario-lobby|6|scenario is not a google lobby game type.
-[2026-08-31 11:39:56,962] root INFO [main:SaveClientExceptionsToDB:604] Saving 0 client exceptions to DB...
-[2026-08-31 11:39:56,963] root INFO [main:CleanupDownloadFiles:597] Deleting temporary files...
-======= Serving on http://127.0.0.1:8080 ======
-Map pool size: 10
-Map pool size: 20
-Map pool size: 30
-Map pool size: 40
-Map pool size: 50
-Map pool size: 60
-Map pool size: 70
-Map pool size: 80
-Map pool size: 90
-Map pool size: 100
-Map pool size: 110
-Map pool size: 120
-Map pool size: 130
-Map pool size: 140
-Map pool size: 150
-Map pool size: 160
-Map pool size: 170
-Map pool size: 180
-Map pool size: 190
-Map pool size: 200
-Map pool size: 210
-Map pool size: 220
-Map pool size: 230
-Map pool size: 240
-Map pool size: 250
-Map pool size: 260
-Map pool size: 270
-Map pool size: 280
-Map pool size: 290
-Map pool size: 300
-Map pool size: 310
-Map pool size: 320
-Map pool size: 330
-Map pool size: 340
-Map pool size: 350
-Map pool size: 360
-Map pool size: 370
-Map pool size: 380
-Map pool size: 390
-Map pool size: 400
-Map pool size: 410
-Map pool size: 420
-Map pool size: 430
-Map pool size: 440
-Map pool size: 450
-Map pool size: 460
-Map pool size: 470
-Map pool size: 480
-Map pool size: 490
-Map pool size: 500
-Map pool size: 500
+[2026-09-10 13:11:55,909] root INFO [main:main:1476] Config file parsed.
+[2026-09-10 13:11:55,909] root INFO [main:main:1477] data prefix: data/server
+[2026-09-10 13:11:55,909] root INFO [main:main:1478] Log directory: data/server/game_records
+[2026-09-10 13:11:55,909] root INFO [main:main:1479] Assets directory: data/server/assets
+[2026-09-10 13:11:55,909] root INFO [main:main:1480] Database path: data/server/game_data.db
+[2026-09-10 13:11:55,909] cb2game.server.schemas.base INFO [base:SetDatabase:30] Pragmas: [('journal_mode', 'wal'), ('cache_size', -65536), ('foreign_keys', '1'), ('synchronous', 'off')]
+[2026-09-10 13:11:56,104] aiohttp.access INFO [web_log:log:206] 127.0.0.1 [10/Sep/2026:20:11:56 +0000] "GET /data/config HTTP/1.1" 200 15148 "-" "curl/8.7.1"
+[2026-09-10 13:12:00,092] aiohttp.access INFO [web_log:log:206] 127.0.0.1 [10/Sep/2026:20:12:00 +0000] "GET /play?lobby_name=scenario-lobby&auto=join_game_queue HTTP/1.1" 200 235 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"
+[2026-09-10 13:12:00,134] aiohttp.access INFO [web_log:log:206] 127.0.0.1 [10/Sep/2026:20:12:00 +0000] "GET /TemplateData/style.css HTTP/1.1" 200 234 "http://127.0.0.1:8080/play?lobby_name=scenario-lobby&auto=join_game_queue" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"
+[2026-09-10 13:12:00,444] aiohttp.access INFO [web_log:log:206] 127.0.0.1 [10/Sep/2026:20:12:00 +0000] "GET /Build/WebGL.loader.js HTTP/1.1" 200 243 "http://127.0.0.1:8080/play?lobby_name=scenario-lobby&auto=join_game_queue" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"
+[2026-09-10 13:12:00,475] aiohttp.access INFO [web_log:log:206] 127.0.0.1 [10/Sep/2026:20:12:00 +0000] "GET /Build/WebGL.framework.js HTTP/1.1" 200 245 "http://127.0.0.1:8080/play?lobby_name=scenario-lobby&auto=join_game_queue" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"
+[2026-09-10 13:12:00,561] aiohttp.access INFO [web_log:log:206] 127.0.0.1 [10/Sep/2026:20:12:00 +0000] "GET /TemplateData/favicon.ico HTTP/1.1" 200 240 "http://127.0.0.1:8080/play?lobby_name=scenario-lobby&auto=join_game_queue" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"
+[2026-09-10 13:12:00,592] aiohttp.access INFO [web_log:log:206] 127.0.0.1 [10/Sep/2026:20:12:00 +0000] "GET /Build/WebGL.data HTTP/1.1" 200 258 "http://127.0.0.1:8080/play?lobby_name=scenario-lobby&auto=join_game_queue" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"
+[2026-09-10 13:12:00,672] aiohttp.access INFO [web_log:log:206] 127.0.0.1 [10/Sep/2026:20:12:00 +0000] "GET /Build/WebGL.wasm HTTP/1.1" 200 250 "http://127.0.0.1:8080/play?lobby_name=scenario-lobby&auto=join_game_queue" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"
+[2026-09-10 13:12:01,114] aiohttp.access INFO [web_log:log:206] 127.0.0.1 [10/Sep/2026:20:12:01 +0000] "GET /data/config HTTP/1.1" 200 15148 "-" "python-requests/2.28.1"
+[2026-09-10 13:12:01,126] root INFO [main:PlayerEndpoint:1268] Player connecting to lobby: scenario-lobby | type: 6
+[2026-09-10 13:12:01,127] root INFO [main:PlayerEndpoint:1299] player connected from : 127.0.0.1
+[2026-09-10 13:12:01,129] root INFO [main:PlayerEndpoint:1319] Player connected. Type: <UserType.BOT: 4>
+[2026-09-10 13:12:01,130] root INFO [main:receive_agent_updates:1191] receive_agent_updates(<Request GET /player_endpoint >, <WebSocketResponse Switching Protocols GET /player_endpoint >, <cb2game.server.lobbies.scenario_lobby.ScenarioLobby object at 0x10a9dfcd0>)
+[2026-09-10 13:12:01,130] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
+[2026-09-10 13:12:01,195] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
+[2026-09-10 13:12:01,259] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
+[2026-09-10 13:12:01,320] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
+[2026-09-10 13:12:01,380] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
+[2026-09-10 13:12:01,432] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
+[2026-09-10 13:12:01,492] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
+[2026-09-10 13:12:01,559] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
+[2026-09-10 13:12:01,612] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
+[2026-09-10 13:12:01,674] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
+[2026-09-10 13:12:01,729] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
+[2026-09-10 13:12:01,795] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
+[2026-09-10 13:12:01,848] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
+[2026-09-10 13:12:01,901] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
+[2026-09-10 13:12:01,953] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
+[2026-09-10 13:12:02,007] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
+[2026-09-10 13:12:02,074] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
+[2026-09-10 13:12:02,131] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
+[2026-09-10 13:12:02,184] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
+[2026-09-10 13:12:02,237] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
+[2026-09-10 13:12:02,304] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
+[2026-09-10 13:12:02,356] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
+[2026-09-10 13:12:02,418] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
+[2026-09-10 13:12:02,479] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
+[2026-09-10 13:12:02,537] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
+[2026-09-10 13:12:02,598] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
+[2026-09-10 13:12:02,659] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
+[2026-09-10 13:12:02,711] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
+[2026-09-10 13:12:02,763] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
+[2026-09-10 13:12:02,831] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
+[2026-09-10 13:12:02,893] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
+[2026-09-10 13:12:02,944] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
+[2026-09-10 13:12:02,999] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
+[2026-09-10 13:12:03,071] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
+[2026-09-10 13:12:03,134] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
+[2026-09-10 13:12:03,134] aiohttp.access INFO [web_log:log:206] 127.0.0.1 [10/Sep/2026:20:12:03 +0000] "GET /data/config HTTP/1.1" 200 15148 "http://127.0.0.1:8080/play?lobby_name=scenario-lobby&auto=join_game_queue" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"
+[2026-09-10 13:12:03,135] root INFO [main:PlayerEndpoint:1268] Player connecting to lobby: scenario-lobby | type: 6
+[2026-09-10 13:12:03,135] root INFO [main:PlayerEndpoint:1299] player connected from : 127.0.0.1
+[2026-09-10 13:12:03,136] root INFO [main:PlayerEndpoint:1319] Player connected. Type: <UserType.OPEN: 2>
+[2026-09-10 13:12:03,136] root INFO [main:receive_agent_updates:1191] receive_agent_updates(<Request GET /player_endpoint >, <WebSocketResponse Switching Protocols GET /player_endpoint >, <cb2game.server.lobbies.scenario_lobby.ScenarioLobby object at 0x10a9dfcd0>)
+[2026-09-10 13:12:03,186] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
+[2026-09-10 13:12:03,238] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
+[2026-09-10 13:12:03,290] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
+[2026-09-10 13:12:03,321] cb2game.server.lobbies.scenario_lobby INFO [scenario_lobby:handle_join_request:43] Received join request from <WebSocketResponse Switching Protocols GET /player_endpoint >.
+[2026-09-10 13:12:03,341] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
+[2026-09-10 13:12:03,393] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
+[2026-09-10 13:12:03,445] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
+[2026-09-10 13:12:03,498] cb2game.server.lobby INFO [lobby:handle_scenario_request:722] Scenario  does not exist. Cannot attach.
+[2026-09-10 13:12:03,511] cb2game.server.lobby INFO [lobby:matchmake:311] Creating room for <WebSocketResponse Switching Protocols GET /player_endpoint >. Queue size: 0 Follower Queue: 0
+[2026-09-10 13:12:03,561] cb2game.server.room INFO [room:__init__:70] Lobby object: <cb2game.server.lobbies.scenario_lobby.ScenarioLobby object at 0x10a9dfcd0> | name: scenario-lobby | lobby type: 6 | typeinfo: <class 'cb2game.server.lobbies.scenario_lobby.ScenarioLobby'>
+[2026-09-10 13:12:03,597] root INFO [room:start:282] Room 240 started game.
+[2026-09-10 13:12:03,615] cb2game.server.lobby INFO [lobby:handle_scenario_request:717] room 240 has scenario 
+[2026-09-10 13:12:03,627] cb2game.server.lobby INFO [lobby:drain_message:1012] Drained scenario response type ScenarioResponseType.LOADED for <WebSocketResponse Switching Protocols GET /player_endpoint >.
+[2026-09-10 13:12:03,679] root INFO [main:receive_agent_updates:1228] ========== @@@@@@@@@ ############ $$$$$$$$$$$ Client exception: No server config found.
+[2026-09-10 13:12:04,059] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.SCENARIO_REQUEST for player 1.
+[2026-09-10 13:12:04,149] aiohttp.access INFO [web_log:log:206] 127.0.0.1 [10/Sep/2026:20:12:04 +0000] "GET /data/config HTTP/1.1" 200 15148 "http://127.0.0.1:8080/play?lobby_name=scenario-lobby&auto=join_game_queue" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"
+[2026-09-10 13:12:04,157] cb2game.server.user_info_fetcher INFO [user_info_fetcher:handle_userinfo_request:46] User info request for 
+[2026-09-10 13:12:04,157] root INFO [main:stream_game_state:1125] message: MessageFromServer(transmit_time=datetime.datetime(2026, 9, 10, 20, 12, 4, 157913), type=<MessageType.USER_INFO: 12>, actions=None, map_update=None, state=None, room_management_response=None, objectives=None, turn_state=None, tutorial_response=None, live_feedback=None, prop_update=None, state_machine_tick=None, google_auth_confirmation=None, user_info=UserInfo(user_name='', user_type=<UserType.OPEN: 2>), prop_spawn=None, prop_despawn=None, replay_response=None, scenario_response=None, menu_options=None, sound_trigger=None, feedback_question=None)
+[2026-09-10 13:12:15,345] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:15,416] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:15,416] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:12:15,986] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:15,993] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:15,993] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:12:16,518] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:16,527] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:16,527] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.DOWN
+[2026-09-10 13:12:17,077] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:17,086] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:17,086] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:12:17,602] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:17,610] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:17,610] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.DOWN
+[2026-09-10 13:12:18,151] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:18,160] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:18,160] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:12:18,727] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:18,727] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.S
+[2026-09-10 13:12:18,727] cb2game.server.state INFO [state:_select_if_on_card:870] Selected card 6 with color: Color(r=0, g=0, b=1, a=1), selected: True
+[2026-09-10 13:12:18,734] cb2game.server.state INFO [state:_advance_fmri_instruction:906] Correct fMRI target selected; advanced to next instruction.
+[2026-09-10 13:12:20,785] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:20,794] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:20,794] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:12:21,510] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:21,518] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:21,518] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:12:22,276] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:22,324] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:22,324] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:12:22,627] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:22,635] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:22,635] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:12:22,986] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:22,994] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:22,994] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:12:23,393] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:23,402] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:23,402] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:12:23,827] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:23,835] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:23,835] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:12:24,351] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:24,359] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:24,359] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:12:24,702] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:24,710] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:24,710] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:12:25,093] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:25,104] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:25,104] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:12:25,443] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:25,451] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:25,451] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:12:25,793] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:25,802] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:25,802] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:12:26,452] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:26,460] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:26,460] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:12:26,768] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:26,791] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:26,791] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:12:27,043] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:27,043] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.S
+[2026-09-10 13:12:27,043] cb2game.server.state INFO [state:_select_if_on_card:870] Selected card 50 with color: Color(r=0, g=0, b=1, a=1), selected: True
+[2026-09-10 13:12:27,935] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:27,996] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:27,996] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.DOWN
+[2026-09-10 13:12:28,876] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:28,884] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:28,884] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:12:29,143] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:29,151] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:29,151] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:12:30,527] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:30,535] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:30,535] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:12:31,135] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:31,143] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:31,143] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:12:31,544] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:31,562] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:31,562] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:12:31,868] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:31,886] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:31,886] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:12:32,218] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:32,226] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:32,227] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:12:32,710] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:32,717] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:32,717] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:12:33,268] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:33,276] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:33,276] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:12:33,660] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:33,669] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:33,669] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:12:34,010] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:34,018] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:34,018] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:12:34,310] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:34,394] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:34,394] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:12:34,568] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:34,568] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.S
+[2026-09-10 13:12:34,568] cb2game.server.state INFO [state:_select_if_on_card:860] Replaced previous fMRI card selection 50 with 7.
+[2026-09-10 13:12:34,568] cb2game.server.state INFO [state:_select_if_on_card:870] Selected card 7 with color: Color(r=0, g=0, b=1, a=1), selected: True
+[2026-09-10 13:12:34,573] cb2game.server.state INFO [state:_advance_fmri_instruction:906] Correct fMRI target selected; advanced to next instruction.
+[2026-09-10 13:12:37,760] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:37,768] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:37,768] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:12:38,127] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:38,135] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:38,135] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:12:40,109] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.SCENARIO_REQUEST for player 1.
+[2026-09-10 13:12:43,660] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:43,668] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:43,668] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:12:46,543] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:46,551] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:46,551] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:12:47,710] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:47,718] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:47,718] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:12:48,302] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:48,309] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:48,310] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:12:48,652] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:48,660] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:48,660] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:12:49,085] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:49,093] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:49,094] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:12:49,876] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:49,885] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:49,885] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:12:50,210] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:50,218] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:50,219] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:12:50,560] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:50,568] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:50,568] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:12:50,827] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:50,897] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:50,897] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:12:51,135] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:51,135] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.S
+[2026-09-10 13:12:51,135] cb2game.server.state INFO [state:_select_if_on_card:870] Selected card 53 with color: Color(r=0, g=0, b=1, a=1), selected: True
+[2026-09-10 13:12:51,610] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:51,610] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.S
+[2026-09-10 13:12:51,610] cb2game.server.state INFO [state:_select_if_on_card:870] Selected card 53 with color: Color(r=1, g=0, b=0, a=1), selected: False
+[2026-09-10 13:12:52,459] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:52,460] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.S
+[2026-09-10 13:12:52,460] cb2game.server.state INFO [state:_select_if_on_card:870] Selected card 53 with color: Color(r=0, g=0, b=1, a=1), selected: True
+[2026-09-10 13:12:52,793] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:52,801] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:52,802] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.DOWN
+[2026-09-10 13:12:53,268] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:53,276] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:53,276] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:12:53,576] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:53,576] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.S
+[2026-09-10 13:12:53,576] cb2game.server.state INFO [state:_select_if_on_card:870] Selected card 53 with color: Color(r=1, g=0, b=0, a=1), selected: False
+[2026-09-10 13:12:54,093] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:54,101] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:54,102] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:12:54,627] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:54,634] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:54,635] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:12:55,059] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:55,068] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:55,068] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:12:55,343] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:55,343] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.S
+[2026-09-10 13:12:55,343] cb2game.server.state INFO [state:_select_if_on_card:870] Selected card 53 with color: Color(r=0, g=0, b=1, a=1), selected: True
+[2026-09-10 13:12:55,643] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:55,644] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.S
+[2026-09-10 13:12:55,644] cb2game.server.state INFO [state:_select_if_on_card:870] Selected card 53 with color: Color(r=1, g=0, b=0, a=1), selected: False
+[2026-09-10 13:12:55,843] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:55,843] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.S
+[2026-09-10 13:12:55,843] cb2game.server.state INFO [state:_select_if_on_card:870] Selected card 53 with color: Color(r=0, g=0, b=1, a=1), selected: True
+[2026-09-10 13:12:55,939] cb2game.server.client_exception_logger INFO [client_exception_logger:save_exceptions_to_db:41] Saving 1 exceptions to DB.
+[2026-09-10 13:12:55,968] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:55,976] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:55,976] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:12:56,267] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:56,268] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.S
+[2026-09-10 13:12:56,268] cb2game.server.state INFO [state:_select_if_on_card:860] Replaced previous fMRI card selection 53 with 19.
+[2026-09-10 13:12:56,268] cb2game.server.state INFO [state:_select_if_on_card:870] Selected card 19 with color: Color(r=0, g=0, b=1, a=1), selected: True
+[2026-09-10 13:12:57,009] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:57,061] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:57,061] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:12:57,276] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:57,285] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:57,285] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:12:57,543] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:57,551] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:57,551] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:12:57,884] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:57,892] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:57,892] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:12:58,218] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:58,218] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.S
+[2026-09-10 13:12:58,219] cb2game.server.state INFO [state:_select_if_on_card:860] Replaced previous fMRI card selection 19 with 53.
+[2026-09-10 13:12:58,219] cb2game.server.state INFO [state:_select_if_on_card:870] Selected card 53 with color: Color(r=0, g=0, b=1, a=1), selected: True
+[2026-09-10 13:12:58,642] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:58,650] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:58,651] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:12:58,910] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:58,917] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:58,918] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:12:59,768] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:12:59,777] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:12:59,777] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:13:00,418] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:00,427] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:00,427] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:13:00,843] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:00,902] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:00,902] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:13:01,334] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:01,343] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:01,343] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:13:01,759] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:01,768] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:01,768] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:13:02,643] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:02,652] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:02,652] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:13:03,127] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:03,134] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:03,134] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:13:03,476] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:03,485] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:03,485] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:13:03,826] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:03,834] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:03,835] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:13:04,234] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:04,242] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:04,242] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:13:04,585] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:04,636] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:04,636] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:13:04,935] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:04,943] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:04,943] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:13:05,284] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:05,292] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:05,292] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:13:05,968] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:05,976] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:05,976] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:13:06,676] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:06,685] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:06,685] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:13:07,027] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:07,035] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:07,035] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:13:07,335] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:07,364] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:07,364] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:13:07,685] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:07,693] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:07,693] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:13:08,026] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:08,034] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:08,034] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:13:08,376] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:08,385] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:08,385] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:13:08,718] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:08,727] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:08,727] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:13:09,260] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:09,268] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:09,268] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:13:09,685] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:09,736] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:09,736] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:13:10,042] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:10,061] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:10,061] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:13:10,335] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:10,335] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.S
+[2026-09-10 13:13:10,336] cb2game.server.state INFO [state:_select_if_on_card:860] Replaced previous fMRI card selection 53 with 49.
+[2026-09-10 13:13:10,336] cb2game.server.state INFO [state:_select_if_on_card:870] Selected card 49 with color: Color(r=0, g=0, b=1, a=1), selected: True
+[2026-09-10 13:13:10,341] cb2game.server.state INFO [state:_advance_fmri_instruction:906] Correct fMRI target selected; advanced to next instruction.
+[2026-09-10 13:13:13,155] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.SCENARIO_REQUEST for player 1.
+[2026-09-10 13:13:20,539] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:20,590] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:20,590] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:13:22,005] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:22,014] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:22,014] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:13:22,648] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:22,655] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:22,655] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:13:23,039] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:23,047] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:23,048] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:13:23,430] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:23,438] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:23,438] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:13:23,797] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:23,806] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:23,806] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:13:24,148] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:24,155] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:24,156] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:13:24,497] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:24,505] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:24,505] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:13:24,814] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:24,835] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:24,835] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:13:25,163] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:25,172] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:25,172] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:13:25,514] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:25,522] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:25,522] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:13:25,939] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:25,947] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:25,947] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:13:26,289] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:26,297] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:26,297] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:13:26,980] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:26,988] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:26,988] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:13:27,414] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:27,422] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:27,422] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:13:27,840] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:27,852] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:27,853] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:13:28,413] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:28,421] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:28,421] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:13:28,689] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:28,750] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:28,750] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:13:29,039] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:29,087] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:29,087] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:13:29,563] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:29,571] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:29,571] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:13:29,989] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:29,997] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:29,997] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:13:30,347] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:30,354] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:30,354] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:13:30,714] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:30,721] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:30,721] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:13:31,105] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:31,114] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:31,114] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:13:31,455] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:31,464] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:31,464] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:13:31,721] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:31,794] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:31,794] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:13:32,363] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:32,371] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:32,371] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:13:32,906] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:32,914] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:32,914] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:13:33,273] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:33,281] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:33,281] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:13:33,989] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:33,989] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.S
+[2026-09-10 13:13:33,989] cb2game.server.state INFO [state:_select_if_on_card:870] Selected card 43 with color: Color(r=0, g=0, b=1, a=1), selected: True
+[2026-09-10 13:13:38,930] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:38,981] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:38,981] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:13:39,279] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:39,288] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:39,288] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:13:39,539] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:39,546] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:39,546] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:13:40,097] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:40,106] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:40,106] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:13:40,763] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:40,772] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:40,772] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:13:41,280] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:41,289] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:41,289] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:13:41,630] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:41,638] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:41,638] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:13:41,896] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:41,904] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:41,904] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:13:42,464] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:42,472] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:42,473] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:13:43,539] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:43,546] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:43,547] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:13:44,605] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:44,654] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:44,654] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:13:45,422] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:45,430] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:45,431] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:13:46,160] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.SCENARIO_REQUEST for player 1.
+[2026-09-10 13:13:49,385] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:49,393] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:49,393] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:13:49,910] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:49,918] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:49,918] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:13:50,943] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:50,951] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:50,951] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:13:51,759] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:51,768] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:51,768] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:13:52,109] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:52,118] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:52,118] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:13:55,967] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:56,021] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:56,021] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:13:56,509] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:56,518] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:56,518] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:13:56,892] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:56,900] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:56,900] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:13:57,209] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:57,220] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:57,220] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:13:57,593] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:57,604] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:57,604] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:13:58,026] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:58,034] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:58,035] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:13:58,510] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:58,517] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:58,517] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:13:59,192] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:59,192] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.S
+[2026-09-10 13:13:59,192] cb2game.server.state INFO [state:_select_if_on_card:870] Selected card 39 with color: Color(r=0, g=0, b=1, a=1), selected: True
+[2026-09-10 13:13:59,726] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:13:59,734] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:13:59,734] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:00,426] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:00,434] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:00,434] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:14:00,759] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:00,768] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:00,768] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:01,109] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:01,117] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:01,117] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:01,568] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:01,575] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:01,575] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:14:02,142] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:02,199] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:02,201] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:14:02,559] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:02,568] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:02,568] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:02,909] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:02,917] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:02,917] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:14:03,176] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:03,248] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:03,248] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:03,526] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:03,534] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:03,534] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:14:03,809] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:03,865] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:03,865] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:04,160] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:04,199] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:04,199] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:04,509] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:04,542] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:04,542] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:04,858] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:04,867] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:04,867] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:05,543] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:05,552] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:05,552] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:14:06,051] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:06,060] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:06,060] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:06,401] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:06,408] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:06,409] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:06,860] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:06,867] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:06,867] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:14:07,326] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:07,372] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:07,372] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:07,676] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:07,690] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:07,690] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:14:07,943] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:08,013] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:08,013] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:08,243] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:08,243] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.S
+[2026-09-10 13:14:08,243] cb2game.server.state INFO [state:_select_if_on_card:860] Replaced previous fMRI card selection 39 with 0.
+[2026-09-10 13:14:08,243] cb2game.server.state INFO [state:_select_if_on_card:870] Selected card 0 with color: Color(r=0, g=0, b=1, a=1), selected: True
+[2026-09-10 13:14:08,876] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:08,885] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:08,885] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:09,434] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:09,442] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:09,442] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:09,817] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:09,825] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:09,825] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:14:10,083] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:10,156] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:10,156] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:10,426] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:10,433] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:10,434] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:14:10,810] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:10,817] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:10,817] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:11,101] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:11,101] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.S
+[2026-09-10 13:14:11,102] cb2game.server.state INFO [state:_select_if_on_card:860] Replaced previous fMRI card selection 0 with 13.
+[2026-09-10 13:14:11,102] cb2game.server.state INFO [state:_select_if_on_card:870] Selected card 13 with color: Color(r=0, g=0, b=1, a=1), selected: True
+[2026-09-10 13:14:11,768] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:11,776] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:11,776] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:14:12,034] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:12,043] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:12,043] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:14:12,292] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:12,301] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:12,302] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:14:12,643] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:12,650] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:12,650] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:13,067] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:13,076] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:13,076] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:14:13,526] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:13,578] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:13,578] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:15,884] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:15,892] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:15,892] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:16,235] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:16,242] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:16,242] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:14:16,500] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:16,510] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:16,510] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:14:17,034] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:17,043] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:17,043] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:17,767] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:17,776] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:17,776] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:14:18,034] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:18,043] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:18,043] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:14:18,568] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:19,005] root WARNING [state_machine_driver:run:73] Game 240 slow poll period of 0.4374196529388428s
+[2026-09-10 13:14:19,005] root WARNING [main:stream_game_state:1091] Transmit socket for iphash f528764d624db129b32c21fbca0cb8d6 port 51228, slow poll period of 0.43535590171813965s
+[2026-09-10 13:14:19,005] root WARNING [main:stream_game_state:1091] Transmit socket for iphash f528764d624db129b32c21fbca0cb8d6 port 51231, slow poll period of 0.4355900287628174s
+[2026-09-10 13:14:19,008] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:19,008] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:19,159] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.SCENARIO_REQUEST for player 1.
+[2026-09-10 13:14:22,284] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:22,293] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:22,293] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:14:22,775] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:22,785] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:22,785] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:23,426] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:23,451] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:23,451] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:14:23,851] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:23,859] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:23,859] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:24,201] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:24,209] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:24,209] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:24,551] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:24,559] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:24,559] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:26,301] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:26,309] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:26,309] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:14:26,893] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:26,906] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:26,906] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:27,235] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:27,243] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:27,243] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:27,584] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:27,593] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:27,593] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:27,933] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:27,942] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:27,942] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:14:28,443] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:28,451] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:28,451] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:28,792] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:28,800] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:28,800] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:14:29,059] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:29,067] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:29,068] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:14:29,651] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:29,659] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:29,659] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:14:30,059] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:30,068] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:30,068] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:30,409] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:30,418] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:30,418] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:30,758] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:30,795] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:30,795] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:31,268] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:31,268] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.S
+[2026-09-10 13:14:31,268] cb2game.server.state INFO [state:_select_if_on_card:870] Selected card 14 with color: Color(r=0, g=0, b=1, a=1), selected: True
+[2026-09-10 13:14:31,843] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:31,850] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:31,850] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:14:32,109] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:32,117] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:32,117] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:14:32,776] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:32,785] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:32,785] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:33,118] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:33,127] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:33,127] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:33,467] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:33,476] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:33,476] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:33,810] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:33,833] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:33,833] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:34,159] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:34,170] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:34,170] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:34,509] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:34,518] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:34,518] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:34,852] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:34,860] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:34,860] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:35,200] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:35,209] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:35,210] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:35,567] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:35,567] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.S
+[2026-09-10 13:14:35,567] cb2game.server.state INFO [state:_select_if_on_card:860] Replaced previous fMRI card selection 14 with 15.
+[2026-09-10 13:14:35,568] cb2game.server.state INFO [state:_select_if_on_card:870] Selected card 15 with color: Color(r=0, g=0, b=1, a=1), selected: True
+[2026-09-10 13:14:35,573] cb2game.server.state INFO [state:_advance_fmri_instruction:906] Correct fMRI target selected; advanced to next instruction.
+[2026-09-10 13:14:41,792] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:41,825] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:41,825] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:42,409] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:42,437] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:42,437] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:14:43,409] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:43,417] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:43,417] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:14:44,167] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:44,175] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:44,175] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:14:44,500] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:44,509] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:44,509] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:44,784] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:44,784] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.S
+[2026-09-10 13:14:44,784] cb2game.server.state INFO [state:_select_if_on_card:870] Selected card 13 with color: Color(r=0, g=0, b=1, a=1), selected: True
+[2026-09-10 13:14:44,791] cb2game.server.state INFO [state:_advance_fmri_instruction:906] Correct fMRI target selected; advanced to next instruction.
+[2026-09-10 13:14:45,493] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:45,500] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:45,500] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:14:45,759] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:45,768] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:45,768] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:14:46,360] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:46,367] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:46,367] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:14:47,035] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:47,069] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:47,069] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:47,385] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:47,391] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:47,392] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:14:47,843] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:47,850] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:47,850] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:48,193] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:48,216] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:48,216] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:48,543] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:48,550] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:48,550] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:48,893] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:48,900] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:48,901] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:49,242] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:49,251] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:49,252] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:49,593] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:49,600] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:49,601] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:49,943] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:49,951] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:49,951] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:52,074] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.SCENARIO_REQUEST for player 1.
+[2026-09-10 13:14:57,838] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:57,847] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:57,847] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:14:58,238] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:58,238] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.S
+[2026-09-10 13:14:58,238] cb2game.server.state INFO [state:_select_if_on_card:870] Selected card 45 with color: Color(r=0, g=0, b=1, a=1), selected: True
+[2026-09-10 13:14:58,896] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:58,904] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:58,904] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:14:59,163] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:59,172] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:59,172] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:14:59,588] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:59,596] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:59,597] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:14:59,855] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:14:59,863] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:14:59,863] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:15:00,122] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:15:00,130] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:15:00,131] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:15:00,606] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:15:00,613] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:15:00,613] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:15:01,088] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:15:01,097] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:15:01,097] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:15:01,412] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:15:01,425] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:15:01,426] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:15:01,787] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:15:01,796] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:15:01,797] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.LEFT
+[2026-09-10 13:15:02,096] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:15:02,125] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:15:02,125] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:15:02,479] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:15:02,487] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:15:02,487] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:15:02,872] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:15:02,880] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:15:02,880] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:15:03,221] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:15:03,230] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:15:03,230] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:15:03,572] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:15:03,580] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:15:03,580] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:15:03,921] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:15:03,929] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:15:03,929] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.RIGHT
+[2026-09-10 13:15:04,338] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:15:04,345] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:15:04,346] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:15:04,688] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:15:04,696] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:15:04,696] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:15:05,321] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:15:05,322] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.S
+[2026-09-10 13:15:05,322] cb2game.server.state INFO [state:_select_if_on_card:860] Replaced previous fMRI card selection 45 with 25.
+[2026-09-10 13:15:05,323] cb2game.server.state INFO [state:_select_if_on_card:870] Selected card 25 with color: Color(r=0, g=0, b=1, a=1), selected: True
+[2026-09-10 13:15:07,105] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:15:07,113] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:15:07,113] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:15:07,455] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.ACTIONS for player 0.
+[2026-09-10 13:15:07,464] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:15:07,464] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.UP
+[2026-09-10 13:15:07,822] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.BUTTON_PRESS for player 0.
+[2026-09-10 13:15:07,822] cb2game.server.state INFO [state:_drain_message:963] Received button press: KeyCode.S
+[2026-09-10 13:15:07,822] cb2game.server.state INFO [state:_select_if_on_card:860] Replaced previous fMRI card selection 25 with 18.
+[2026-09-10 13:15:07,822] cb2game.server.state INFO [state:_select_if_on_card:870] Selected card 18 with color: Color(r=0, g=0, b=1, a=1), selected: True
+[2026-09-10 13:15:07,828] cb2game.server.state INFO [state:_advance_fmri_instruction:906] Correct fMRI target selected; advanced to next instruction.
+[2026-09-10 13:15:24,958] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.SCENARIO_REQUEST for player 1.
+[2026-09-10 13:15:57,975] cb2game.server.room INFO [room:drain_messages:275] Received message type MessageType.SCENARIO_REQUEST for player 1.
+[2026-09-10 13:16:35,685] root INFO [main:PlayerEndpoint:1327] =====================================
+[2026-09-10 13:16:35,685] root INFO [main:PlayerEndpoint:1328] player disconnected from : 127.0.0.1
+[2026-09-10 13:16:35,693] cb2game.server.lobby INFO [lobby:disconnect_socket:224] disconnect_socket()
+[2026-09-10 13:16:35,693] cb2game.server.lobby WARNING [lobby:remove_socket_from_queue:901] Socket not found in queue!
+[2026-09-10 13:16:35,693] cb2game.server.lobby WARNING [lobby:remove_socket_from_queue:913] Socket not found in follower queue!
+[2026-09-10 13:16:35,693] cb2game.server.lobby WARNING [lobby:remove_socket_from_queue:925] Socket not found in leader queue!
+[2026-09-10 13:16:35,693] cb2game.server.lobby INFO [lobby:disconnect_socket:235] disconnect_socket() removed role: Role.SPECTATOR
+[2026-09-10 13:16:35,694] root INFO [state:mark_player_disconnected:288] Setting kvals: {'fmri_session_id': 'practice', 'fmri_material_set': 'set_prac', 'fmri_material_run': 'run_prac', 'fmri_auto_advance_instructions': True, 'fmri_instruction_order': [[34], [47], [6], [7], [21], [49], [23], [32], [12], [15], [13], [26], [18], [51], [19]], 'fmri_pose_carryover': {'location': {'a': 1, 'r': 0, 'c': 6}, 'rotation_degrees': 60.0}, 'disconnected': ['SPECTATOR']}
+[2026-09-10 13:16:35,698] aiohttp.access INFO [web_log:log:206] 127.0.0.1 [10/Sep/2026:20:12:01 +0000] "GET /player_endpoint?is_bot=true&lobby_name=scenario-lobby HTTP/1.1" 101 0 "-" "Python/3.9 aiohttp/3.8.4"
+[2026-09-10 13:16:35,700] root INFO [main:PlayerEndpoint:1327] =====================================
+[2026-09-10 13:16:35,700] root INFO [main:PlayerEndpoint:1328] player disconnected from : 127.0.0.1
+[2026-09-10 13:16:35,700] cb2game.server.lobby INFO [lobby:disconnect_socket:224] disconnect_socket()
+[2026-09-10 13:16:35,700] cb2game.server.lobby WARNING [lobby:remove_socket_from_queue:901] Socket not found in queue!
+[2026-09-10 13:16:35,700] cb2game.server.lobby WARNING [lobby:remove_socket_from_queue:913] Socket not found in follower queue!
+[2026-09-10 13:16:35,700] cb2game.server.lobby WARNING [lobby:remove_socket_from_queue:925] Socket not found in leader queue!
+[2026-09-10 13:16:35,700] cb2game.server.lobby INFO [lobby:disconnect_socket:235] disconnect_socket() removed role: Role.FOLLOWER
+[2026-09-10 13:16:35,700] cb2game.server.state WARNING [state:mark_player_disconnected:285] Player ['SPECTATOR'] already disconnected.
+[2026-09-10 13:16:35,700] root INFO [state:mark_player_disconnected:288] Setting kvals: {'fmri_session_id': 'practice', 'fmri_material_set': 'set_prac', 'fmri_material_run': 'run_prac', 'fmri_auto_advance_instructions': True, 'fmri_instruction_order': [[34], [47], [6], [7], [21], [49], [23], [32], [12], [15], [13], [26], [18], [51], [19]], 'fmri_pose_carryover': {'location': {'a': 1, 'r': 0, 'c': 6}, 'rotation_degrees': 60.0}, 'disconnected': ['FOLLOWER']}
+[2026-09-10 13:16:35,701] root INFO [room:stop:299] Room /240 ending game.
+[2026-09-10 13:16:35,701] aiohttp.access INFO [web_log:log:206] 127.0.0.1 [10/Sep/2026:20:12:03 +0000] "GET /player_endpoint?lobby_name=scenario-lobby&auto=join_game_queue HTTP/1.1" 101 0 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"
+[2026-09-10 13:16:35,701] cb2game.server.leaderboard INFO [leaderboard:UpdateLeaderboard:37] Updating leaderboard for game 240
+[2026-09-10 13:16:35,702] root INFO [google_experience:UpdateGoogleUserExperienceTable:92] Updating google experience...
+[2026-09-10 13:16:35,702] root INFO [google_experience:UpdateGoogleUserExperienceTable:101] Game type scenario-lobby|6|scenario is not a google lobby game type.

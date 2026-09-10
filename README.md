@@ -166,6 +166,13 @@ Unity renders:
 - Instructions
 - Card-selection feedback
 
+During scanner runs, Python places a high-contrast HTML instruction panel over
+the Unity panel on the left. The active instruction is synchronized from the
+game state and displayed in bold black Arial-compatible text. Because this
+overlay is ordinary HTML, its appearance can be adjusted in
+`src/cb2game/server/www/WebGL/TemplateData/style.css` without rebuilding
+Unity.
+
 Python does not render the game world. It controls the experiment surrounding
 the Unity game.
 

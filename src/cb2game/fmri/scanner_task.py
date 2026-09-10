@@ -404,6 +404,58 @@ def _install_runtime_keymap(browser, pilot_wasd=False):
     )
 
 
+def _install_instruction_overlay(browser):
+    """Create a readable HTML instruction panel above the Unity canvas."""
+    browser.execute_script(
+        r"""
+        let panel = document.getElementById('cb2-instruction-overlay');
+        if (!panel) {
+          panel = document.createElement('section');
+          panel.id = 'cb2-instruction-overlay';
+          panel.setAttribute('aria-live', 'polite');
+          panel.innerHTML = `
+            <div class="cb2-instruction-heading">Instructions</div>
+            <div class="cb2-instruction-text"></div>
+          `;
+          document.body.appendChild(panel);
+        }
+        panel.style.display = 'block';
+        """
+    )
+
+
+def _active_instruction_text(game_state):
+    """Return the first unfinished instruction shown by the current game."""
+    if game_state is None:
+        return None
+    for instruction in game_state.instructions:
+        if not instruction.completed and not instruction.cancelled:
+            text = str(instruction.text).strip()
+            if text:
+                return text
+    return None
+
+
+def _sync_instruction_overlay(browser, game_state):
+    """Update the HTML panel only when the active instruction changes."""
+    instruction = _active_instruction_text(game_state)
+    if not instruction:
+        return
+    if getattr(browser, "_cb2_overlay_instruction", None) == instruction:
+        return
+    browser.execute_script(
+        """
+        const target = document.querySelector(
+          '#cb2-instruction-overlay .cb2-instruction-text'
+        );
+        if (target) target.textContent = arguments[0];
+        """,
+        instruction,
+    )
+    browser._cb2_overlay_instruction = instruction
+    logger.info("HTML instruction overlay updated: %s", instruction)
+
+
 def _zoom_out_browser_interface(browser):
     """Set Chrome to 67% page zoom for a wider effective game view."""
     try:
@@ -438,7 +490,7 @@ def _connect_controller(host, lobby):
     return client, game
 
 
-def _wait_until(deadline_ns, game=None, fallback_state=None):
+def _wait_until(deadline_ns, game=None, fallback_state=None, browser=None):
     """Wait for an absolute monotonic deadline without network I/O.
 
     ``GameEndpoint.step`` can block for up to 60 seconds while waiting for a
@@ -451,6 +503,8 @@ def _wait_until(deadline_ns, game=None, fallback_state=None):
         now_ns = time.perf_counter_ns()
         if game is not None and now_ns >= next_game_poll_ns:
             latest_state = _snapshot_game(game, latest_state)
+            if browser is not None:
+                _sync_instruction_overlay(browser, latest_state)
             next_game_poll_ns = now_ns + GAME_POLL_INTERVAL_NS
         pygame.event.pump()
         remaining = (deadline_ns - time.perf_counter_ns()) / 1_000_000_000
@@ -473,12 +527,15 @@ def _snapshot_game(game, fallback_state=None):
 
 
 def _run_task_epoch(game, run_zero_ns, condition_code, event_file,
-                    fallback_state=None, deadline_ns=None):
+                    fallback_state=None, deadline_ns=None, browser=None):
     onset_ns = time.perf_counter_ns()
     if deadline_ns is None:
         deadline_ns = onset_ns + int(TASK_SECONDS * 1_000_000_000)
+    if browser is not None:
+        _sync_instruction_overlay(browser, fallback_state)
     latest_state = _wait_until(
-        deadline_ns, game=game, fallback_state=fallback_state
+        deadline_ns, game=game, fallback_state=fallback_state,
+        browser=browser,
     )
     # Capture any completion already buffered at the exact block boundary so a
     # correct selection in the final polling interval is included in the score.
@@ -648,6 +705,7 @@ def run_scanner_task(subject_id, session_id, set_number, run_number,
     try:
         client, game = _connect_controller(host, lobby)
         _install_runtime_keymap(browser, pilot_wasd=pilot_wasd)
+        _install_instruction_overlay(browser)
 
         trial_offset = 0
         first_label, _, first_path = schedule[0]
@@ -695,6 +753,7 @@ def run_scanner_task(subject_id, session_id, set_number, run_number,
             scheduled_seconds += task_seconds
             game_state = _run_task_epoch(
                 game, run_zero_ns, code, events, fallback_state=game_state,
+                browser=browser,
                 deadline_ns=(
                     run_zero_ns + int(scheduled_seconds * 1_000_000_000)
                 ),
